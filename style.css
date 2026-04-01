@@ -936,9 +936,10 @@ img { display: block; max-width: 100%; }
 /* FIFA Atlanta brand — show official colors, no filter */
 .fifa-frame { background: #080604; }
 .fifa-brand-img {
-  object-fit: contain !important;
+  object-fit: cover !important;
+  object-position: center 30% !important;
   filter: none !important;
-  padding: 20px;
+  padding: 0;
   background: #080604;
 }
 .photo-caption {
