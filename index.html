@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jazz Ting Radio — World Cup 2026 Atlanta Broadcast Partner</title>
+  <meta name="description" content="Jazz Ting Radio is Atlanta's premier broadcast studio overlooking Mercedes-Benz Stadium — positioned to be your official World Cup 2026 media partner.">
+  <meta property="og:title" content="Jazz Ting Radio × World Cup 2026 ATL">
+  <meta property="og:description" content="Stadium view. Broadcast-ready. Atlanta's World Cup studio.">
+  <meta property="og:image" content="studio.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>">
+</head>
+<body>
+
+<!-- ── HEADER ─────────────────────────────────────────────── -->
+<header id="header">
+  <div class="header-inner">
+
+    <button class="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <a href="#" class="logo">
+      <span class="logo-jazz">Jazz</span><span class="logo-ting">Ting</span>
+      <span class="logo-radio">Radio</span>
+    </a>
+
+    <nav class="nav">
+      <a href="#studio">Studio</a>
+      <a href="#capabilities">Capabilities</a>
+      <a href="#worldcup">World Cup 2026</a>
+      <a href="#episodes">Episodes</a>
+      <a href="#pitch" class="nav-cta">Partner With Us</a>
+    </nav>
+
+    <button class="hamburger hamburger-right" aria-label="More">
+      <span></span><span></span><span></span>
+    </button>
+
+  </div>
+</header>
+
+<!-- ── HERO ───────────────────────────────────────────────── -->
+<section id="hero">
+  <div class="hero-layout">
+
+    <!-- Main video / studio panel -->
+    <div class="hero-main">
+      <div class="studio-player">
+        <div class="studio-video-wrap">
+          <img src="studio.jpg" alt="Jazz Ting Radio Studio with Mercedes-Benz Stadium view" class="studio-img" id="studioImg">
+          <div class="video-overlay">
+            <button class="play-btn" id="playBtn" onclick="togglePlay()">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </div>
+          <div class="studio-live-badge">
+            <span class="live-dot"></span> BROADCAST READY
+          </div>
+        </div>
+        <div class="player-bar">
+          <div class="player-bar-left">
+            <button class="pbar-btn">⏮</button>
+            <button class="pbar-btn">⏭</button>
+            <button class="pbar-btn">🔊</button>
+          </div>
+          <div class="player-scrubber">
+            <div class="scrubber-track"><div class="scrubber-fill" id="scrubFill"></div></div>
+            <span class="pbar-time">00:00 / Live</span>
+          </div>
+          <div class="player-bar-right">
+            <button class="pbar-btn">⛶</button>
+            <button class="pbar-btn">⧉</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- World Cup Atlanta Banner -->
+      <div class="wc-banner">
+        <div class="wc-banner-bg">
+          <img src="studio.jpg" alt="" class="wc-banner-bg-img" aria-hidden="true">
+          <div class="wc-banner-overlay"></div>
+        </div>
+        <div class="wc-banner-content">
+          <div class="wc-ball">⚽</div>
+          <div class="wc-text">
+            <div class="wc-label">Official Broadcast Partner Opportunity</div>
+            <h2 class="wc-headline">WORLD CUP<br>2026 BROADCAST</h2>
+            <div class="wc-sub">from <span class="wc-atl">ATL</span> — Mercedes-Benz Stadium View</div>
+          </div>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSfRcRvcwnFWovO3eB3N-dpkJ9QsE4e2TLlTL3iY-E5-s3zFxw/viewform" target="_blank" rel="noopener" class="wc-cta-btn">Submit Partnership →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Episodes sidebar -->
+    <aside class="episodes-panel" id="episodes">
+      <div class="episodes-header">
+        <h3>Audio Episodes</h3>
+        <button class="ep-close" aria-label="Close">✕</button>
+      </div>
+      <div class="episodes-scroll">
+        <div class="ep-subnav">
+          <button class="ep-tab active">Audio</button>
+          <button class="ep-tab">Video</button>
+          <button class="ep-tab">Live</button>
+        </div>
+        <div class="episodes-list" id="episodesList">
+          <!-- Populated by app.js -->
+          <div class="ep-loading">Loading episodes…</div>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</section>
+
+<!-- ── STUDIO PITCH ────────────────────────────────────────── -->
+<section id="studio" class="section-dark">
+  <div class="section-inner">
+    <div class="pitch-grid">
+
+      <div class="pitch-text">
+        <div class="eyebrow">The Studio</div>
+        <h2 class="section-title">Atlanta's World Cup<br>Broadcast Studio</h2>
+        <div class="gold-rule"></div>
+        <p class="pitch-body">
+          Jazz Ting Radio operates from a <strong>premium broadcast-ready studio in the heart of Atlanta</strong> — with direct line-of-sight to Mercedes-Benz Stadium, a 2026 FIFA World Cup venue.
+        </p>
+        <p class="pitch-body">
+          Six years of all-vinyl live broadcasts. A proven audio and video production setup. A studio that has hosted DJ Cozy Shawn, Dell Harris, and a roster of Atlanta's finest artists — now positioned to be your World Cup 2026 media partner.
+        </p>
+        <div class="pitch-stats">
+          <div class="stat">
+            <div class="stat-n">6+</div>
+            <div class="stat-l">Years on Air</div>
+          </div>
+          <div class="stat">
+            <div class="stat-n">ATL</div>
+            <div class="stat-l">Host City</div>
+          </div>
+          <div class="stat">
+            <div class="stat-n">WC26</div>
+            <div class="stat-l">Stadium View</div>
+          </div>
+        </div>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfRcRvcwnFWovO3eB3N-dpkJ9QsE4e2TLlTL3iY-E5-s3zFxw/viewform" target="_blank" rel="noopener" class="btn-gold">Submit Partnership Inquiry →</a>
+      </div>
+
+      <div class="pitch-photo">
+        <div class="photo-frame">
+          <img src="studio.jpg" alt="DJ Cozy Shawn — Jazz Ting Radio studio with Mercedes-Benz Stadium view">
+          <div class="photo-caption">Mercedes-Benz Stadium · Atlanta, GA · FIFA World Cup 2026 Venue</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── CAPABILITIES ────────────────────────────────────────── -->
+<section id="capabilities" class="section-mid">
+  <div class="section-inner">
+    <div class="eyebrow" style="text-align:center">What We Offer</div>
+    <h2 class="section-title" style="text-align:center">Broadcast Capabilities</h2>
+    <div class="gold-rule" style="margin:18px auto 48px"></div>
+
+    <div class="caps-grid">
+
+      <div class="cap-card">
+        <div class="cap-icon">📡</div>
+        <h3>Live Broadcast Studio</h3>
+        <p>Fully equipped for live audio and video broadcast. YouTube Live streaming. Multi-camera capability. Direct stadium view backdrop.</p>
+      </div>
+
+      <div class="cap-card">
+        <div class="cap-icon">🎚️</div>
+        <h3>Professional Audio Production</h3>
+        <p>All-vinyl DJ setup. Professional mixing boards. Podcast and interview booth. Six years of live broadcast experience.</p>
+      </div>
+
+      <div class="cap-card">
+        <div class="cap-icon">🏟️</div>
+        <h3>Mercedes-Benz Stadium View</h3>
+        <p>Floor-to-ceiling windows with unobstructed line-of-sight to the FIFA World Cup 2026 venue. Unique visual identity for every broadcast.</p>
+      </div>
+
+      <div class="cap-card">
+        <div class="cap-icon">🎙️</div>
+        <h3>Talent & Hosting</h3>
+        <p>Established DJ talent. Host programming. Pre/post-match commentary. Cultural coverage of Atlanta's World Cup experience.</p>
+      </div>
+
+      <div class="cap-card">
+        <div class="cap-icon">📱</div>
+        <h3>Social & Digital Distribution</h3>
+        <p>YouTube channel (@jazztingradio). Live streaming infrastructure. Content creation for short-form and long-form formats.</p>
+      </div>
+
+      <div class="cap-card">
+        <div class="cap-icon">🤝</div>
+        <h3>Brand Activation Space</h3>
+        <p>Available for sponsored broadcasts, brand activations, and watch parties. Prime Atlanta location during the tournament window.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── WORLD CUP SECTION ───────────────────────────────────── -->
+<section id="worldcup" class="section-wc">
+  <div class="wc-full-banner">
+    <div class="wc-full-bg">
+      <img src="studio.jpg" alt="" aria-hidden="true">
+      <div class="wc-full-overlay"></div>
+    </div>
+    <div class="wc-full-content">
+      <div class="wc-full-badge">FIFA World Cup 2026</div>
+      <h2 class="wc-full-title">ATLANTA IS A<br>HOST CITY.</h2>
+      <h3 class="wc-full-sub">Our studio has the view to prove it.</h3>
+      <p class="wc-full-body">
+        In summer 2026, the world watches Atlanta. Jazz Ting Radio is already here — broadcast-ready, stadium-adjacent, and looking for the right partner to tell Atlanta's World Cup story.
+      </p>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfRcRvcwnFWovO3eB3N-dpkJ9QsE4e2TLlTL3iY-E5-s3zFxw/viewform" target="_blank" rel="noopener" class="btn-gold btn-xl">
+        ⚽ Submit Your Partnership Proposal
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── PITCH FORM CTA ──────────────────────────────────────── -->
+<section id="pitch" class="section-dark">
+  <div class="section-inner section-narrow">
+    <div class="eyebrow" style="text-align:center">Partnership Inquiry</div>
+    <h2 class="section-title" style="text-align:center">Let's Build Something Together</h2>
+    <div class="gold-rule" style="margin:18px auto 28px"></div>
+    <p class="pitch-center-body">
+      Jazz Ting Radio is seeking World Cup 2026 partners — media companies, brands, sponsors, and organizations looking for a broadcast-ready, stadium-view studio in Atlanta. Fill out the official partnership form to start the conversation.
+    </p>
+    <div class="form-cta-block">
+      <div class="form-cta-card">
+        <div class="form-cta-icon">📋</div>
+        <h3>Official Partnership Form</h3>
+        <p>Submit your inquiry through the official World Cup 2026 Atlanta partnership portal. We'll respond within 48 hours.</p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfRcRvcwnFWovO3eB3N-dpkJ9QsE4e2TLlTL3iY-E5-s3zFxw/viewform" target="_blank" rel="noopener" class="btn-gold btn-block">
+          Open Partnership Form →
+        </a>
+      </div>
+      <div class="form-details">
+        <h4>What to include in your submission:</h4>
+        <ul class="form-checklist">
+          <li>✦ Your organization and role</li>
+          <li>✦ Partnership type (media, sponsorship, activation, broadcast)</li>
+          <li>✦ World Cup 2026 ATL dates you're targeting</li>
+          <li>✦ What you need from a studio partner</li>
+          <li>✦ Budget range or in-kind offer</li>
+        </ul>
+        <div class="contact-note">
+          Direct contact: <a href="mailto:hello@jazztingradio.com">hello@jazztingradio.com</a><br>
+          YouTube: <a href="https://www.youtube.com/@jazztingradio" target="_blank">@jazztingradio</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ──────────────────────────────────────────────── -->
+<footer id="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <span class="logo-jazz">Jazz</span><span class="logo-ting">Ting</span>
+      <span class="logo-radio">Radio</span>
+    </div>
+    <p class="footer-tagline">All vinyl. Broadcast-ready. Live from Atlanta.<br>Mercedes-Benz Stadium View · FIFA World Cup 2026</p>
+    <div class="footer-links">
+      <a href="https://www.youtube.com/@jazztingradio" target="_blank">YouTube</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfRcRvcwnFWovO3eB3N-dpkJ9QsE4e2TLlTL3iY-E5-s3zFxw/viewform" target="_blank">Partner With Us</a>
+    </div>
+    <p class="footer-copy">&copy; 2026 Jazz Ting Radio · Atlanta, GA</p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
