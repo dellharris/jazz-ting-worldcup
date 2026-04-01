@@ -11,11 +11,148 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,900;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='none' stroke='%23c8961e' stroke-width='4'/><circle cx='50' cy='50' r='18' fill='none' stroke='%23c8961e' stroke-width='4'/><line x1='50' y1='4' x2='50' y2='28' stroke='%23c8961e' stroke-width='6' stroke-linecap='round'/></svg>">
 </head>
 <body>
 
-<!-- ── HEADER ─────────────────────────────────────────────── -->
+<!-- ── SVG Icon Sprite ───────────────────────────────────── -->
+<svg style="display:none" aria-hidden="true">
+  <defs>
+    <symbol id="ic-vinyl" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+      <circle cx="12" cy="12" r="3.5" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M8.5 20.5 a10 10 0 0 1 0-17" stroke="currentColor" stroke-width="1" stroke-dasharray="2 3"/>
+      <line x1="12" y1="2" x2="12" y2="6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="ic-globe" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+      <ellipse cx="12" cy="12" rx="4.5" ry="10" stroke="currentColor" stroke-width="1"/>
+      <line x1="2.2" y1="8.5" x2="21.8" y2="8.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+      <line x1="2.2" y1="15.5" x2="21.8" y2="15.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="ic-lens" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+      <circle cx="12" cy="12" r="3.5" stroke="currentColor" stroke-width="1.5"/>
+      <line x1="12" y1="2" x2="12" y2="8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+      <line x1="12" y1="15.5" x2="12" y2="22" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+      <line x1="2" y1="12" x2="8.5" y2="12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+      <line x1="15.5" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+      <line x1="4.9" y1="4.9" x2="9.3" y2="9.3" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+      <line x1="14.7" y1="14.7" x2="19.1" y2="19.1" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="ic-signal" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="14.5" r="2.5" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M8.5 10.5 a5 5 0 0 1 7 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M5 7 a10 10 0 0 1 14 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="12" y1="17" x2="12" y2="21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="ic-camera" viewBox="0 0 24 24" fill="none">
+      <rect x="2" y="7" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M16 10.5 L22 8 L22 16 L16 13.5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+      <circle cx="9" cy="12" r="2.5" stroke="currentColor" stroke-width="1"/>
+    </symbol>
+    <symbol id="ic-stadium" viewBox="0 0 24 24" fill="none">
+      <path d="M3 19 Q6 9 12 9 Q18 9 21 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="3" y1="19" x2="21" y2="19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M7 19 Q9 14 12 14 Q15 14 17 19" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+      <line x1="12" y1="9" x2="12" y2="5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+      <circle cx="12" cy="4" r="1.5" stroke="currentColor" stroke-width="1.2"/>
+    </symbol>
+    <symbol id="ic-soccer" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+      <polygon points="12,4.5 14,8 12,10.5 10,8" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/>
+      <polygon points="4,9.5 7,9 8.5,11.5 7,14 4.5,13.5" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/>
+      <polygon points="20,9.5 17,9 15.5,11.5 17,14 19.5,13.5" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/>
+      <polygon points="7.5,18.5 8.5,16 11,15.5 13,15.5 15.5,16 16.5,18.5" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="ic-form" viewBox="0 0 24 24" fill="none">
+      <rect x="5" y="2" width="14" height="20" rx="2" stroke="currentColor" stroke-width="1.5"/>
+      <line x1="8" y1="7" x2="16" y2="7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+      <line x1="8" y1="11" x2="16" y2="11" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+      <line x1="8" y1="15" x2="13" y2="15" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+      <circle cx="15.5" cy="17.5" r="1.8" stroke="currentColor" stroke-width="1.2"/>
+    </symbol>
+    <symbol id="ic-knob" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.5"/>
+      <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M7 18.5 a8.5 8.5 0 0 1 0-13" stroke="currentColor" stroke-width="1" stroke-dasharray="2 3"/>
+      <line x1="12" y1="2.5" x2="12" y2="7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="ic-fader" viewBox="0 0 24 24" fill="none">
+      <line x1="12" y1="2" x2="12" y2="22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <rect x="7.5" y="8.5" width="9" height="5.5" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+      <line x1="9" y1="11.2" x2="15" y2="11.2" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="ic-prev" viewBox="0 0 24 24">
+      <line x1="5" y1="5" x2="5" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M19 5 L9 12 L19 19 Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="ic-next" viewBox="0 0 24 24">
+      <line x1="19" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M5 5 L15 12 L5 19 Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="ic-volume" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M7.5 17.5 a7.5 7.5 0 0 1 0-11" stroke="currentColor" stroke-width="1" stroke-dasharray="2 3"/>
+      <line x1="12" y1="3" x2="12" y2="7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="ic-fullscreen" viewBox="0 0 24 24" fill="none">
+      <polyline points="3,9 3,3 9,3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <polyline points="15,3 21,3 21,9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <polyline points="3,15 3,21 9,21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <polyline points="21,15 21,21 15,21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ── Power-On Screen ───────────────────────────────────── -->
+<div id="powerOn" class="power-on-screen">
+  <div class="po-panel">
+    <!-- corner screws (CSS) -->
+    <div class="po-corner po-corner-tl"></div>
+    <div class="po-corner po-corner-tr"></div>
+    <div class="po-corner po-corner-bl"></div>
+    <div class="po-corner po-corner-br"></div>
+    <!-- channel label like the "one" / "two" on the mixer -->
+    <div class="po-channel-label">input · one</div>
+    <div class="po-brand">
+      <span class="logo-jazz">Jazz</span><span class="logo-ting">Ting</span>
+      <span class="logo-radio">Radio</span>
+    </div>
+    <div class="po-tagline">× WORLD CUP 2026 · ATLANTA</div>
+    <div class="po-knob-section">
+      <!-- Arc progress ring (SVG) -->
+      <svg class="po-arc" viewBox="0 0 130 130" aria-hidden="true">
+        <!-- dashed track like isolator knob on mixer -->
+        <path class="po-arc-track"
+          d="M 19 104 A 52 52 0 1 1 111 104"
+          fill="none" stroke="rgba(200,150,30,0.18)" stroke-width="3"
+          stroke-linecap="round" stroke-dasharray="3 4"/>
+        <!-- fill arc -->
+        <path class="po-arc-fill" id="poArcFill"
+          d="M 19 104 A 52 52 0 1 1 111 104"
+          fill="none" stroke="var(--brass-warm)" stroke-width="3"
+          stroke-linecap="round"
+          stroke-dasharray="265" stroke-dashoffset="265"/>
+      </svg>
+      <!-- The knob -->
+      <div class="po-knob-wrap">
+        <div class="po-knob" id="poKnob">
+          <div class="po-knob-grip"></div>
+          <div class="po-knob-indicator"></div>
+        </div>
+      </div>
+    </div>
+    <div class="po-instruction" id="poInstruction">ROTATE CLOCKWISE TO POWER ON</div>
+    <div class="po-status-row">
+      <div class="po-led" id="poLed"></div>
+      <span class="po-status-text" id="poStatusText">STANDBY</span>
+    </div>
+    <div class="po-mixer-label">POWER · MASTER</div>
+  </div>
+</div>
+
+
 <header id="header">
   <div class="header-inner">
     <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -44,9 +181,9 @@
         <div class="studio-video-wrap">
           <img src="studio.jpg" alt="Jazz Ting Radio — Dell Harris at turntables, Mercedes-Benz Stadium visible through floor-to-ceiling windows" class="studio-img">
           <div class="video-overlay">
-            <button class="play-btn" onclick="togglePlay()">
+            <a href="https://www.youtube.com/@Jazztingradio" target="_blank" rel="noopener" class="play-btn" aria-label="Watch Jazz Ting Radio on YouTube">
               <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            </button>
+            </a>
           </div>
           <div class="studio-live-badge"><span class="live-dot"></span> BROADCAST READY · ATL</div>
           <div class="hero-title-overlay">
@@ -58,16 +195,16 @@
         </div>
         <div class="player-bar">
           <div class="player-bar-left">
-            <button class="pbar-btn">⏮</button>
-            <button class="pbar-btn">⏭</button>
-            <button class="pbar-btn">🔊</button>
+            <button class="pbar-btn" aria-label="Previous"><svg class="icon" aria-hidden="true"><use href="#ic-prev"/></svg></button>
+            <button class="pbar-btn" aria-label="Next"><svg class="icon" aria-hidden="true"><use href="#ic-next"/></svg></button>
+            <button class="pbar-btn" aria-label="Volume"><svg class="icon" aria-hidden="true"><use href="#ic-volume"/></svg></button>
           </div>
           <div class="player-scrubber">
             <div class="scrubber-track"><div class="scrubber-fill" id="scrubFill"></div></div>
             <span class="pbar-time">Jazz Ting Radio · Live</span>
           </div>
           <div class="player-bar-right">
-            <button class="pbar-btn">⛶</button>
+            <button class="pbar-btn" aria-label="Fullscreen"><svg class="icon" aria-hidden="true"><use href="#ic-fullscreen"/></svg></button>
           </div>
         </div>
       </div>
@@ -79,7 +216,7 @@
           <div class="wc-banner-overlay"></div>
         </div>
         <div class="wc-banner-content">
-          <div class="wc-ball">⚽</div>
+          <div class="wc-ball"><svg class="icon" aria-hidden="true"><use href="#ic-soccer"/></svg></div>
           <div class="wc-text">
             <div class="wc-label">Live Broadcast Concept · Match Day Series</div>
             <h2 class="wc-headline">WORLD CUP<br>2026 BROADCAST</h2>
@@ -98,12 +235,27 @@
       </div>
       <div class="episodes-scroll">
         <div class="ep-subnav">
-          <button class="ep-tab active">Audio</button>
-          <button class="ep-tab">Video</button>
-          <button class="ep-tab">Live</button>
+          <button class="ep-tab active" data-tab="video">Video</button>
+          <button class="ep-tab" data-tab="audio">Audio</button>
+          <button class="ep-tab" data-tab="live">Live</button>
         </div>
-        <div class="episodes-list" id="episodesList">
-          <div class="ep-loading">Loading sets…</div>
+        <!-- Video/Live tab: YouTube episodes list (default) -->
+        <div class="ep-panel ep-panel-video" id="epPanelVideo">
+          <div class="episodes-list" id="episodesList">
+            <div class="ep-loading">Loading sets…</div>
+          </div>
+        </div>
+        <!-- Audio tab: SoundCloud embed -->
+        <div class="ep-panel ep-panel-audio" id="epPanelAudio" style="display:none;">
+          <iframe width="100%" height="540" scrolling="no" frameborder="no" allow="autoplay"
+            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/soundcloud%253Aplaylists%253A1151487817&color=%23917070&auto_play=false&hide_related=false&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=true"
+            style="display:block;border-radius:4px;overflow:hidden;">
+          </iframe>
+          <div style="font-size:10px;color:#8a7460;padding:4px 0 0;text-align:center;">
+            <a href="https://soundcloud.com/dellharris" target="_blank" style="color:#8a7460;">Dell Harris</a>
+            · <a href="https://soundcloud.com/dellharris/sets/jazztingradio" target="_blank" style="color:#8a7460;">Jazz Ting Radio</a>
+          </div>
+        </div>
         </div>
       </div>
     </aside>
@@ -126,16 +278,16 @@
           This isn't a watch party. It's a <strong>live broadcast + social event</strong> — filmed cinematically, streamed to YouTube, and clipped for social media. Atlanta has never had a World Cup before. Jazz Ting Radio is positioned to tell that story through sound.
         </p>
         <div class="concept-pillars">
-          <div class="pillar"><div class="pillar-icon">🎚️</div><div class="pillar-label">Vinyl-First<br>Broadcast</div></div>
-          <div class="pillar"><div class="pillar-icon">🌍</div><div class="pillar-label">Country-Themed<br>Curation</div></div>
-          <div class="pillar"><div class="pillar-icon">🎬</div><div class="pillar-label">Cinematic<br>Production</div></div>
-          <div class="pillar"><div class="pillar-icon">📡</div><div class="pillar-label">Live YouTube<br>Stream</div></div>
+          <div class="pillar"><div class="pillar-icon"><svg class="icon" aria-hidden="true"><use href="#ic-vinyl"/></svg></div><div class="pillar-label">Vinyl-First<br>Broadcast</div></div>
+          <div class="pillar"><div class="pillar-icon"><svg class="icon" aria-hidden="true"><use href="#ic-globe"/></svg></div><div class="pillar-label">Country-Themed<br>Curation</div></div>
+          <div class="pillar"><div class="pillar-icon"><svg class="icon" aria-hidden="true"><use href="#ic-lens"/></svg></div><div class="pillar-label">Cinematic<br>Production</div></div>
+          <div class="pillar"><div class="pillar-icon"><svg class="icon" aria-hidden="true"><use href="#ic-signal"/></svg></div><div class="pillar-label">Live YouTube<br>Stream</div></div>
         </div>
       </div>
       <div class="concept-photo">
-        <div class="photo-frame">
-          <img src="studio.jpg" alt="Jazz Ting Radio studio — Mercedes-Benz Stadium, Atlanta">
-          <div class="photo-caption">Dell Harris · Jazz Ting Radio · Mercedes-Benz Stadium View · Atlanta, GA</div>
+        <div class="photo-frame fifa-frame">
+          <img src="fifa-atlanta.jpg" alt="FIFA World Cup 2026 — Official Atlanta Host City Brand" class="fifa-brand-img">
+          <div class="photo-caption">FIFA World Cup 2026™ · Official Atlanta Host City Emblem · Atlanta, GA</div>
         </div>
         <div class="vibe-tags">
           <span class="vibe-tag">Soulful</span>
@@ -183,19 +335,19 @@
 
     <div class="format-production">
       <div class="fp-item">
-        <div class="fp-icon">🎥</div>
+        <div class="fp-icon"><svg class="icon" aria-hidden="true"><use href="#ic-camera"/></svg></div>
         <div class="fp-text"><strong>Filmed</strong> by professional videographer — cinematic framing, vinyl shots, crowd reactions, needle drops</div>
       </div>
       <div class="fp-item">
-        <div class="fp-icon">📡</div>
+        <div class="fp-icon"><svg class="icon" aria-hidden="true"><use href="#ic-signal"/></svg></div>
         <div class="fp-text"><strong>Streamed live</strong> to YouTube continuously + clipped for social media post-event</div>
       </div>
       <div class="fp-item">
-        <div class="fp-icon">🎚️</div>
+        <div class="fp-icon"><svg class="icon" aria-hidden="true"><use href="#ic-fader"/></svg></div>
         <div class="fp-text"><strong>Audio</strong> clean direct feed from DJ booth + ambient crowd blend — HiFi quality broadcast</div>
       </div>
       <div class="fp-item">
-        <div class="fp-icon">🏟️</div>
+        <div class="fp-icon"><svg class="icon" aria-hidden="true"><use href="#ic-stadium"/></svg></div>
         <div class="fp-text"><strong>Venue</strong> Mitchell Street corridor or similar Atlanta cultural space — screens showing live matches in background</div>
       </div>
     </div>
@@ -212,32 +364,32 @@
 
     <div class="curation-grid">
       <div class="curation-card">
-        <div class="cc-flag">🇧🇷</div>
+        <div class="cc-flag"><span class="cc-iso">BR</span></div>
         <div class="cc-country">Brazil</div>
         <div class="cc-sounds">Samba · Bossa Nova · Baile Funk edits · Afro-Brazilian rhythms</div>
       </div>
       <div class="curation-card">
-        <div class="cc-flag">🇫🇷</div>
+        <div class="cc-flag"><span class="cc-iso">FR</span></div>
         <div class="cc-country">France</div>
         <div class="cc-sounds">Afro-French rap · French house · Jazz fusion · West African roots</div>
       </div>
       <div class="curation-card">
-        <div class="cc-flag">🇳🇬</div>
+        <div class="cc-flag"><span class="cc-iso">NG</span></div>
         <div class="cc-country">Nigeria</div>
         <div class="cc-sounds">Afrobeats · Highlife · Amapiano crossover · Lagos club culture</div>
       </div>
       <div class="curation-card">
-        <div class="cc-flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</div>
+        <div class="cc-flag"><span class="cc-iso">ENG</span></div>
         <div class="cc-country">England</div>
         <div class="cc-sounds">Broken beat · UK jazz · Garage · Soul · Grime undertones</div>
       </div>
       <div class="curation-card">
-        <div class="cc-flag">🇦🇷</div>
+        <div class="cc-flag"><span class="cc-iso">AR</span></div>
         <div class="cc-country">Argentina</div>
         <div class="cc-sounds">Tango samples flipped into house · Nu-cumbia · Latin soul</div>
       </div>
       <div class="curation-card">
-        <div class="cc-flag">🌍</div>
+        <div class="cc-flag"><svg class="icon" aria-hidden="true"><use href="#ic-globe"/></svg></div>
         <div class="cc-country">Every Nation</div>
         <div class="cc-sounds">Traditional influence + diaspora connection + Jazz Ting signature: Jazz · House · Amapiano</div>
       </div>
@@ -289,6 +441,135 @@
   </div>
 </section>
 
+<!-- ── VINTAGE RADIO PLAYER ───────────────────────────────── -->
+<section id="radio-player" class="section-dark section-radio-player">
+  <div class="section-inner">
+    <div class="eyebrow" style="text-align:center">Tune In</div>
+    <h2 class="section-title" style="text-align:center">On the Air</h2>
+    <div class="gold-rule" style="margin:16px auto 48px"></div>
+
+    <div class="vintage-radio">
+
+      <!-- Cabinet top: wood trim + brand plate + vents -->
+      <div class="radio-cabinet-top">
+        <div class="radio-vents">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="radio-brand-plate">
+          <span class="radio-brand-name">JAZZ TING</span>
+          <span class="radio-brand-sub">HIGH FIDELITY · ATLANTA · EST. 2020</span>
+        </div>
+        <div class="radio-vents">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+
+      <!-- Frequency dial -->
+      <div class="radio-freq-bar">
+        <div class="radio-freq-band-label">FM</div>
+        <div class="radio-freq-scale">
+          <div class="freq-needle"></div>
+          <div class="freq-labels">
+            <span>88</span><span>90</span><span>92</span><span>94</span><span>96</span>
+            <span>98</span><span>100</span><span>102</span><span>104</span><span>106</span><span>108</span>
+          </div>
+        </div>
+        <div class="radio-freq-band-label">AM</div>
+      </div>
+
+      <!-- Main screen: SoundCloud embed -->
+      <div class="radio-display">
+        <div class="radio-display-bezel">
+          <div class="radio-display-inner">
+            <iframe width="100%" height="600" scrolling="no" frameborder="no" allow="autoplay"
+              src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/soundcloud%253Aplaylists%253A1151487817&color=%23917070&auto_play=true&hide_related=false&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=true">
+            </iframe>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom controls: speaker grille | knobs + pilot | VU meters -->
+      <div class="radio-controls">
+
+        <!-- Speaker grille -->
+        <div class="radio-grille">
+          <div class="grille-cloth"></div>
+          <div class="grille-bars">
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span>
+          </div>
+        </div>
+
+        <!-- Knobs + pilot light -->
+        <div class="radio-knob-panel">
+          <div class="r-knob-group">
+            <div class="r-knob"></div>
+            <span>VOL</span>
+          </div>
+          <div class="radio-pilot-area">
+            <div class="r-pilot"></div>
+            <span>ON AIR</span>
+          </div>
+          <div class="r-knob-group">
+            <div class="r-knob"></div>
+            <span>TONE</span>
+          </div>
+          <div class="r-knob-group">
+            <div class="r-knob r-knob-sm"></div>
+            <span>BASS</span>
+          </div>
+        </div>
+
+        <!-- VU meters -->
+        <div class="radio-vu-panel">
+          <div class="r-vu-meter">
+            <div class="r-vu-bars" id="vuBarsL">
+              <div class="r-vu-bar" style="height:20%"></div>
+              <div class="r-vu-bar" style="height:35%"></div>
+              <div class="r-vu-bar" style="height:55%"></div>
+              <div class="r-vu-bar" style="height:70%"></div>
+              <div class="r-vu-bar" style="height:45%"></div>
+              <div class="r-vu-bar" style="height:30%"></div>
+            </div>
+            <span class="r-vu-label">L</span>
+          </div>
+          <div class="r-vu-meter">
+            <div class="r-vu-bars" id="vuBarsR">
+              <div class="r-vu-bar" style="height:30%"></div>
+              <div class="r-vu-bar" style="height:50%"></div>
+              <div class="r-vu-bar" style="height:65%"></div>
+              <div class="r-vu-bar" style="height:40%"></div>
+              <div class="r-vu-bar" style="height:55%"></div>
+              <div class="r-vu-bar" style="height:25%"></div>
+            </div>
+            <span class="r-vu-label">R</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Cabinet bottom: model plate + rubber feet -->
+      <div class="radio-cabinet-bottom">
+        <div class="radio-model-plate">MODEL JT-2026 · SERIES II · BROADCAST RECEIVER · ATLANTA, GA</div>
+        <div class="radio-feet">
+          <div class="r-foot"></div>
+          <div class="r-foot"></div>
+          <div class="r-foot"></div>
+          <div class="r-foot"></div>
+        </div>
+      </div>
+
+    </div><!-- end .vintage-radio -->
+
+    <div class="radio-sc-credit">
+      <a href="https://soundcloud.com/dellharris" target="_blank">Dell Harris</a>
+      · <a href="https://soundcloud.com/dellharris/sets/jazztingradio" target="_blank">Jazz Ting Radio</a>
+      on SoundCloud
+    </div>
+  </div>
+</section>
+
 <!-- ── WORLD CUP FULL BANNER ──────────────────────────────── -->
 <section class="section-wc">
   <div class="wc-full-banner">
@@ -297,12 +578,12 @@
       <div class="wc-full-overlay"></div>
     </div>
     <div class="wc-full-content">
-      <div class="wc-full-badge">⚽ FIFA World Cup 2026 · Atlanta</div>
+      <div class="wc-full-badge"><svg class="icon" aria-hidden="true"><use href="#ic-soccer"/></svg> FIFA World Cup 2026 · Atlanta</div>
       <h2 class="wc-full-title">ATLANTA IS A<br>HOST CITY.</h2>
       <h3 class="wc-full-sub">Jazz Ting Radio is already here.</h3>
       <p class="wc-full-body">In summer 2026, the world comes to Atlanta. Jazz Ting Radio is broadcast-ready, stadium-adjacent, and built to be the cultural soundtrack of Atlanta's World Cup moment — a live destination for music, sport, and global identity.</p>
       <p class="wc-full-body" style="font-style:italic;opacity:.7;font-size:14px;">This is a pilot for Jazz Ting Café — a future permanent venue concept rooted in the same cultural vision.</p>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfRcRvcwnFWovO3eB3N-dpkJ9QsE4e2TLlTL3iY-E5-s3zFxw/viewform" target="_blank" rel="noopener" class="btn-gold btn-xl">⚽ Submit Your Partnership Proposal</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfRcRvcwnFWovO3eB3N-dpkJ9QsE4e2TLlTL3iY-E5-s3zFxw/viewform" target="_blank" rel="noopener" class="btn-gold btn-xl"><svg class="icon" aria-hidden="true"><use href="#ic-form"/></svg> Submit Your Partnership Proposal</a>
     </div>
   </div>
 </section>
@@ -317,7 +598,7 @@
 
     <div class="form-cta-block">
       <div class="form-cta-card">
-        <div class="form-cta-icon">📋</div>
+        <div class="form-cta-icon"><svg class="icon" aria-hidden="true"><use href="#ic-form"/></svg></div>
         <h3>Official Partnership Form</h3>
         <p>Submit your inquiry through the official World Cup 2026 Atlanta partnership portal. We'll respond within 48 hours.</p>
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSfRcRvcwnFWovO3eB3N-dpkJ9QsE4e2TLlTL3iY-E5-s3zFxw/viewform" target="_blank" rel="noopener" class="btn-gold btn-block">Open Partnership Form →</a>

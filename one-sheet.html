@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jazz Ting Radio × World Cup 2026 — One Sheet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── Reset ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Design Tokens ───────────────────────────────────────── */
+    :root {
+      --bg:          #1c1404;
+      --panel:       #221a06;
+      --panel-mid:   #2e2008;
+      --gold:        #c8a820;
+      --gold-light:  #d4b430;
+      --gold-bright: #e0c840;
+      --cream:       #e8d880;
+      --cream-dim:   #c0a840;
+      --muted:       #806e30;
+      --border:      rgba(200,168,32,0.3);
+    }
+
+    /* ── Print Button (screen only) ──────────────────────────── */
+    .print-btn {
+      position: fixed;
+      top: 16px; right: 16px;
+      background: var(--gold);
+      color: #1c1404;
+      font-family: 'Courier Prime', monospace;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      border: none; padding: 10px 20px;
+      cursor: pointer; z-index: 999;
+      border-radius: 2px;
+    }
+    .print-btn:hover { background: var(--gold-bright); }
+    @media print { .print-btn { display: none; } }
+
+    /* ── Page ────────────────────────────────────────────────── */
+    html, body {
+      width: 100%;
+      background: var(--bg);
+      color: var(--cream);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      line-height: 1.55;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .page {
+      width: 8.5in;
+      min-height: 11in;
+      margin: 0 auto;
+      background: var(--bg);
+      background-image:
+        repeating-linear-gradient(90deg, transparent 0, transparent 3px, rgba(0,0,0,0.04) 3px, rgba(0,0,0,0.04) 4px),
+        repeating-linear-gradient(180deg, transparent 0, transparent 12px, rgba(68,48,16,0.05) 12px, rgba(68,48,16,0.05) 13px);
+      padding: 0.45in 0.5in 0.4in;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    @media print {
+      html, body { width: 8.5in; }
+      .page { margin: 0; padding: 0.4in 0.45in 0.35in; min-height: 0; }
+      @page { size: 8.5in 11in; margin: 0; }
+    }
+
+    /* ── Header ──────────────────────────────────────────────── */
+    .os-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--gold);
+      margin-bottom: 16px;
+    }
+    .os-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 26px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    .os-logo-jazz  { color: var(--gold-bright); }
+    .os-logo-ting  { color: var(--cream); }
+    .os-logo-radio {
+      font-family: 'Courier Prime', monospace;
+      font-size: 9px;
+      letter-spacing: 4px;
+      color: var(--muted);
+      font-weight: 700;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+    .os-header-right {
+      text-align: right;
+    }
+    .os-header-right .tag {
+      font-family: 'Courier Prime', monospace;
+      font-size: 8px;
+      letter-spacing: 3px;
+      color: var(--gold);
+      text-transform: uppercase;
+      display: block;
+    }
+    .os-header-right .year {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: 4px;
+      color: var(--cream);
+      text-transform: uppercase;
+    }
+
+    /* ── Brass rule ──────────────────────────────────────────── */
+    .rule {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), var(--gold-light), var(--gold), transparent);
+      opacity: 0.5;
+      margin: 0;
+    }
+
+    /* ── Hero Strip ──────────────────────────────────────────── */
+    .os-hero {
+      background:
+        linear-gradient(135deg, rgba(28,20,4,0.96) 0%, rgba(28,20,4,0.85) 100%),
+        var(--panel-mid);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--gold);
+      padding: 18px 24px 16px;
+      margin-bottom: 14px;
+      position: relative;
+    }
+    .os-hero-eyebrow {
+      font-family: 'Courier Prime', monospace;
+      font-size: 7.5px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+    .os-hero-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 46px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--cream);
+      line-height: 0.95;
+      margin-bottom: 10px;
+    }
+    .os-hero-sub {
+      font-size: 13px;
+      color: var(--cream-dim);
+      max-width: 5.5in;
+      letter-spacing: 0.3px;
+      line-height: 1.6;
+    }
+
+    /* ── Two-column grid ──────────────────────────────────────── */
+    .os-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .os-grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    /* ── Block card ──────────────────────────────────────────── */
+    .os-block {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 14px 16px;
+      position: relative;
+    }
+    /* corner screw */
+    .os-block::before {
+      content: '';
+      position: absolute;
+      top: 7px; left: 7px;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #4a3818, #0d0a04);
+    }
+    .os-block-label {
+      font-family: 'Courier Prime', monospace;
+      font-size: 7px;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 7px;
+      padding-left: 12px;
+    }
+    .os-block-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 17px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--cream);
+      margin-bottom: 8px;
+    }
+    .os-block p {
+      font-size: 12px;
+      color: var(--cream-dim);
+      line-height: 1.6;
+      letter-spacing: 0.3px;
+    }
+    .os-block p strong {
+      color: var(--cream);
+      font-weight: 700;
+    }
+
+    /* ── Format phases ────────────────────────────────────────── */
+    .phase-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(200,168,32,0.1);
+    }
+    .phase-row:last-child { border-bottom: none; }
+    .phase-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 22px;
+      color: rgba(200,168,32,0.25);
+      line-height: 1;
+      flex-shrink: 0;
+      width: 22px;
+    }
+    .phase-info {}
+    .phase-name {
+      font-family: 'Courier Prime', monospace;
+      font-size: 7px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2px;
+    }
+    .phase-title {
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--cream);
+      margin-bottom: 2px;
+    }
+    .phase-desc {
+      font-size: 11px;
+      color: var(--cream-dim);
+      line-height: 1.5;
+    }
+    .phase-bpm {
+      font-family: 'Courier Prime', monospace;
+      font-size: 8px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* ── Country grid ─────────────────────────────────────────── */
+    .country-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+    .country-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 6px 8px;
+      background: rgba(200,168,32,0.04);
+      border-left: 2px solid var(--border);
+    }
+    .country-iso {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 1px;
+      color: var(--gold-bright);
+      flex-shrink: 0;
+      width: 30px;
+      line-height: 1.2;
+    }
+    .country-sounds {
+      font-size: 10px;
+      color: var(--cream-dim);
+      line-height: 1.4;
+    }
+    .country-name {
+      font-weight: 700;
+      font-size: 11px;
+      color: var(--cream);
+      display: block;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── Production specs ─────────────────────────────────────── */
+    .spec-list {
+      list-style: none;
+    }
+    .spec-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(200,168,32,0.08);
+      font-size: 11px;
+      color: var(--cream-dim);
+      line-height: 1.4;
+    }
+    .spec-list li:last-child { border-bottom: none; }
+    .spec-list li::before {
+      content: '—';
+      color: var(--gold);
+      flex-shrink: 0;
+      font-family: 'Courier Prime', monospace;
+    }
+    .spec-list strong { color: var(--cream); font-weight: 700; }
+
+    /* ── Stats row ────────────────────────────────────────────── */
+    .stats-row {
+      display: flex;
+      gap: 0;
+      margin-bottom: 12px;
+    }
+    .stat-block {
+      flex: 1;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-right: none;
+      padding: 12px 14px;
+      text-align: center;
+    }
+    .stat-block:last-child { border-right: 1px solid var(--border); }
+    .stat-n {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 28px;
+      letter-spacing: 3px;
+      color: var(--gold-bright);
+      line-height: 1;
+      display: block;
+    }
+    .stat-l {
+      font-family: 'Courier Prime', monospace;
+      font-size: 7px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: block;
+      margin-top: 4px;
+    }
+
+    /* ── Genres strip ─────────────────────────────────────────── */
+    .genres-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .genre-tag {
+      font-family: 'Courier Prime', monospace;
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--border);
+      padding: 3px 9px;
+    }
+
+    /* ── ATL Culture House answers ────────────────────────────── */
+    .qa-block {
+      background: var(--panel-mid);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold);
+      padding: 10px 14px;
+      margin-bottom: 8px;
+    }
+    .qa-q {
+      font-family: 'Courier Prime', monospace;
+      font-size: 7.5px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 5px;
+    }
+    .qa-a {
+      font-size: 11.5px;
+      color: var(--cream-dim);
+      line-height: 1.6;
+      letter-spacing: 0.2px;
+    }
+
+    /* ── Footer ──────────────────────────────────────────────── */
+    .os-footer {
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .os-footer-left {
+      font-family: 'Courier Prime', monospace;
+      font-size: 8px;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .os-footer-left strong { color: var(--gold); }
+    .os-footer-cta {
+      text-align: right;
+    }
+    .os-footer-cta a {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--gold), #a88018);
+      color: #1c1404;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 8px 20px;
+      border: 1px solid var(--gold-light);
+    }
+    .os-footer-cta .url {
+      display: block;
+      font-family: 'Courier Prime', monospace;
+      font-size: 7px;
+      letter-spacing: 1px;
+      color: var(--muted);
+      margin-top: 4px;
+      text-align: right;
+    }
+
+    /* ── Section divider label ────────────────────────────────── */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 10px 0 8px;
+    }
+    .section-divider span {
+      font-family: 'Courier Prime', monospace;
+      font-size: 7px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+    .section-divider::before, .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+  </style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">Save as PDF →</button>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="os-header">
+    <div class="os-logo">
+      <span class="os-logo-jazz">Jazz</span><span class="os-logo-ting">Ting</span>
+      <span class="os-logo-radio">Radio</span>
+    </div>
+    <div class="os-header-right">
+      <span class="tag">FIFA World Cup 2026 · Atlanta Host City</span>
+      <span class="year">ATL Culture House · Partnership Proposal</span>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <div class="os-hero">
+    <div class="os-hero-eyebrow">Live Broadcast Concept · Match Day Series · Vinyl-First · Stadium Adjacent</div>
+    <div class="os-hero-title">Where Music<br>Meets the Match.</div>
+    <p class="os-hero-sub">A live cultural broadcast series built around every FIFA World Cup 2026 match day in Atlanta — country-themed DJ sets, cinematic production, and global culture streamed live from a studio overlooking Mercedes-Benz Stadium.</p>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-block"><span class="stat-n">6+</span><span class="stat-l">Years on Air</span></div>
+    <div class="stat-block"><span class="stat-n">ATL</span><span class="stat-l">Host City</span></div>
+    <div class="stat-block"><span class="stat-n">WC26</span><span class="stat-l">Stadium View</span></div>
+    <div class="stat-block"><span class="stat-n">LIVE</span><span class="stat-l">YouTube Broadcast</span></div>
+    <div class="stat-block"><span class="stat-n">8+</span><span class="stat-l">Match Days</span></div>
+  </div>
+
+  <!-- CONCEPT + FORMAT -->
+  <div class="section-divider"><span>The Concept &amp; Format</span></div>
+  <div class="os-grid-2" style="margin-bottom:10px;">
+
+    <div class="os-block">
+      <div class="os-block-label">The Concept</div>
+      <div class="os-block-title">Music + Sport +<br>Global Identity</div>
+      <p>Jazz Ting Radio proposes a <strong>live cultural broadcast series</strong> for every Atlanta World Cup match. Each event is a DJ set curated around the countries playing that day — pulling from traditional music, diaspora sounds, and contemporary club culture, blended into the Jazz Ting signature sound.</p>
+      <p style="margin-top:7px;">This isn't a watch party. It's a <strong>live broadcast + social event</strong> — filmed cinematically, streamed to YouTube, and clipped for social. Atlanta has never had a World Cup before. Jazz Ting Radio is positioned to tell that story through sound.</p>
+      <div class="genres-strip">
+        <span class="genre-tag">Amapiano</span>
+        <span class="genre-tag">Jazz House</span>
+        <span class="genre-tag">Afro-house</span>
+        <span class="genre-tag">Rare Groove</span>
+        <span class="genre-tag">Hip-hop Mashups</span>
+        <span class="genre-tag">Vinyl Soul</span>
+      </div>
+    </div>
+
+    <div class="os-block">
+      <div class="os-block-label">Match Day Format</div>
+      <div class="os-block-title">Three Phases · One Broadcast</div>
+      <div class="phase-row">
+        <div class="phase-num">01</div>
+        <div class="phase-info">
+          <div class="phase-name">Pre-Game</div>
+          <div class="phase-title">Set the Atmosphere</div>
+          <div class="phase-desc">Downtempo jazz, soul, and rare groove from the featured countries. Analog texture, conversation-friendly energy.</div>
+          <div class="phase-bpm">90–110 BPM</div>
+        </div>
+      </div>
+      <div class="phase-row">
+        <div class="phase-num">02</div>
+        <div class="phase-info">
+          <div class="phase-name">Match Time</div>
+          <div class="phase-title">Ride the Energy</div>
+          <div class="phase-desc">Amapiano, Afro-house, and global club rhythms that reflect the match energy. High musicality over aggressive drops.</div>
+          <div class="phase-bpm">115–128 BPM</div>
+        </div>
+      </div>
+      <div class="phase-row">
+        <div class="phase-num">03</div>
+        <div class="phase-info">
+          <div class="phase-name">Post-Game</div>
+          <div class="phase-title">Celebrate the Culture</div>
+          <div class="phase-desc">Cross-cultural mashups that close the loop — Brazilian samba into house, UK jazz into amapiano, Argentine tango flipped into club.</div>
+          <div class="phase-bpm">120–128 BPM · Peak</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CURATION + PRODUCTION -->
+  <div class="section-divider"><span>Curation &amp; Production</span></div>
+  <div class="os-grid-2" style="margin-bottom:10px;">
+
+    <div class="os-block">
+      <div class="os-block-label">Country-Themed Curation</div>
+      <div class="os-block-title">Every Nation Has a Set</div>
+      <div class="country-grid">
+        <div class="country-item">
+          <div class="country-iso">BR</div>
+          <div class="country-sounds"><span class="country-name">Brazil</span>Samba · Bossa Nova · Baile Funk · Afro-Brazilian</div>
+        </div>
+        <div class="country-item">
+          <div class="country-iso">FR</div>
+          <div class="country-sounds"><span class="country-name">France</span>Afro-French rap · French house · West African roots</div>
+        </div>
+        <div class="country-item">
+          <div class="country-iso">NG</div>
+          <div class="country-sounds"><span class="country-name">Nigeria</span>Afrobeats · Highlife · Amapiano · Lagos club</div>
+        </div>
+        <div class="country-item">
+          <div class="country-iso">ENG</div>
+          <div class="country-sounds"><span class="country-name">England</span>UK Jazz · Garage · Broken beat · Grime</div>
+        </div>
+        <div class="country-item">
+          <div class="country-iso">AR</div>
+          <div class="country-sounds"><span class="country-name">Argentina</span>Tango flipped into house · Nu-cumbia · Latin soul</div>
+        </div>
+        <div class="country-item">
+          <div class="country-iso">+32</div>
+          <div class="country-sounds"><span class="country-name">Every Nation</span>Traditional + diaspora + Jazz Ting signature</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="os-block">
+      <div class="os-block-label">Broadcast Production</div>
+      <div class="os-block-title">Broadcast-Ready.<br>Stadium Adjacent.</div>
+      <ul class="spec-list">
+        <li><strong>Filmed</strong> by professional videographer — cinematic framing, vinyl shots, needle drops, crowd reactions</li>
+        <li><strong>Streamed live</strong> to YouTube + clipped for Instagram, TikTok, and YouTube Shorts post-event</li>
+        <li><strong>Audio</strong> clean direct feed from DJ booth + ambient crowd blend — HiFi broadcast quality</li>
+        <li><strong>Studio</strong> overlooks Mercedes-Benz Stadium — floor-to-ceiling windows, analog equipment visible</li>
+        <li><strong>Venue</strong> Mitchell Street corridor or similar Atlanta cultural space, live match screens in background</li>
+        <li><strong>Pilot</strong> for Jazz Ting Café — a future permanent Atlanta cultural venue concept</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- ATL CULTURE HOUSE ANSWERS -->
+  <div class="section-divider"><span>ATL Culture House Application</span></div>
+
+  <div class="os-grid-2" style="margin-bottom:0;">
+    <div style="display:flex;flex-direction:column;gap:7px;">
+      <div class="qa-block">
+        <div class="qa-q">Programming Concept Overview</div>
+        <div class="qa-a">Jazz Ting Radio × World Cup 2026 is a live DJ broadcast series built around every FIFA match day in Atlanta. Each event features a vinyl-first DJ set curated around the countries playing that day — drawing from traditional music, diaspora sounds, and contemporary club culture. Broadcasts are filmed cinematically, streamed live to YouTube, and clipped for social. The format runs pre-game through post-game: downtempo jazz and soul building to Amapiano and Afro-house at match time, closing with cross-cultural mashups. This is not a watch party — it's a live cultural broadcast with the stadium as backdrop.</div>
+      </div>
+      <div class="qa-block">
+        <div class="qa-q">Uniquely Connected to Atlanta Culture</div>
+        <div class="qa-a">Jazz Ting Radio has broadcast live, all-vinyl DJ sets from a studio with direct line-of-sight to Mercedes-Benz Stadium for six years. Our sound reflects Atlanta's DNA — a city built on Black musical innovation, global migration, and cultural collision. We blend Amapiano, Jazz House, Hip-hop, and Rare Groove the same way Atlanta blends trap, gospel, and R&B: without apology. Dell Harris, founder and host, has spent years building a broadcast practice rooted in the Mitchell Street corridor — Atlanta's original cultural spine. This work is not inspired by Atlanta. It lives inside it.</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:7px;">
+      <div class="qa-block">
+        <div class="qa-q">Translating Atlanta Culture to a Global Audience</div>
+        <div class="qa-a">Jazz Ting Radio speaks the language every World Cup visitor already understands: music. Our match-day broadcasts are built around the countries competing — curating Brazilian samba into house, Nigerian Afrobeats into Amapiano, French jazz into club rhythms — and threading Atlanta's sound through every set. Streamed live to YouTube and clipped for social, our content travels globally the moment it airs. International visitors won't just hear Atlanta — they'll hear their own culture reflected through it. That exchange is how Jazz Ting Radio introduces the world to Atlanta: through groove, not geography.</div>
+      </div>
+      <div class="qa-block">
+        <div class="qa-q">Community Impact</div>
+        <div class="qa-a">Jazz Ting Radio serves Atlanta's creative community — DJs, producers, vinyl collectors, and music lovers who rarely see their tastes reflected in major event programming. Participation in ATL Culture House would validate this work as essential to the World Cup narrative, creating a platform for underrepresented sound in a historically mainstream event. It creates paid opportunities for local talent, amplifies Atlanta's independent music scene to a global audience, and builds the foundation for Jazz Ting Café — a permanent cultural venue rooted in the same community we've served for six years.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="os-footer" style="margin-top:12px;">
+    <div class="os-footer-left">
+      <strong>Dell Harris</strong> · Founder &amp; Host · Jazz Ting Radio · Atlanta, GA<br>
+      youtube.com/@jazztingradio &nbsp;·&nbsp; All-vinyl broadcast · 6+ years on air<br>
+      Studio overlooks Mercedes-Benz Stadium · FIFA World Cup 2026 Venue
+    </div>
+    <div class="os-footer-cta">
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfRcRvcwnFWovO3eB3N-dpkJ9QsE4e2TLlTL3iY-E5-s3zFxw/viewform" target="_blank">
+        Submit Partnership Inquiry →
+      </a>
+      <span class="url">jazztingradio.com · © 2026 Jazz Ting Radio</span>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
