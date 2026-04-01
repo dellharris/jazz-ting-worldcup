@@ -192,12 +192,30 @@
     <div class="hero-main">
       <div class="studio-player">
         <div class="studio-video-wrap">
-          <img src="studio.jpg" alt="Jazz Ting Radio — Dell Harris at turntables, Mercedes-Benz Stadium visible through floor-to-ceiling windows" class="studio-img">
-          <div class="video-overlay">
-            <a href="https://www.youtube.com/@Jazztingradio" target="_blank" rel="noopener" class="play-btn" aria-label="Watch Jazz Ting Radio on YouTube">
-              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            </a>
+          <iframe
+            src="https://www.youtube.com/embed/sUy6hqrtd_Q?autoplay=1&mute=1&rel=0&modestbranding=1&loop=1&playlist=sUy6hqrtd_Q"
+            style="position:absolute;inset:0;width:100%;height:100%;border:none;"
+            title="Jazz Ting Radio — They Lied About UK Garage"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          ></iframe>
+          <!-- Hidden SoundCloud player controlled by the play button -->
+          <iframe id="scHeroPlayer"
+            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/soundcloud%253Aplaylists%253A1151487817&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false"
+            style="display:none;" allow="autoplay">
+          </iframe>
+
+          <!-- Glowing play button -->
+          <div class="hero-sc-play-wrap">
+            <button class="hero-sc-btn" id="heroScBtn" onclick="triggerSCPlay()" aria-label="Play Jazz Ting Radio">
+              <span class="hero-sc-ring"></span>
+              <span class="hero-sc-ring hero-sc-ring-2"></span>
+              <svg class="hero-sc-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <div class="hero-sc-label">LISTEN LIVE</div>
           </div>
+
           <div class="studio-live-badge"><span class="live-dot"></span> BROADCAST READY · ATL</div>
           <div class="hero-title-overlay">
             <div class="hero-eyebrow">FIFA World Cup 2026 · Atlanta Host City</div>

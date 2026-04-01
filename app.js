@@ -42,6 +42,27 @@ document.addEventListener('DOMContentLoaded', () => {
   renderEpisodes();
 });
 
+/* ── Hero SoundCloud Play Button ──────────────────────────── */
+let scPlaying = false;
+function triggerSCPlay() {
+  const iframe = document.getElementById('scHeroPlayer');
+  const btn    = document.getElementById('heroScBtn');
+  const icon   = btn.querySelector('.hero-sc-icon');
+  if (!iframe) return;
+
+  if (!scPlaying) {
+    iframe.src = iframe.src.replace('auto_play=false', 'auto_play=true');
+    icon.innerHTML = '<rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/>';
+    btn.classList.add('playing');
+    scPlaying = true;
+  } else {
+    iframe.src = iframe.src.replace('auto_play=true', 'auto_play=false');
+    icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+    btn.classList.remove('playing');
+    scPlaying = false;
+  }
+}
+
 /* ── Power-On Knob ─────────────────────────────────────────── */
 function initPowerOn() {
   const screen   = document.getElementById('powerOn');

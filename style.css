@@ -935,6 +935,88 @@ img { display: block; max-width: 100%; }
 }
 /* FIFA Atlanta brand — show official colors, no filter */
 .fifa-frame { background: #080604; }
+
+/* ── Hero SoundCloud Play Button ──────────────────────────── */
+.hero-sc-play-wrap {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  z-index: 10;
+}
+.hero-sc-btn {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, rgba(232,216,128,0.95), rgba(200,168,32,0.9));
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 0 0 0 rgba(232,216,128,0.6),
+    0 8px 32px rgba(0,0,0,0.6),
+    inset 0 1px 0 rgba(255,255,255,0.4),
+    inset 0 -1px 0 rgba(0,0,0,0.2);
+  transition: transform 0.15s, box-shadow 0.15s;
+  animation: scPulse 2.4s ease-in-out infinite;
+}
+.hero-sc-btn:hover {
+  transform: scale(1.1);
+  box-shadow:
+    0 0 0 8px rgba(232,216,128,0.2),
+    0 12px 40px rgba(0,0,0,0.7),
+    inset 0 1px 0 rgba(255,255,255,0.5);
+  animation: none;
+}
+.hero-sc-btn.playing {
+  background: linear-gradient(145deg, rgba(80,220,120,0.95), rgba(40,180,80,0.9));
+  animation: none;
+}
+@keyframes scPulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(232,216,128,0.5), 0 8px 32px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.4); }
+  50%      { box-shadow: 0 0 0 14px rgba(232,216,128,0.1), 0 8px 32px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.4); }
+}
+.hero-sc-ring {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(232,216,128,0.35);
+  animation: scRing 2.4s ease-out infinite;
+}
+.hero-sc-ring-2 {
+  inset: -18px;
+  border-color: rgba(232,216,128,0.15);
+  animation-delay: 0.8s;
+}
+@keyframes scRing {
+  0%   { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.3); opacity: 0; }
+}
+.hero-sc-icon {
+  width: 26px;
+  height: 26px;
+  fill: #1a1200;
+  margin-left: 4px;
+  position: relative;
+  z-index: 1;
+}
+.hero-sc-label {
+  font-family: 'Courier Prime', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--cream);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+  white-space: nowrap;
+}
+
+
 .fifa-brand-img {
   object-fit: cover !important;
   object-position: center 30% !important;
