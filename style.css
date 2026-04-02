@@ -1239,6 +1239,61 @@ img { display: block; max-width: 100%; }
   letter-spacing: .3px;
 }
 
+/* ── Contact Form ─────────────────────────────────────────── */
+.contact-form {
+  display: flex; flex-direction: column; gap: 20px;
+  max-width: 640px; margin: 0 auto;
+}
+.cf-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+}
+.cf-field {
+  display: flex; flex-direction: column; gap: 7px;
+}
+.cf-field label {
+  font-family: 'Courier Prime', monospace;
+  font-size: 10px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--brass-warm);
+}
+.cf-field input,
+.cf-field select {
+  background: rgba(255,200,80,.04);
+  border: 1px solid rgba(200,150,30,.35);
+  border-radius: 3px;
+  padding: 12px 16px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 15px; font-weight: 500;
+  color: var(--cream);
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+  width: 100%;
+  -webkit-appearance: none; appearance: none;
+}
+.cf-field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c8a820' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+.cf-field select option,
+.cf-field select optgroup {
+  background: #1a1406; color: var(--cream);
+}
+.cf-field input::placeholder { color: rgba(200,150,30,.35); }
+.cf-field input:focus,
+.cf-field select:focus {
+  border-color: var(--brass-warm);
+  box-shadow: 0 0 0 2px rgba(200,168,32,.15);
+}
+.cf-submit {
+  font-size: 12px; padding: 16px 32px; margin-top: 8px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  cursor: pointer; border: none;
+}
+@media (max-width: 600px) {
+  .cf-row { grid-template-columns: 1fr; }
+}
+
 /* ── Buttons ──────────────────────────────────────────────── */
 .btn-gold {
   display: inline-block;

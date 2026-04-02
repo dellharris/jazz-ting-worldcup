@@ -216,7 +216,6 @@
             <div class="hero-eyebrow">FIFA World Cup 2026 · Atlanta Host City</div>
             <h1 class="hero-main-title">Where Music<br>Meets the Match.</h1>
             <p class="hero-sub">A live DJ broadcast series built around every Atlanta World Cup match day — country-themed sets, cinematic production, global culture.</p>
-            <a href="#pitch" class="btn-gold">Submit Partnership Inquiry →</a>
           </div>
         </div>
         <div class="player-bar">
@@ -248,7 +247,7 @@
             <h2 class="wc-headline">WORLD CUP<br>2026 BROADCAST</h2>
             <div class="wc-sub">from <span class="wc-atl">ATL</span> — Vinyl · Culture · Global Sound</div>
           </div>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSfRcRvcwnFWovO3eB3N-dpkJ9QsE4e2TLlTL3iY-E5-s3zFxw/viewform" target="_blank" rel="noopener" class="wc-cta-btn">Submit Partnership →</a>
+          <a href="#pitch" class="wc-cta-btn">Contact Us →</a>
         </div>
       </div>
     </div>
@@ -609,40 +608,61 @@
       <h3 class="wc-full-sub">Jazz Ting Radio is already here.</h3>
       <p class="wc-full-body">In summer 2026, the world comes to Atlanta. Jazz Ting Radio is broadcast-ready, stadium-adjacent, and built to be the cultural soundtrack of Atlanta's World Cup moment — a live destination for music, sport, and global identity.</p>
       <p class="wc-full-body" style="font-style:italic;opacity:.7;font-size:14px;">This is a pilot for Jazz Ting Café — a future permanent venue concept rooted in the same cultural vision.</p>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfRcRvcwnFWovO3eB3N-dpkJ9QsE4e2TLlTL3iY-E5-s3zFxw/viewform" target="_blank" rel="noopener" class="btn-gold btn-xl"><svg class="icon" aria-hidden="true"><use href="#ic-form"/></svg> Submit Your Partnership Proposal</a>
+      <a href="#pitch" class="btn-gold btn-xl"><svg class="icon" aria-hidden="true"><use href="#ic-form"/></svg> Get In Touch</a>
     </div>
   </div>
 </section>
 
-<!-- ── PITCH / FORM CTA ────────────────────────────────────── -->
+<!-- ── CONTACT FORM ────────────────────────────────────────── -->
 <section id="pitch" class="section-dark">
   <div class="section-inner section-narrow">
-    <div class="eyebrow" style="text-align:center">Partnership Inquiry</div>
+    <div class="eyebrow" style="text-align:center">Get In Touch</div>
     <h2 class="section-title" style="text-align:center">Let's Build This Together.</h2>
     <div class="gold-rule" style="margin:16px auto 28px"></div>
     <p class="pitch-center-body">Jazz Ting Radio is seeking World Cup 2026 partners — sponsors, media companies, venue operators, cultural organizations, and brands looking to connect with Atlanta's global audience through music, sport, and live production.</p>
 
-    <div class="form-cta-block">
-      <div class="form-cta-card">
-        <div class="form-cta-icon"><svg class="icon" aria-hidden="true"><use href="#ic-form"/></svg></div>
-        <h3>Official Partnership Form</h3>
-        <p>Submit your inquiry through the official World Cup 2026 Atlanta partnership portal. We'll respond within 48 hours.</p>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfRcRvcwnFWovO3eB3N-dpkJ9QsE4e2TLlTL3iY-E5-s3zFxw/viewform" target="_blank" rel="noopener" class="btn-gold btn-block">Open Partnership Form →</a>
-      </div>
-      <div class="form-details">
-        <h4>What to include in your submission:</h4>
-        <ul class="form-checklist">
-          <li>✦ Your organization and role</li>
-          <li>✦ Partnership type — media, sponsorship, venue, brand activation</li>
-          <li>✦ World Cup 2026 ATL match dates you're targeting</li>
-          <li>✦ What you need from a cultural broadcast partner</li>
-          <li>✦ Budget range or in-kind offer</li>
-        </ul>
-        <div class="contact-note">
-          YouTube: <a href="https://www.youtube.com/@jazztingradio" target="_blank">@jazztingradio</a><br>
-          Founded by: <strong style="color:var(--cream)">Dell Harris</strong> · Atlanta, GA
+    <!-- ⚙️  Action: sign up at formspree.io → create form → paste your endpoint below -->
+    <form class="contact-form" action="https://formspree.io/f/REPLACE_WITH_YOUR_ID" method="POST">
+      <div class="cf-row">
+        <div class="cf-field">
+          <label for="cf-name">Name</label>
+          <input id="cf-name" type="text" name="name" placeholder="Your full name" required>
+        </div>
+        <div class="cf-field">
+          <label for="cf-email">Email</label>
+          <input id="cf-email" type="email" name="email" placeholder="your@email.com" required>
         </div>
       </div>
+      <div class="cf-field">
+        <label for="cf-product">Product / Partnership Type</label>
+        <input id="cf-product" type="text" name="product" placeholder="e.g. Sponsorship, Venue, Media, Brand Activation…" required>
+      </div>
+      <div class="cf-field">
+        <label for="cf-day">Which match day do you want to activate?</label>
+        <select id="cf-day" name="activation_day" required>
+          <option value="" disabled selected>Select a match day</option>
+          <optgroup label="Group Stage — Atlanta">
+            <option>June 14, 2026</option>
+            <option>June 18, 2026</option>
+            <option>June 22, 2026</option>
+            <option>June 26, 2026</option>
+          </optgroup>
+          <optgroup label="Knockout Rounds">
+            <option>Round of 32 (June 29 – July 1)</option>
+            <option>Round of 16 (July 4 – July 6)</option>
+          </optgroup>
+          <option>Multiple / All Match Days</option>
+          <option>Not Sure Yet</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-gold btn-block cf-submit">
+        <svg class="icon" aria-hidden="true"><use href="#ic-form"/></svg> Send Inquiry
+      </button>
+    </form>
+
+    <div class="contact-note" style="margin-top:32px;text-align:center">
+      YouTube: <a href="https://www.youtube.com/@jazztingradio" target="_blank">@jazztingradio</a><br>
+      Founded by: <strong style="color:var(--cream)">Dell Harris</strong> · Atlanta, GA
     </div>
   </div>
 </section>
@@ -659,7 +679,7 @@
     <div class="footer-links">
       <a href="https://www.youtube.com/@jazztingradio" target="_blank">YouTube</a>
       <a href="#concept">The Concept</a>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfRcRvcwnFWovO3eB3N-dpkJ9QsE4e2TLlTL3iY-E5-s3zFxw/viewform" target="_blank">Partner With Us</a>
+      <a href="#pitch">Contact Us</a>
     </div>
     <p class="footer-copy">&copy; 2026 Jazz Ting Radio · Dell Harris · Atlanta, GA</p>
   </div>
