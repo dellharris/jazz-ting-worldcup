@@ -274,10 +274,17 @@ function playEpisode(videoId, title) {
   const idx = EPISODES.findIndex(e => e.id === videoId);
   if (idx !== -1) currentEpIndex = idx;
 
-  // Swap only the src on the existing iframe — preserves all overlays and styling
+  // Use YouTube API loadVideoById — keeps the same trusted iframe (fixes iOS autoplay)
+  // then unmute so audio plays
   const iframe = document.getElementById('ytHeroPlayer');
   if (iframe) {
-    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&enablejsapi=1`;
+    iframe.contentWindow.postMessage(
+      JSON.stringify({ event: 'command', func: 'loadVideoById', args: [videoId] }), '*'
+    );
+    setTimeout(() => {
+      _ytCmd('unMute');
+      _ytCmd('setVolume', [90]);
+    }, 800);
   }
   document.querySelector('.pbar-time').textContent = 'Playing: ' + title.slice(0, 30) + '…';
 }
