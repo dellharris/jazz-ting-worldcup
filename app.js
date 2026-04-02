@@ -274,16 +274,11 @@ function playEpisode(videoId, title) {
   const idx = EPISODES.findIndex(e => e.id === videoId);
   if (idx !== -1) currentEpIndex = idx;
 
-  // Replace studio image with embedded player
-  const wrap = document.querySelector('.studio-video-wrap');
-  if (!wrap) return;
-  wrap.innerHTML = `
-    <iframe
-      src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0"
-      style="position:absolute;inset:0;width:100%;height:100%;border:none;"
-      allowfullscreen
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    ></iframe>`;
+  // Swap only the src on the existing iframe — preserves all overlays and styling
+  const iframe = document.getElementById('ytHeroPlayer');
+  if (iframe) {
+    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&enablejsapi=1`;
+  }
   document.querySelector('.pbar-time').textContent = 'Playing: ' + title.slice(0, 30) + '…';
 }
 
