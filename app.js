@@ -275,16 +275,16 @@ function playEpisode(videoId, title) {
   if (idx !== -1) currentEpIndex = idx;
 
   // Use YouTube API loadVideoById — keeps the same trusted iframe (fixes iOS autoplay)
-  // then unmute so audio plays
+  // Call unMute/setVolume synchronously so iOS treats it as part of the user gesture
   const iframe = document.getElementById('ytHeroPlayer');
   if (iframe) {
     iframe.contentWindow.postMessage(
       JSON.stringify({ event: 'command', func: 'loadVideoById', args: [videoId] }), '*'
     );
-    setTimeout(() => {
-      _ytCmd('unMute');
-      _ytCmd('setVolume', [90]);
-    }, 800);
+    _ytCmd('unMute');
+    _ytCmd('setVolume', [90]);
+    ytMuted = false;
+    _updatePlayBtn(true);
   }
   document.querySelector('.pbar-time').textContent = 'Playing: ' + title.slice(0, 30) + '…';
 }

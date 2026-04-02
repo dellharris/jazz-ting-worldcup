@@ -582,6 +582,9 @@ img { display: block; max-width: 100%; }
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
   isolation: isolate;
+  /* iOS Safari: force overflow:hidden to clip iframe edges */
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  border-radius: 1px;
 }
 .studio-img {
   width: 100%; height: 100%;
@@ -2092,4 +2095,11 @@ img { display: block; max-width: 100%; }
     right: 16px;
   }
   .hero-sc-btn { width: 56px; height: 56px; }
+  /* Pin video to 16:9 on mobile — prevents jump/resize when switching episodes */
+  .studio-video-wrap {
+    flex: none;
+    min-height: 0;
+    height: 56.25vw;
+    max-height: 340px;
+  }
 }
