@@ -40,64 +40,41 @@ document.addEventListener('DOMContentLoaded', () => {
   initPlayer();
   initEpisodeTabs();
   renderEpisodes();
-  initSCWidget();
   initRadioShuffle();
 });
 
-/* ── Hero SoundCloud Play Button (Widget API — works on mobile) ── */
-let scWidget  = null;
-let scReady   = false;
-let scPlaying = false;
+/* ── Hero Play Button — unmute/mute YouTube at 70% volume ──── */
+let ytMuted = true;   // video starts muted (mute=1 in embed URL)
 
-function initSCWidget() {
-  const iframe = document.getElementById('scHeroPlayer');
-  if (!iframe || typeof SC === 'undefined') return;
-
-  scWidget = SC.Widget(iframe);
-
-  scWidget.bind(SC.Widget.Events.READY, () => {
-    scReady = true;
-  });
-  scWidget.bind(SC.Widget.Events.PLAY, () => {
-    scPlaying = true;
-    _updatePlayBtn(true);
-  });
-  scWidget.bind(SC.Widget.Events.PAUSE, () => {
-    scPlaying = false;
-    _updatePlayBtn(false);
-  });
-  scWidget.bind(SC.Widget.Events.FINISH, () => {
-    scPlaying = false;
-    _updatePlayBtn(false);
-  });
+function _ytCmd(func, args) {
+  const iframe = document.getElementById('ytHeroPlayer');
+  if (!iframe) return;
+  iframe.contentWindow.postMessage(
+    JSON.stringify({ event: 'command', func, args: args || [] }),
+    '*'
+  );
 }
 
 function _updatePlayBtn(playing) {
   const pauseIcon = '<rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/>';
   const playIcon  = '<path d="M8 5v14l11-7z"/>';
-
-  // Overlay hero button (desktop)
   const btn = document.getElementById('heroScBtn');
   if (btn) {
     btn.querySelector('.hero-sc-icon').innerHTML = playing ? pauseIcon : playIcon;
     btn.classList.toggle('playing', playing);
   }
-  // Player-bar button (mobile)
-  const pbarBtn = document.getElementById('pbarScBtn');
-  if (pbarBtn) {
-    pbarBtn.querySelector('.pbar-sc-icon').innerHTML = playing ? pauseIcon : playIcon;
-    pbarBtn.querySelector('span').textContent = playing ? 'PAUSE' : 'LISTEN LIVE';
-    pbarBtn.classList.toggle('playing', playing);
-  }
 }
 
 function triggerSCPlay() {
-  if (scWidget && scReady) {
-    if (!scPlaying) {
-      scWidget.play();
-    } else {
-      scWidget.pause();
-    }
+  if (ytMuted) {
+    _ytCmd('unMute');
+    _ytCmd('setVolume', [70]);
+    ytMuted = false;
+    _updatePlayBtn(true);
+  } else {
+    _ytCmd('mute');
+    ytMuted = true;
+    _updatePlayBtn(false);
   }
 }
 
