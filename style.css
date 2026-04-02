@@ -593,7 +593,7 @@ img { display: block; max-width: 100%; }
     rgba(10,6,2,0.82) 55%,
     rgba(10,6,2,0.97) 100%
   );
-  padding: 80px 36px 32px; z-index: 2;
+  padding: 50px 28px 24px; z-index: 2;
 }
 .hero-eyebrow {
   font-family: 'Courier Prime', monospace;
@@ -606,7 +606,7 @@ img { display: block; max-width: 100%; }
 .hero-main-title {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 800;
-  font-size: clamp(44px, 6vw, 80px);
+  font-size: clamp(32px, 4.5vw, 58px);
   letter-spacing: 4px;
   text-transform: uppercase;
   color: var(--cream);
@@ -620,10 +620,10 @@ img { display: block; max-width: 100%; }
 .hero-sub {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 13px;
   letter-spacing: 1px;
   color: var(--cream-faint);
-  max-width: 520px; margin-bottom: 24px; line-height: 1.75;
+  max-width: 520px; margin-bottom: 18px; line-height: 1.6;
   text-shadow: 0 1px 6px rgba(0,0,0,0.95), 0 2px 12px rgba(0,0,0,0.8);
 }
 
@@ -1290,6 +1290,15 @@ img { display: block; max-width: 100%; }
   display: flex; align-items: center; justify-content: center; gap: 8px;
   cursor: pointer; border: none;
 }
+.cf-submit:disabled { opacity: .6; cursor: default; }
+.cf-msg {
+  font-family: 'Courier Prime', monospace;
+  font-size: 12px; letter-spacing: .5px;
+  text-align: center; padding: 12px; border-radius: 3px;
+  display: none;
+}
+.cf-msg-ok  { display: block; color: var(--pilot-green); background: rgba(0,232,120,.08); border: 1px solid rgba(0,232,120,.25); }
+.cf-msg-err { display: block; color: #e06060; background: rgba(220,80,80,.08); border: 1px solid rgba(220,80,80,.25); }
 @media (max-width: 600px) {
   .cf-row { grid-template-columns: 1fr; }
 }
@@ -2016,8 +2025,8 @@ img { display: block; max-width: 100%; }
   .wc-ball { font-size: 48px; }
   .wc-headline { font-size: 32px; }
   .wc-cta-btn { width: 100%; text-align: center; }
-  .hero-title-overlay { padding: 40px 20px 24px; }
-  .hero-main-title { font-size: 36px; }
+  .hero-title-overlay { padding: 30px 16px 20px; }
+  .hero-main-title { font-size: 28px; }
   .header-tubes { display: none; }
   /* Round button stays visible — repositioned to top-right, above the text overlay */
   .hero-sc-play-wrap {
