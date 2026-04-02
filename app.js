@@ -3,6 +3,41 @@
    YouTube episodes + player interactions
 ================================================================ */
 
+// Always land at the top of the page on load
+if (history.scrollRestoration) history.scrollRestoration = 'manual';
+window.scrollTo(0, 0);
+
+/* ── Countdown to First ATL Match: June 14, 2026 · 3 PM ET ── */
+(function () {
+  // June 14, 2026 3:00 PM Eastern Time (UTC-4 in summer)
+  const TARGET = new Date('2026-06-14T19:00:00Z');
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function tick() {
+    const diff = TARGET - Date.now();
+    if (diff <= 0) {
+      document.getElementById('cdDays').textContent  = '00';
+      document.getElementById('cdHours').textContent = '00';
+      document.getElementById('cdMins').textContent  = '00';
+      document.getElementById('cdSecs').textContent  = '00';
+      document.querySelector('.cd-label') && (document.querySelector('.cd-label').textContent = '⚽ MATCH DAY');
+      return;
+    }
+    const days  = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const mins  = Math.floor((diff % 3600000)  / 60000);
+    const secs  = Math.floor((diff % 60000)    / 1000);
+    document.getElementById('cdDays').textContent  = pad(days);
+    document.getElementById('cdHours').textContent = pad(hours);
+    document.getElementById('cdMins').textContent  = pad(mins);
+    document.getElementById('cdSecs').textContent  = pad(secs);
+  }
+
+  tick();
+  setInterval(tick, 1000);
+})();
+
 /* ──────────────────────────────────────────────────────────────
    NO API KEY NEEDED. To add your real videos:
 
@@ -314,6 +349,55 @@ function initEpisodeTabs() {
     });
   });
 }
+
+/* ── Mailchimp Contact Form ───────────────────────────────── */
+(function () {
+  const form = document.getElementById('contactForm');
+  if (!form) return;
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const btn     = document.getElementById('cfSubmit');
+    const btnText = document.getElementById('cfBtnText');
+    const msg     = document.getElementById('cfMsg');
+
+    // Basic validation
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+
+    // Build JSONP URL (Mailchimp requires /post-json endpoint)
+    const action = form.action.replace('/post?', '/post-json?') + '&c=_mcCb';
+    const params = new URLSearchParams(new FormData(form)).toString();
+
+    btnText.textContent = 'Sending…';
+    btn.disabled = true;
+    msg.className = 'cf-msg';
+    msg.textContent = '';
+
+    // JSONP callback
+    window._mcCb = function (res) {
+      btn.disabled = false;
+      btnText.textContent = 'Send Inquiry';
+      if (res.result === 'success') {
+        msg.className = 'cf-msg cf-msg-ok';
+        msg.textContent = '✦ Got it — we\'ll be in touch within 48 hours.';
+        form.reset();
+      } else {
+        msg.className = 'cf-msg cf-msg-err';
+        // Strip Mailchimp's HTML from error string
+        msg.textContent = res.msg.replace(/<[^>]+>/g, '') || 'Something went wrong. Please try again.';
+      }
+      // Clean up script tag
+      const old = document.getElementById('_mcScript');
+      if (old) old.remove();
+    };
+
+    const script = document.createElement('script');
+    script.id  = '_mcScript';
+    script.src = action + '&' + params;
+    document.body.appendChild(script);
+  });
+})();
 
 /* ── Utils ────────────────────────────────────────────────── */
 function escHtml(s) {
