@@ -52,7 +52,7 @@
 ::-webkit-scrollbar-thumb { background: var(--brass); border-radius: 3px; }
 
 /* ── Base ─────────────────────────────────────────────────── */
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
 
 body {
   background-color: var(--wood);
@@ -70,6 +70,8 @@ body {
   line-height: 1.65;
   min-height: 100vh;
   letter-spacing: 0.3px;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 a { color: var(--brass-warm); text-decoration: none; transition: color 0.2s; }
@@ -579,6 +581,7 @@ img { display: block; max-width: 100%; }
 .studio-video-wrap {
   position: relative; flex: 1;
   background: #000; min-height: 360px; overflow: hidden;
+  max-width: 100%;
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
   isolation: isolate;
