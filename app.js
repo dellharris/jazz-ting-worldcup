@@ -76,7 +76,31 @@ document.addEventListener('DOMContentLoaded', () => {
   initEpisodeTabs();
   renderEpisodes();
   initRadioShuffle();
+  initEpisodesDrawer();
 });
+
+/* ── Mobile Episodes Drawer ───────────────────────────────── */
+function initEpisodesDrawer() {
+  const panel    = document.getElementById('episodes');
+  const backdrop = document.getElementById('epBackdrop');
+  const closeBtn = panel ? panel.querySelector('.ep-close') : null;
+  const rightBurger = document.querySelector('.hamburger-right');
+
+  function openDrawer() {
+    panel.classList.add('ep-open');
+    backdrop.classList.add('ep-open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawer() {
+    panel.classList.remove('ep-open');
+    backdrop.classList.remove('ep-open');
+    document.body.style.overflow = '';
+  }
+
+  if (rightBurger) rightBurger.addEventListener('click', openDrawer);
+  if (closeBtn)    closeBtn.addEventListener('click', closeDrawer);
+  if (backdrop)    backdrop.addEventListener('click', closeDrawer);
+}
 
 /* ── Hero Play Button — unmute/mute YouTube at 70% volume ──── */
 let ytMuted = true;   // video starts muted (mute=1 in embed URL)
@@ -270,6 +294,11 @@ function renderEpisodes() {
 }
 
 function playEpisode(videoId, title) {
+  // Close the mobile drawer if open
+  document.getElementById('episodes')?.classList.remove('ep-open');
+  document.getElementById('epBackdrop')?.classList.remove('ep-open');
+  document.body.style.overflow = '';
+
   // Replace studio image with embedded player
   const wrap = document.querySelector('.studio-video-wrap');
   if (!wrap) return;
