@@ -2062,25 +2062,7 @@ img { display: block; max-width: 100%; }
 
 @media (max-width: 1100px) {
   .hero-layout { grid-template-columns: 1fr; }
-  .episodes-panel {
-    display: flex;               /* override the display:none */
-    position: fixed;
-    top: 0; right: -340px; bottom: 0;
-    width: 320px;
-    z-index: 900;
-    transition: right 0.3s cubic-bezier(.4,0,.2,1);
-    box-shadow: -4px 0 24px rgba(0,0,0,.7);
-  }
-  .episodes-panel.ep-open { right: 0; }
-  /* Backdrop */
-  .ep-backdrop {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,.6);
-    z-index: 899;
-    backdrop-filter: blur(2px);
-  }
-  .ep-backdrop.ep-open { display: block; }
+  .episodes-panel { display: none; }
   .curation-grid { grid-template-columns: repeat(2,1fr); }
   .concept-grid { grid-template-columns: 1fr; gap: 40px; }
 }
