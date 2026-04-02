@@ -582,9 +582,20 @@ img { display: block; max-width: 100%; }
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
   isolation: isolate;
-  /* iOS Safari: force overflow:hidden to clip iframe edges */
-  -webkit-mask-image: -webkit-radial-gradient(white, black);
-  border-radius: 1px;
+  /* iOS Safari: clip-path is the only reliable way to clip iframe content */
+  -webkit-clip-path: inset(0);
+  clip-path: inset(0);
+  will-change: transform;
+}
+/* Second containment layer — belt-and-suspenders for iOS iframe overflow */
+.ios-clip-inner {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-clip-path: inset(0);
+  clip-path: inset(0);
 }
 .studio-img {
   width: 100%; height: 100%;
