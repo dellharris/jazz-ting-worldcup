@@ -203,7 +203,7 @@
           <!-- Hidden SoundCloud player controlled by the play button -->
           <iframe id="scHeroPlayer"
             src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/soundcloud%253Aplaylists%253A1151487817&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false"
-            style="display:none;" allow="autoplay">
+            style="position:absolute;width:0;height:0;border:none;pointer-events:none;" allow="autoplay">
           </iframe>
 
           <!-- Glowing play button -->
@@ -670,6 +670,7 @@
   </div>
 </footer>
 
+<script src="https://w.soundcloud.com/player/api.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

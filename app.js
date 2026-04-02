@@ -40,27 +40,75 @@ document.addEventListener('DOMContentLoaded', () => {
   initPlayer();
   initEpisodeTabs();
   renderEpisodes();
+  initSCWidget();
+  initRadioShuffle();
 });
 
-/* ── Hero SoundCloud Play Button ──────────────────────────── */
+/* ── Hero SoundCloud Play Button (Widget API — works on mobile) ── */
+let scWidget  = null;
+let scReady   = false;
 let scPlaying = false;
-function triggerSCPlay() {
-  const iframe = document.getElementById('scHeroPlayer');
-  const btn    = document.getElementById('heroScBtn');
-  const icon   = btn.querySelector('.hero-sc-icon');
-  if (!iframe) return;
 
-  if (!scPlaying) {
-    iframe.src = iframe.src.replace('auto_play=false', 'auto_play=true');
+function initSCWidget() {
+  const iframe = document.getElementById('scHeroPlayer');
+  if (!iframe || typeof SC === 'undefined') return;
+
+  scWidget = SC.Widget(iframe);
+
+  scWidget.bind(SC.Widget.Events.READY, () => {
+    scReady = true;
+  });
+  scWidget.bind(SC.Widget.Events.PLAY, () => {
+    scPlaying = true;
+    _updatePlayBtn(true);
+  });
+  scWidget.bind(SC.Widget.Events.PAUSE, () => {
+    scPlaying = false;
+    _updatePlayBtn(false);
+  });
+  scWidget.bind(SC.Widget.Events.FINISH, () => {
+    scPlaying = false;
+    _updatePlayBtn(false);
+  });
+}
+
+function _updatePlayBtn(playing) {
+  const btn = document.getElementById('heroScBtn');
+  if (!btn) return;
+  const icon = btn.querySelector('.hero-sc-icon');
+  if (playing) {
     icon.innerHTML = '<rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/>';
     btn.classList.add('playing');
-    scPlaying = true;
   } else {
-    iframe.src = iframe.src.replace('auto_play=true', 'auto_play=false');
     icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
     btn.classList.remove('playing');
-    scPlaying = false;
   }
+}
+
+function triggerSCPlay() {
+  if (scWidget && scReady) {
+    if (!scPlaying) {
+      scWidget.play();
+    } else {
+      scWidget.pause();
+    }
+  }
+}
+
+/* ── Radio Player: start on a random track ─────────────────── */
+function initRadioShuffle() {
+  const iframe = document.querySelector('.radio-display-inner iframe');
+  if (!iframe || typeof SC === 'undefined') return;
+
+  const radioWidget = SC.Widget(iframe);
+  radioWidget.bind(SC.Widget.Events.READY, () => {
+    radioWidget.getSounds(sounds => {
+      if (sounds && sounds.length > 1) {
+        const randomIndex = Math.floor(Math.random() * sounds.length);
+        radioWidget.skip(randomIndex);
+      }
+    });
+  });
 }
 
 /* ── Power-On Knob ─────────────────────────────────────────── */

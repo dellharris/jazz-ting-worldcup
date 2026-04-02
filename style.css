@@ -1965,4 +1965,10 @@ img { display: block; max-width: 100%; }
   .hero-title-overlay { padding: 40px 20px 24px; }
   .hero-main-title { font-size: 36px; }
   .header-tubes { display: none; }
+  /* Move play button to top-right so it doesn't overlap text overlay */
+  .hero-sc-play-wrap {
+    bottom: auto;
+    top: 56px;
+    right: 16px;
+  }
 }
