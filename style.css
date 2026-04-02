@@ -582,10 +582,6 @@ img { display: block; max-width: 100%; }
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
   isolation: isolate;
-  /* iOS Safari: clip-path is the only reliable way to clip iframe content */
-  -webkit-clip-path: inset(0);
-  clip-path: inset(0);
-  will-change: transform;
 }
 /* Second containment layer — belt-and-suspenders for iOS iframe overflow */
 .ios-clip-inner {
@@ -594,8 +590,17 @@ img { display: block; max-width: 100%; }
   overflow: hidden;
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
-  -webkit-clip-path: inset(0);
-  clip-path: inset(0);
+}
+/* Prevent YouTube's JS from overriding iframe dimensions on skip/reinit */
+#ytHeroPlayer {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  border: none !important;
 }
 .studio-img {
   width: 100%; height: 100%;
@@ -2106,11 +2111,21 @@ img { display: block; max-width: 100%; }
     right: 16px;
   }
   .hero-sc-btn { width: 56px; height: 56px; }
-  /* Pin video to 16:9 on mobile — prevents jump/resize when switching episodes */
+  /* iOS Safari: clip-path clips iframe content; lock iframe size so YT JS can't resize it */
   .studio-video-wrap {
-    flex: none;
-    min-height: 0;
-    height: 56.25vw;
-    max-height: 340px;
+    -webkit-clip-path: inset(0);
+    clip-path: inset(0);
+    will-change: transform;
+  }
+  .ios-clip-inner {
+    -webkit-clip-path: inset(0);
+    clip-path: inset(0);
+  }
+  #ytHeroPlayer {
+    position: absolute !important;
+    top: 0 !important; left: 0 !important;
+    width: 100% !important; height: 100% !important;
+    max-width: 100% !important; max-height: 100% !important;
+    border: none !important;
   }
 }
