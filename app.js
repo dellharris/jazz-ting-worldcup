@@ -73,15 +73,21 @@ function initSCWidget() {
 }
 
 function _updatePlayBtn(playing) {
+  const pauseIcon = '<rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/>';
+  const playIcon  = '<path d="M8 5v14l11-7z"/>';
+
+  // Overlay hero button (desktop)
   const btn = document.getElementById('heroScBtn');
-  if (!btn) return;
-  const icon = btn.querySelector('.hero-sc-icon');
-  if (playing) {
-    icon.innerHTML = '<rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/>';
-    btn.classList.add('playing');
-  } else {
-    icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
-    btn.classList.remove('playing');
+  if (btn) {
+    btn.querySelector('.hero-sc-icon').innerHTML = playing ? pauseIcon : playIcon;
+    btn.classList.toggle('playing', playing);
+  }
+  // Player-bar button (mobile)
+  const pbarBtn = document.getElementById('pbarScBtn');
+  if (pbarBtn) {
+    pbarBtn.querySelector('.pbar-sc-icon').innerHTML = playing ? pauseIcon : playIcon;
+    pbarBtn.querySelector('span').textContent = playing ? 'PAUSE' : 'LISTEN LIVE';
+    pbarBtn.classList.toggle('playing', playing);
   }
 }
 

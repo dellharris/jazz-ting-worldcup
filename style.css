@@ -936,7 +936,11 @@ img { display: block; max-width: 100%; }
 /* FIFA Atlanta brand — show official colors, no filter */
 .fifa-frame { background: #080604; }
 
-/* ── Hero SoundCloud Play Button ──────────────────────────── */
+/* Mobile LISTEN LIVE button in player-bar (hidden on desktop) */
+.pbar-sc-play-btn {
+  display: none;
+}
+
 .hero-sc-play-wrap {
   position: absolute;
   bottom: 40px;
@@ -1965,10 +1969,30 @@ img { display: block; max-width: 100%; }
   .hero-title-overlay { padding: 40px 20px 24px; }
   .hero-main-title { font-size: 36px; }
   .header-tubes { display: none; }
-  /* Move play button to top-right so it doesn't overlap text overlay */
-  .hero-sc-play-wrap {
-    bottom: auto;
-    top: 56px;
-    right: 16px;
+  /* Hide floating play button on mobile — moved to player bar instead */
+  .hero-sc-play-wrap { display: none; }
+  /* Show the player-bar LISTEN LIVE button on mobile */
+  .pbar-sc-play-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, rgba(40,190,85,0.95), rgba(20,150,60,0.9));
+    color: #fff;
+    border: 1px solid rgba(0,210,80,0.45);
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-left: auto;
   }
+  .pbar-sc-play-btn.playing {
+    background: linear-gradient(135deg, rgba(200,168,32,0.95), rgba(160,130,20,0.9));
+    border-color: rgba(200,168,32,0.5);
+    color: #1a1406;
+  }
+  .pbar-sc-icon { width: 14px; height: 14px; fill: currentColor; flex-shrink: 0; }
 }

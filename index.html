@@ -202,7 +202,7 @@
           ></iframe>
           <!-- Hidden SoundCloud player controlled by the play button -->
           <iframe id="scHeroPlayer"
-            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/soundcloud%253Aplaylists%253A1151487817&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false"
+            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/soundcloud%253Aplaylists%253A1151487817&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&enable_api=1"
             style="position:absolute;width:0;height:0;border:none;pointer-events:none;" allow="autoplay">
           </iframe>
 
@@ -237,6 +237,11 @@
           <div class="player-bar-right">
             <button class="pbar-btn" aria-label="Fullscreen"><svg class="icon" aria-hidden="true"><use href="#ic-fullscreen"/></svg></button>
           </div>
+          <!-- Mobile-only LISTEN LIVE button in the player bar -->
+          <button class="pbar-sc-play-btn" id="pbarScBtn" onclick="triggerSCPlay()" aria-label="Play on SoundCloud">
+            <svg viewBox="0 0 24 24" class="pbar-sc-icon"><path d="M8 5v14l11-7z"/></svg>
+            <span>LISTEN LIVE</span>
+          </button>
         </div>
       </div>
 
