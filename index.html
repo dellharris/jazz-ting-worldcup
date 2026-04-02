@@ -621,25 +621,40 @@
     <div class="gold-rule" style="margin:16px auto 28px"></div>
     <p class="pitch-center-body">Jazz Ting Radio is seeking World Cup 2026 partners — sponsors, media companies, venue operators, cultural organizations, and brands looking to connect with Atlanta's global audience through music, sport, and live production.</p>
 
-    <!-- ⚙️  Action: sign up at formspree.io → create form → paste your endpoint below -->
-    <form class="contact-form" action="https://formspree.io/f/REPLACE_WITH_YOUR_ID" method="POST">
+    <!--
+      Mailchimp setup:
+      1. Audience → Signup forms → Embedded forms → copy the action URL
+      2. Replace YOUR_MAILCHIMP_URL below (keep everything after the ?)
+      3. In Mailchimp: Audience → Settings → Audience fields → add:
+           MMERGE3  label "Product"        (Text)
+           MMERGE4  label "Activation Day" (Text)
+    -->
+    <form id="contactForm" class="contact-form"
+      action="https://dellharris.us6.list-manage.com/subscribe/post?u=995804b0087c54bfa89b72928&amp;id=6add36c7e8&amp;f_id=000ad3e5f0"
+      method="POST" novalidate>
+
+      <!-- Mailchimp anti-bot honeypot — do not remove -->
+      <div style="position:absolute;left:-5000px" aria-hidden="true">
+        <input type="text" name="b_995804b0087c54bfa89b72928_6add36c7e8" tabindex="-1" value="">
+      </div>
+
       <div class="cf-row">
         <div class="cf-field">
           <label for="cf-name">Name</label>
-          <input id="cf-name" type="text" name="name" placeholder="Your full name" required>
+          <input id="cf-name" type="text" name="FNAME" placeholder="Your name" required>
         </div>
         <div class="cf-field">
           <label for="cf-email">Email</label>
-          <input id="cf-email" type="email" name="email" placeholder="your@email.com" required>
+          <input id="cf-email" type="email" name="EMAIL" placeholder="your@email.com" required>
         </div>
       </div>
       <div class="cf-field">
         <label for="cf-product">Product / Partnership Type</label>
-        <input id="cf-product" type="text" name="product" placeholder="e.g. Sponsorship, Venue, Media, Brand Activation…" required>
+        <input id="cf-product" type="text" name="MMERGE5" placeholder="e.g. Sponsorship, Venue, Media, Brand Activation…" required>
       </div>
       <div class="cf-field">
         <label for="cf-day">Which match day do you want to activate?</label>
-        <select id="cf-day" name="activation_day" required>
+        <select id="cf-day" name="MMERGE6" required>
           <option value="" disabled selected>Select a match day</option>
           <optgroup label="Group Stage — Atlanta">
             <option>June 14, 2026</option>
@@ -655,9 +670,13 @@
           <option>Not Sure Yet</option>
         </select>
       </div>
-      <button type="submit" class="btn-gold btn-block cf-submit">
-        <svg class="icon" aria-hidden="true"><use href="#ic-form"/></svg> Send Inquiry
+
+      <button type="submit" class="btn-gold btn-block cf-submit" id="cfSubmit">
+        <svg class="icon" aria-hidden="true"><use href="#ic-form"/></svg>
+        <span id="cfBtnText">Send Inquiry</span>
       </button>
+
+      <div id="cfMsg" class="cf-msg" aria-live="polite"></div>
     </form>
 
     <div class="contact-note" style="margin-top:32px;text-align:center">
