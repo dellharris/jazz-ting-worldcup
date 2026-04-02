@@ -270,6 +270,10 @@ function renderEpisodes() {
 }
 
 function playEpisode(videoId, title) {
+  // Keep index in sync so Next/Prev stay relative to what's playing
+  const idx = EPISODES.findIndex(e => e.id === videoId);
+  if (idx !== -1) currentEpIndex = idx;
+
   // Replace studio image with embedded player
   const wrap = document.querySelector('.studio-video-wrap');
   if (!wrap) return;
@@ -284,6 +288,8 @@ function playEpisode(videoId, title) {
 }
 
 /* ── Player Controls ──────────────────────────────────────── */
+let currentEpIndex = -1;  // -1 = hero default (not an episode yet)
+
 function initPlayer() {
   // Scrubber fill visual
   let pct = 0;
@@ -295,6 +301,25 @@ function initPlayer() {
 
   // VU meter animation
   animateVU();
+
+  // Wire Next / Prev buttons
+  document.querySelectorAll('.pbar-btn').forEach(btn => {
+    const label = btn.getAttribute('aria-label');
+    if (label === 'Next')     btn.addEventListener('click', playNext);
+    if (label === 'Previous') btn.addEventListener('click', playPrev);
+  });
+}
+
+function playNext() {
+  currentEpIndex = (currentEpIndex + 1) % EPISODES.length;
+  const ep = EPISODES[currentEpIndex];
+  playEpisode(ep.id, ep.title);
+}
+
+function playPrev() {
+  currentEpIndex = (currentEpIndex - 1 + EPISODES.length) % EPISODES.length;
+  const ep = EPISODES[currentEpIndex];
+  playEpisode(ep.id, ep.title);
 }
 
 function animateVU() {
