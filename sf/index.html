@@ -678,6 +678,26 @@ body.nav-open .nav-overlay {
   text-transform: uppercase; margin-top: 3px;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
+.sp404-screen-right {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 10px;
+  flex-shrink: 0; margin-left: 14px;
+}
+.sp404-buy {
+  font-family: 'Courier Prime', monospace;
+  font-size: 9px; letter-spacing: 0.18em;
+  color: rgba(72,230,110,0.9);
+  text-decoration: none; text-align: center;
+  line-height: 1.3;
+  border: 1px solid rgba(72,230,110,0.35);
+  padding: 4px 7px;
+  border-radius: 3px;
+  transition: background 0.15s, color 0.15s;
+}
+.sp404-buy:hover {
+  background: rgba(72,230,110,0.15);
+  color: rgba(72,230,110,1);
+}
 .sp404-led {
   width: 9px; height: 9px; border-radius: 50%;
   flex-shrink: 0; margin-left: 14px;
@@ -1001,7 +1021,12 @@ body.nav-open .nav-overlay {
           <div class="sp404-display-main" id="sp404Main">SOUTHERN FREQUENCIES</div>
           <div class="sp404-display-sub"  id="sp404Sub">TAP A PAD TO PREVIEW</div>
         </div>
-        <div class="sp404-led" id="sp404Led"></div>
+        <div class="sp404-screen-right">
+          <a class="sp404-buy" id="sp404Buy" href="#" target="_blank" rel="noopener" style="display:none">
+            BUY<br>↗
+          </a>
+          <div class="sp404-led" id="sp404Led"></div>
+        </div>
       </div>
 
       <div class="sp404-pads" id="sp404Pads"></div>
@@ -1048,6 +1073,10 @@ function loadEmbed(id) {
 
 // ── SP-404 Sampler ──────────────────────────────────────────
 (function () {
+  // ── Add songs here ────────────────────────────────────────
+  // Each entry: { a: 'Artist', t: 'Track Title' }
+  // Previews + buy links fetched automatically from iTunes.
+  // Up to 16 pads (4×4). Blank entries keep the pad dark.
   var TRACKS = [
     { a: 'Dell Harris',       t: 'Jazz Side'                    },
     { a: 'MF DOOM',           t: 'Accordion'                    },
@@ -1066,14 +1095,17 @@ function loadEmbed(id) {
     { a: 'Smino',             t: 'Wild Irish Roses'             },
     { a: 'Dell Harris',       t: 'Jazz Charge'                  },
   ];
+  // ─────────────────────────────────────────────────────────
 
   var padsEl  = document.getElementById('sp404Pads');
   var mainEl  = document.getElementById('sp404Main');
   var subEl   = document.getElementById('sp404Sub');
   var ledEl   = document.getElementById('sp404Led');
+  var buyEl   = document.getElementById('sp404Buy');
   if (!padsEl) return;
 
-  var previews     = new Array(TRACKS.length).fill(null);
+  // Each slot: { previewUrl, buyUrl } or null
+  var data         = new Array(TRACKS.length).fill(null);
   var curAudio     = null;
   var curPad       = null;
   var progTimer    = null;
@@ -1103,14 +1135,18 @@ function loadEmbed(id) {
     padsEl.appendChild(pad);
   });
 
-  // Fetch 30-sec previews from iTunes (no auth needed)
+  // Fetch previews + buy links from iTunes (no auth needed)
   TRACKS.forEach(function (trk, i) {
     var q = encodeURIComponent(trk.a + ' ' + trk.t);
     fetch('https://itunes.apple.com/search?term=' + q + '&entity=song&limit=1&media=music')
       .then(function (r) { return r.json(); })
       .then(function (d) {
-        if (d.results && d.results[0] && d.results[0].previewUrl) {
-          previews[i] = d.results[0].previewUrl;
+        var result = d.results && d.results[0];
+        if (result && result.previewUrl) {
+          data[i] = {
+            previewUrl: result.previewUrl,
+            buyUrl:     result.trackViewUrl || null,
+          };
         } else {
           padsEl.children[i].classList.add('no-preview');
         }
@@ -1129,17 +1165,17 @@ function loadEmbed(id) {
       curPad = null;
     }
     ledEl.classList.remove('on');
-    mainEl.textContent = 'SOUTHERN FREQUENCIES';
-    subEl.textContent  = 'TAP A PAD TO PREVIEW';
+    buyEl.style.display  = 'none';
+    buyEl.href           = '#';
+    mainEl.textContent   = 'SOUTHERN FREQUENCIES';
+    subEl.textContent    = 'TAP A PAD TO PREVIEW';
   }
 
   function tap(pad, i) {
-    // Toggle off
     if (curPad === pad) { reset(); return; }
     reset();
 
-    if (!previews[i]) {
-      // No-signal flash
+    if (!data[i]) {
       mainEl.textContent = '— NO SIGNAL —';
       subEl.textContent  = '';
       setTimeout(function () {
@@ -1150,7 +1186,8 @@ function loadEmbed(id) {
     }
 
     var trk   = TRACKS[i];
-    var audio = new Audio(previews[i]);
+    var slot  = data[i];
+    var audio = new Audio(slot.previewUrl);
     curAudio  = audio;
     curPad    = pad;
 
@@ -1158,6 +1195,12 @@ function loadEmbed(id) {
     ledEl.classList.add('on');
     mainEl.textContent = trk.a.toUpperCase();
     subEl.textContent  = trk.t.toUpperCase();
+
+    // Show buy link if available
+    if (slot.buyUrl) {
+      buyEl.href         = slot.buyUrl;
+      buyEl.style.display = 'block';
+    }
 
     audio.play().catch(function () {});
 
