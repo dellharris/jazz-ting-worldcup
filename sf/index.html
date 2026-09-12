@@ -207,6 +207,7 @@ body {
   margin-bottom: 32px;
 }
 
+/* ── Pioneer CDJ-3000 ─────────────────────────────────────── */
 .cdj-pair {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -214,174 +215,316 @@ body {
   margin-bottom: 32px;
 }
 
-/* ── Pioneer CDJ-3000 unit ── */
 .cdj {
-  background: linear-gradient(175deg, #1c1c1c 0%, #111 60%, #191919 100%);
-  border-radius: 10px;
-  border: 1px solid #2a2a2a;
-  padding: 16px;
+  background: linear-gradient(180deg, #191919 0%, #111 100%);
+  border-radius: 8px;
+  border: 1px solid #2c2c2c;
+  padding: 12px 12px 14px;
   box-shadow:
-    0 12px 48px rgba(0,0,0,0.9),
+    0 16px 56px rgba(0,0,0,0.95),
     inset 0 1px 0 rgba(255,255,255,0.04),
-    inset 0 -1px 0 rgba(0,0,0,0.6);
-  display: flex; flex-direction: column; gap: 14px;
+    inset 0 -1px 0 rgba(0,0,0,0.5);
+  display: flex; flex-direction: column; gap: 8px;
+  user-select: none;
+}
+
+/* Top source buttons */
+.cdj-top-row {
+  display: flex; gap: 4px; justify-content: center;
+}
+.cdj-top-btn {
+  background: #1e1e1e; border: 1px solid #2e2e2e;
+  color: rgba(255,255,255,0.22); border-radius: 3px;
+  font-family: "Courier Prime", monospace;
+  font-size: 7px; letter-spacing: 0.12em;
+  padding: 3px 5px; cursor: default;
+  text-transform: uppercase;
+}
+.cdj-top-btn.hi {
+  color: rgba(80,180,255,0.85);
+  border-color: rgba(80,180,255,0.25);
 }
 
 /* Display screen */
-.cdj-display {
-  background: #000;
-  border-radius: 6px;
-  border: 1px solid #2a2a2a;
-  box-shadow: inset 0 2px 8px rgba(0,0,0,0.9);
-  overflow: hidden;
-  position: relative;
-  min-height: 130px;
+.cdj-screen {
+  background: #08090c;
+  border-radius: 5px;
+  border: 1px solid #222;
+  box-shadow: inset 0 2px 12px rgba(0,0,0,0.9), 0 0 0 1px #000;
+  position: relative; overflow: hidden;
+  padding: 10px 12px 8px;
 }
-.cdj-display-info {
-  padding: 14px 16px 12px;
-  display: flex; flex-direction: column; gap: 3px;
+.cdj-screen::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,180,255,0.015) 2px, rgba(0,180,255,0.015) 3px);
+  pointer-events: none;
 }
-.cdj-display-platform {
-  font-family: 'Courier Prime', monospace;
-  font-size: 8px; letter-spacing: 0.42em;
-  color: rgba(255,255,255,0.3); text-transform: uppercase;
+.cdj.playing .cdj-screen { background: #060a0c; }
+
+.cdj-screen-top {
+  display: flex; justify-content: space-between;
+  align-items: flex-start; margin-bottom: 4px;
 }
-.cdj-display-track {
-  font-family: 'Courier Prime', monospace;
-  font-size: 13px; letter-spacing: 0.12em;
+.cdj-screen-platform {
+  font-family: "Courier Prime", monospace;
+  font-size: 8px; letter-spacing: 0.4em;
+  text-transform: uppercase;
+}
+.cdj-platform-spotify  { color: rgba(30,215,96,0.9); }
+.cdj-platform-apple    { color: rgba(252,60,68,0.85); }
+
+.cdj-screen-bpm {
+  font-family: "Courier Prime", monospace;
+  font-size: 14px; letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.7);
+}
+.cdj-screen-bpm span { font-size: 8px; opacity: 0.5; letter-spacing: 0.2em; }
+
+.cdj-screen-track {
+  font-family: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+  font-weight: 700; font-size: 13px; letter-spacing: 1px;
   color: rgba(255,255,255,0.88); text-transform: uppercase;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-.cdj-display-artist {
-  font-family: 'Courier Prime', monospace;
-  font-size: 9px; letter-spacing: 0.28em;
-  color: rgba(255,255,255,0.4); text-transform: uppercase;
-}
-.cdj-display-meta {
-  font-family: 'Courier Prime', monospace;
-  font-size: 8px; letter-spacing: 0.3em;
-  color: rgba(255,255,255,0.2); text-transform: uppercase;
-  margin-top: 4px;
+.cdj-screen-artist {
+  font-family: "Courier Prime", monospace;
+  font-size: 8px; letter-spacing: 0.22em;
+  color: rgba(255,255,255,0.35); text-transform: uppercase;
+  margin-bottom: 6px;
 }
 
-/* Waveform — animated bars */
-.cdj-waveform {
-  display: flex; align-items: flex-end;
-  gap: 2px; height: 32px; margin: 8px 0 4px;
+/* Waveform */
+.cdj-wave {
+  display: flex; align-items: center;
+  gap: 1px; height: 38px; overflow: hidden;
 }
-.cdj-waveform-bar {
-  width: 3px; border-radius: 1px;
-  background: rgba(255,200,0,0.7);
-  transition: height 0.14s ease;
+.cdj-wave-bar {
+  flex-shrink: 0;
+  width: 2px; border-radius: 1px;
+  background: linear-gradient(to top, rgba(255,140,0,0.8) 0%, rgba(0,160,255,0.6) 60%, rgba(0,100,255,0.3) 100%);
+  transition: height 0.18s ease;
 }
-.cdj-waveform.playing .cdj-waveform-bar {
-  animation: wave-bar 0.8s ease-in-out infinite;
-}
-@keyframes wave-bar {
-  0%,100% { opacity: 0.4; }
-  50%      { opacity: 1; }
+.cdj.playing .cdj-wave-bar { animation: wbar 0.7s ease-in-out infinite; }
+@keyframes wbar { 0%,100%{opacity:0.6} 50%{opacity:1} }
+
+.cdj-screen-time {
+  font-family: "Courier Prime", monospace;
+  font-size: 9px; letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.25); margin-top: 4px;
 }
 
-/* Embed iframe fills display when playing */
-.cdj-embed-frame {
+/* Embed iframe over screen when playing */
+.cdj-embed {
   display: none;
   position: absolute; inset: 0;
-  width: 100%; height: 100%; border: none;
+  width: 100%; height: 100%; border: none; z-index: 5;
 }
-.cdj.playing .cdj-embed-frame  { display: block; }
-.cdj.playing .cdj-display-info { display: none; }
+.cdj.playing .cdj-embed { display: block; }
+.cdj.playing .cdj-screen > *:not(.cdj-embed) { visibility: hidden; }
 
-/* Spinning platter */
-.cdj-platter-wrap {
-  display: flex; justify-content: center;
-  padding: 4px 0;
+/* Hot cue buttons A–H */
+.cdj-hot-cues {
+  display: flex; gap: 3px;
 }
-.cdj-platter {
-  width: 140px; height: 140px;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 50% 50%, #2a2a2a 0%, #111 55%, #0a0a0a 100%);
-  border: 3px solid #222;
-  box-shadow:
-    0 0 0 1px #333,
-    0 8px 24px rgba(0,0,0,0.8),
-    inset 0 2px 6px rgba(255,255,255,0.04);
+.hcq {
+  flex: 1; padding: 4px 0;
+  border-radius: 3px; border: none;
+  font-family: "Courier Prime", monospace;
+  font-size: 8px; font-weight: 700; letter-spacing: 0.1em;
+  cursor: default;
+}
+.hcq-a,.hcq-b { background:#0a3a28; color:rgba(30,215,96,0.8); border:1px solid #0d5236; }
+.hcq-c,.hcq-d { background:#2a1a00; color:rgba(255,165,0,0.8); border:1px solid #3a2500; }
+.hcq-e,.hcq-f { background:#200808; color:rgba(220,60,60,0.8); border:1px solid #3a1010; }
+.hcq-g,.hcq-h { background:#0a0a2a; color:rgba(80,120,255,0.8); border:1px solid #10103a; }
+
+/* Body: left | jog | right */
+.cdj-body {
+  display: grid;
+  grid-template-columns: 60px 1fr 52px;
+  gap: 8px; align-items: center;
+}
+
+/* Left control strip */
+.cdj-left {
+  display: flex; flex-direction: column;
+  gap: 5px; align-items: center;
+}
+.cdj-mini-row {
+  display: flex; gap: 3px;
+}
+.cdj-mini {
+  background: #1c1c1c; border: 1px solid #2a2a2a;
+  border-radius: 2px; padding: 3px 4px;
+  font-family: "Courier Prime", monospace;
+  font-size: 6px; letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.3); cursor: default;
+  text-transform: uppercase;
+}
+.cdj-knob-sm {
+  width: 18px; height: 18px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #383838, #181818);
+  border: 1px solid #2e2e2e;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.04);
   position: relative;
-  overflow: hidden;
-  transition: transform 0.3s;
 }
-.cdj.playing .cdj-platter {
-  animation: platter-spin 2.4s linear infinite;
+.cdj-knob-sm::after {
+  content: ''; position: absolute;
+  top: 3px; left: 50%; transform: translateX(-50%);
+  width: 1.5px; height: 5px;
+  background: rgba(255,255,255,0.25); border-radius: 1px;
 }
-@keyframes platter-spin { to { transform: rotate(360deg); } }
+.cdj-knob-row { display: flex; gap: 5px; }
 
-.cdj-platter-label {
-  position: absolute; inset: 12px;
+/* Prominent CUE + PLAY buttons */
+.cdj-cue-btn, .cdj-play-btn {
+  border-radius: 50%; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.1s; font-weight: 700;
+  font-family: "Courier Prime", monospace;
+  letter-spacing: 0.1em; font-size: 7px;
+}
+.cdj-cue-btn {
+  width: 44px; height: 44px;
+  background: radial-gradient(circle at 40% 35%, #2a2200, #181200);
+  color: rgba(255,165,0,0.85);
+  box-shadow: 0 0 0 2.5px rgba(255,145,0,0.6), 0 0 16px rgba(255,145,0,0.25), 0 4px 12px rgba(0,0,0,0.8);
+}
+.cdj-cue-btn:hover { box-shadow: 0 0 0 2.5px rgba(255,165,0,0.9), 0 0 24px rgba(255,165,0,0.45), 0 4px 12px rgba(0,0,0,0.8); }
+.cdj-play-btn {
+  width: 54px; height: 54px;
+  background: radial-gradient(circle at 40% 35%, #002210, #001208);
+  color: rgba(30,215,96,0.9);
+  box-shadow: 0 0 0 2.5px rgba(30,215,96,0.65), 0 0 16px rgba(30,215,96,0.2), 0 4px 12px rgba(0,0,0,0.8);
+}
+.cdj-play-btn:hover, .cdj-play-btn:active {
+  box-shadow: 0 0 0 2.5px rgba(30,215,96,1), 0 0 28px rgba(30,215,96,0.5), 0 4px 12px rgba(0,0,0,0.8);
+}
+.cdj-play-btn svg { width: 20px; height: 20px; }
+.cdj.playing .cdj-play-btn {
+  background: radial-gradient(circle at 40% 35%, #003820, #001f10);
+  box-shadow: 0 0 0 2.5px rgba(30,215,96,1), 0 0 32px rgba(30,215,96,0.7), 0 4px 12px rgba(0,0,0,0.8);
+}
+
+/* Jog wheel */
+.cdj-jog-wrap { display: flex; justify-content: center; }
+.cdj-jog {
+  width: 160px; height: 160px; border-radius: 50%;
+  position: relative;
+  /* Rubber ribbed outer rim */
+  background:
+    repeating-conic-gradient(#161616 0deg, #212121 1.8deg, #161616 3.6deg);
+  box-shadow:
+    0 0 0 2px #0a0a0a,
+    0 8px 28px rgba(0,0,0,0.9),
+    inset 0 0 20px rgba(0,0,0,0.6);
+  transition: transform 0.2s;
+}
+.cdj.playing .cdj-jog { animation: jog-spin 2.2s linear infinite; }
+@keyframes jog-spin { to { transform: rotate(360deg); } }
+
+/* Silver inner ring */
+.cdj-jog-ring {
+  position: absolute; inset: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #1f1f1f 65%, #2a2a2a 100%);
+  border: 2px solid #3a3a3a;
+  box-shadow: 0 0 0 1px #111, inset 0 0 12px rgba(0,0,0,0.7);
+}
+
+/* Illuminated color ring */
+.cdj-jog-ring::after {
+  content: '';
+  position: absolute; inset: 8px;
+  border-radius: 50%;
+  border: 3px solid rgba(0,120,255,0.35);
+  box-shadow: 0 0 12px rgba(0,120,255,0.15), inset 0 0 8px rgba(0,120,255,0.1);
+}
+.cdj.playing .cdj-jog-ring::after {
+  border-color: rgba(255,100,0,0.7);
+  box-shadow: 0 0 20px rgba(255,100,0,0.4), inset 0 0 12px rgba(255,80,0,0.2);
+}
+
+/* Art center */
+.cdj-jog-art {
+  position: absolute; inset: 30px;
   border-radius: 50%; overflow: hidden;
   background: #111;
+  border: 2px solid #2a2a2a;
+  box-shadow: inset 0 0 8px rgba(0,0,0,0.8);
 }
-.cdj-platter-label img {
+.cdj-jog-art img {
   width: 100%; height: 100%;
-  object-fit: cover; border-radius: 50%;
-  opacity: 0.75;
+  object-fit: cover; opacity: 0.65;
+  border-radius: 50%;
 }
-.cdj-platter-dot {
+.cdj-jog-dot {
   position: absolute; top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  width: 10px; height: 10px; border-radius: 50%;
-  background: #1a1a1a;
+  width: 10px; height: 10px;
+  border-radius: 50%; z-index: 2;
+  background: #111;
   border: 2px solid #333;
-  box-shadow: 0 0 0 4px #111;
-  z-index: 2;
+  box-shadow: 0 0 0 3px #111;
 }
 
-/* Transport controls */
-.cdj-controls {
-  display: flex; align-items: center;
-  justify-content: center; gap: 16px;
+/* Right controls */
+.cdj-right {
+  display: flex; flex-direction: column;
+  gap: 5px; align-items: center;
 }
-.cdj-btn-cue, .cdj-btn-play {
-  border: none; border-radius: 50%;
-  cursor: pointer; display: flex;
-  align-items: center; justify-content: center;
-  transition: all 0.12s;
-  font-family: 'Courier Prime', monospace;
-  font-size: 9px; letter-spacing: 0.2em;
+.cdj-mode-grp { display: flex; flex-direction: column; gap: 3px; width: 100%; }
+.cdj-mode-btn {
+  background: #1a1a1a; border: 1px solid #2a2a2a;
+  border-radius: 2px; padding: 3px 4px;
+  font-family: "Courier Prime", monospace;
+  font-size: 6px; letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.28); cursor: default;
+  text-transform: uppercase; text-align: center;
+  width: 100%;
 }
-.cdj-btn-cue {
-  width: 40px; height: 40px;
-  background: #1e1e1e;
-  color: rgba(255,100,100,0.7);
-  border: 1px solid #2f2f2f;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.04);
+.cdj-mode-btn.on {
+  background: #201800; color: rgba(255,190,0,0.85);
+  border-color: rgba(200,150,0,0.3);
 }
-.cdj-btn-cue:hover { background: #252525; color: rgba(255,100,100,1); }
-.cdj-btn-play {
-  width: 52px; height: 52px;
-  background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
-  color: rgba(255,255,255,0.8);
-  border: 1px solid #333;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.06);
-}
-.cdj-btn-play svg { width: 18px; height: 18px; }
-.cdj-btn-play:hover { background: linear-gradient(145deg, #303030, #222); color: #fff; }
-.cdj.playing .cdj-btn-play { background: linear-gradient(145deg, #ffcc00, #cc9900); color: #000; }
-.cdj.playing .cdj-btn-play:hover { background: linear-gradient(145deg, #ffd633, #ccaa00); }
 
-/* Footer label */
-.cdj-footer {
-  display: flex; justify-content: space-between;
-  padding: 0 4px;
+/* Tempo fader */
+.cdj-tempo-wrap {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 4px; flex: 1;
 }
-.cdj-brand {
-  font-family: 'Barlow Condensed', Arial, sans-serif;
-  font-weight: 800; font-size: 11px; letter-spacing: 3px;
-  color: rgba(255,255,255,0.18); text-transform: uppercase;
+.cdj-tempo-lbl {
+  font-family: "Courier Prime", monospace;
+  font-size: 6px; letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.2); text-transform: uppercase;
 }
-.cdj-model {
-  font-family: 'Courier Prime', monospace;
-  font-size: 8px; letter-spacing: 0.28em;
+.cdj-tempo-track {
+  width: 4px; height: 70px; background: #111;
+  border-radius: 2px; border: 1px solid #222;
+  position: relative; box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
+}
+.cdj-tempo-fader {
+  width: 14px; height: 8px;
+  background: linear-gradient(to bottom, #444, #333);
+  border: 1px solid #555; border-radius: 2px;
+  position: absolute; left: 50%; top: 40%;
+  transform: translateX(-50%);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.6);
+}
+.cdj-tempo-val {
+  font-family: "Courier Prime", monospace;
+  font-size: 7px; color: rgba(255,255,255,0.3);
+  letter-spacing: 0.1em;
+}
+
+/* Footer */
+.cdj-footer-bar {
+  text-align: right;
+  font-family: "Barlow Condensed", Arial, sans-serif;
+  font-weight: 800; font-size: 10px; letter-spacing: 2px;
   color: rgba(255,255,255,0.14); text-transform: uppercase;
+  padding-right: 4px;
 }
 
 .playlist__links {
@@ -401,312 +544,9 @@ body {
 
 @media (max-width: 640px) {
   .cdj-pair { grid-template-columns: 1fr; }
-  .cdj-platter { width: 110px; height: 110px; }
-}
 }
 
-.tracks { list-style: none; }
 
-.track { border-bottom: 1px solid rgba(140, 115, 78, 0.09); }
-.track:first-child { border-top: 1px solid rgba(140, 115, 78, 0.09); }
-
-.track a {
-  display: grid;
-  grid-template-columns: 30px 1fr 1fr 72px;
-  align-items: center;
-  gap: 20px;
-  padding: 15px 4px;
-  text-decoration: none;
-  transition: background 0.14s;
-}
-
-.track a:hover { background: rgba(195, 162, 118, 0.04); }
-.track a:hover .track__title { color: rgba(218, 194, 155, 0.9); }
-
-.track__num {
-  font-size: 10px; letter-spacing: 0.16em;
-  color: rgba(165, 135, 92, 0.4);
-  font-weight: 300; font-variant-numeric: tabular-nums;
-  text-align: right;
-}
-
-.track__artist {
-  font-size: 11px; letter-spacing: 0.32em;
-  color: rgba(200, 175, 138, 0.85);
-  font-weight: 400; text-transform: uppercase;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-
-.track__title {
-  font-size: 11px; letter-spacing: 0.09em;
-  color: rgba(162, 138, 102, 0.62);
-  font-weight: 300; font-style: italic;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  transition: color 0.14s;
-}
-
-.track__tag {
-  font-size: 8px; letter-spacing: 0.3em;
-  color: rgba(138, 114, 80, 0.26);
-  font-weight: 300; text-transform: uppercase;
-  text-align: right;
-}
-
-.track--own .track__artist { color: rgba(216, 190, 146, 0.95); }
-.track--own .track__num    { color: rgba(190, 155, 102, 0.65); }
-
-/* ═══════════════════════════
-   FOOTER
-═══════════════════════════ */
-.footer {
-  max-width: 860px; margin: 0 auto;
-  border-top: 1px solid rgba(140, 115, 78, 0.1);
-  padding: 72px 40px 88px;
-  display: flex; flex-direction: column;
-  align-items: center; gap: 36px;
-}
-
-.footer__logo-link {
-  display: block;
-  opacity: 0.38;
-  transition: opacity 0.22s;
-}
-.footer__logo-link:hover { opacity: 0.72; }
-
-.footer__logo-link img {
-  display: block;
-  height: auto;
-  max-width: 180px;
-  filter: brightness(0) invert(1);
-}
-
-.footer__divider {
-  width: 1px; height: 28px;
-  background: rgba(155, 128, 88, 0.14);
-}
-
-.footer__credit {
-  font-size: 9px; letter-spacing: 0.3em;
-  color: rgba(105, 86, 58, 0.26);
-  text-transform: uppercase; font-weight: 300;
-  text-align: center; line-height: 2;
-}
-
-/* ═══════════════════════════
-   RESPONSIVE
-═══════════════════════════ */
-/* ═══════════════════════════
-   SITE HEADER
-═══════════════════════════ */
-.site-header {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 200;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 40px;
-  background: linear-gradient(to bottom, rgba(4,2,1,0.65) 0%, transparent 100%);
-  pointer-events: none;
-}
-.site-header__brand,
-.site-header__toggle { pointer-events: all; }
-
-.site-header__brand {
-  font-family: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
-  font-weight: 800;
-  font-size: 22px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  text-decoration: none;
-  line-height: 1;
-  display: inline-flex;
-  align-items: baseline;
-  gap: 1px;
-}
-.brand__jazz  { color: #e0c840; }
-.brand__ting  { color: #e8d880; }
-.brand__radio { color: rgba(200, 172, 80, 0.55); font-size: 14px; letter-spacing: 2px; margin-left: 3px; }
-
-.site-header__toggle {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  position: relative; z-index: 210;
-}
-.site-header__toggle span {
-  display: block;
-  width: 24px; height: 1.5px;
-  background: rgba(200, 175, 135, 0.75);
-  transform-origin: center center;
-}
-
-/* ── Open: slide to centre, then rotate ── */
-@keyframes bar1-open {
-  0%   { transform: translateY(0px)    rotate(0deg);  }
-  48%  { transform: translateY(6.5px)  rotate(0deg);  }
-  100% { transform: translateY(6.5px)  rotate(45deg); }
-}
-@keyframes bar2-open {
-  0%   { opacity: 1; transform: scaleX(1); }
-  32%  { opacity: 0; transform: scaleX(0); }
-  100% { opacity: 0; transform: scaleX(0); }
-}
-@keyframes bar3-open {
-  0%   { transform: translateY(0px)     rotate(0deg);   }
-  48%  { transform: translateY(-6.5px)  rotate(0deg);   }
-  100% { transform: translateY(-6.5px)  rotate(-45deg); }
-}
-
-/* ── Close: un-rotate first, then spread back ── */
-@keyframes bar1-close {
-  0%   { transform: translateY(6.5px)  rotate(45deg); }
-  52%  { transform: translateY(6.5px)  rotate(0deg);  }
-  100% { transform: translateY(0px)    rotate(0deg);  }
-}
-@keyframes bar2-close {
-  0%   { opacity: 0; transform: scaleX(0); }
-  55%  { opacity: 1; transform: scaleX(1); }
-  100% { opacity: 1; transform: scaleX(1); }
-}
-@keyframes bar3-close {
-  0%   { transform: translateY(-6.5px)  rotate(-45deg); }
-  52%  { transform: translateY(-6.5px)  rotate(0deg);   }
-  100% { transform: translateY(0px)     rotate(0deg);   }
-}
-
-.toggle--opening span:nth-child(1) { animation: bar1-open  0.38s cubic-bezier(.4,0,.2,1) forwards; }
-.toggle--opening span:nth-child(2) { animation: bar2-open  0.28s ease forwards; }
-.toggle--opening span:nth-child(3) { animation: bar3-open  0.38s cubic-bezier(.4,0,.2,1) forwards; }
-
-.toggle--closing span:nth-child(1) { animation: bar1-close 0.38s cubic-bezier(.4,0,.2,1) forwards; }
-.toggle--closing span:nth-child(2) { animation: bar2-close 0.38s ease 0.14s forwards; }
-.toggle--closing span:nth-child(3) { animation: bar3-close 0.38s cubic-bezier(.4,0,.2,1) forwards; }
-
-body.nav-open { overflow: hidden; }
-
-/* ═══════════════════════════
-   FULL-SCREEN NAV OVERLAY
-═══════════════════════════ */
-.nav-overlay {
-  position: fixed; inset: 0;
-  z-index: 195;
-  background: #060402;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 100px 40px 60px;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(-16px);
-  transition: opacity 0.35s cubic-bezier(.4,0,.2,1), transform 0.35s cubic-bezier(.4,0,.2,1);
-}
-body.nav-open .nav-overlay {
-  opacity: 1;
-  pointer-events: all;
-  transform: translateY(0);
-}
-
-.nav-overlay__grain {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  pointer-events: none;
-  mix-blend-mode: overlay; opacity: 0.1;
-}
-
-/* Universe breadcrumb */
-.nav-universe {
-  font-size: 9px; letter-spacing: 0.5em;
-  color: rgba(155, 128, 88, 0.35);
-  font-weight: 300; text-transform: uppercase;
-  margin-bottom: 40px;
-  display: flex; align-items: center; gap: 12px;
-}
-.nav-universe span { opacity: 0.4; }
-
-/* Nav links list */
-.nav-links {
-  list-style: none;
-  max-width: 800px;
-  width: 100%;
-}
-
-.nav-link { border-bottom: 1px solid rgba(140, 115, 78, 0.09); }
-.nav-link:first-child { border-top: 1px solid rgba(140, 115, 78, 0.09); }
-
-.nav-link a {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 22px 0 22px 0;
-  text-decoration: none;
-  transition: padding-left 0.22s cubic-bezier(.4,0,.2,1);
-  gap: 16px;
-}
-.nav-link a:hover { padding-left: 14px; }
-
-.nav-link__label {
-  font-size: clamp(24px, 4.5vw, 48px);
-  letter-spacing: 0.1em;
-  color: rgba(215, 192, 150, 0.85);
-  font-weight: 200;
-  text-transform: uppercase;
-  transition: color 0.2s;
-  white-space: nowrap;
-}
-.nav-link a:hover .nav-link__label { color: rgba(230, 210, 172, 1); }
-
-/* Current page — dimmed */
-.nav-link--current .nav-link__label { color: rgba(175, 148, 100, 0.45); }
-.nav-link--current a:hover .nav-link__label { color: rgba(195, 165, 118, 0.65); }
-
-.nav-link__meta {
-  font-size: 9px; letter-spacing: 0.4em;
-  color: rgba(145, 118, 80, 0.38);
-  font-weight: 300; text-transform: uppercase;
-  text-align: right; flex-shrink: 0;
-  transition: color 0.2s;
-}
-.nav-link a:hover .nav-link__meta { color: rgba(165, 135, 90, 0.65); }
-
-/* Logos row at bottom of overlay */
-.nav-footer-logos {
-  display: flex;
-  align-items: center;
-  gap: 36px;
-  margin-top: 44px;
-  padding-top: 32px;
-  border-top: 1px solid rgba(140, 115, 78, 0.08);
-}
-.nav-footer-logos a {
-  display: block;
-  opacity: 0.28;
-  transition: opacity 0.2s;
-}
-.nav-footer-logos a:hover { opacity: 0.6; }
-.nav-footer-logos img {
-  height: 16px; width: auto;
-  display: block;
-  filter: brightness(0) invert(1);
-}
-
-@media (max-width: 640px) {
-  .site-header { padding: 18px 24px; }
-  .nav-overlay { padding: 88px 24px 48px; }
-  .nav-universe { margin-bottom: 28px; }
-  .playlist       { padding: 60px 24px 80px; }
-  .footer         { padding: 52px 24px 64px; }
-  .track a        { grid-template-columns: 26px 1fr 1fr; }
-  .track__tag     { display: none; }
-  .track__artist, .track__title { font-size: 10px; }
-  .playlist__players { grid-template-columns: 1fr; }
-}
-
-/* ── SP-404 Sampler ───────────────────────────────────────── */
 .sp404-wrap {
   display: flex; justify-content: center;
   padding: 8px 0 40px;
@@ -1022,71 +862,175 @@ body.nav-open .nav-overlay {
 
     <!-- CDJ 1: Spotify -->
     <div class="cdj" id="cdj-spotify">
-      <div class="cdj-display">
-        <div class="cdj-display-info" id="cdj-spotify-info">
-          <div class="cdj-display-platform">Spotify</div>
-          <div class="cdj-display-track">Southern Frequencies</div>
-          <div class="cdj-display-artist">Dell Harris</div>
-          <div class="cdj-waveform" id="cdj-spotify-wave"></div>
-          <div class="cdj-display-meta">Tap ▶ to load playlist</div>
+
+      <div class="cdj-top-row">
+        <span class="cdj-top-btn hi">Source</span>
+        <span class="cdj-top-btn hi">USB 1</span>
+        <span class="cdj-top-btn">Link</span>
+        <span class="cdj-top-btn">Sync</span>
+        <span class="cdj-top-btn">Menu</span>
+      </div>
+
+      <div class="cdj-screen" id="cdj-spotify-screen">
+        <div class="cdj-screen-top">
+          <span class="cdj-screen-platform cdj-platform-spotify">Spotify</span>
+          <span class="cdj-screen-bpm">124.0 <span>BPM</span></span>
         </div>
-        <iframe class="cdj-embed-frame" id="cdj-spotify-iframe"
+        <div class="cdj-screen-track" id="cdj-spotify-track">Southern Frequencies</div>
+        <div class="cdj-screen-artist" id="cdj-spotify-artist">Dell Harris</div>
+        <div class="cdj-wave" id="cdj-spotify-wave"></div>
+        <div class="cdj-screen-time" id="cdj-spotify-time">00:00.000</div>
+        <iframe class="cdj-embed" id="cdj-spotify-iframe"
           src="" data-src="https://open.spotify.com/embed/playlist/43nmDGp7oalFHysD50Rvxs?utm_source=generator&theme=0"
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
       </div>
-      <div class="cdj-platter-wrap">
-        <div class="cdj-platter" id="cdj-spotify-platter">
-          <div class="cdj-platter-label">
-            <img src="spotify-cover.jpg" alt="" onerror="this.style.display='none'">
-            <div class="cdj-platter-dot"></div>
+
+      <div class="cdj-hot-cues">
+        <button class="hcq hcq-a">A</button>
+        <button class="hcq hcq-b">B</button>
+        <button class="hcq hcq-c">C</button>
+        <button class="hcq hcq-d">D</button>
+        <button class="hcq hcq-e">E</button>
+        <button class="hcq hcq-f">F</button>
+        <button class="hcq hcq-g">G</button>
+        <button class="hcq hcq-h">H</button>
+      </div>
+
+      <div class="cdj-body">
+        <div class="cdj-left">
+          <div class="cdj-mini-row">
+            <span class="cdj-mini">Beat</span>
+            <span class="cdj-mini">Loop</span>
+          </div>
+          <div class="cdj-mini-row">
+            <span class="cdj-mini">◀</span>
+            <span class="cdj-mini">▶</span>
+          </div>
+          <div class="cdj-knob-row">
+            <div class="cdj-knob-sm"></div>
+            <div class="cdj-knob-sm"></div>
+          </div>
+          <button class="cdj-cue-btn">CUE</button>
+          <button class="cdj-play-btn" id="cdj-spotify-playbtn" onclick="cdjToggle('spotify')">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21" fill="currentColor"/></svg>
+          </button>
+        </div>
+
+        <div class="cdj-jog-wrap">
+          <div class="cdj-jog" id="cdj-spotify-jog">
+            <div class="cdj-jog-ring">
+              <div class="cdj-jog-art">
+                <img src="spotify-cover.jpg" alt="" onerror="this.style.display='none'">
+                <div class="cdj-jog-dot"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cdj-right">
+          <div class="cdj-mode-grp">
+            <div class="cdj-mode-btn on">Vinyl</div>
+            <div class="cdj-mode-btn">CDJ</div>
+            <div class="cdj-mode-btn">Jog</div>
+          </div>
+          <div class="cdj-tempo-wrap">
+            <span class="cdj-tempo-lbl">Tempo</span>
+            <div class="cdj-tempo-track">
+              <div class="cdj-tempo-fader"></div>
+            </div>
+            <span class="cdj-tempo-val">+0.0</span>
           </div>
         </div>
       </div>
-      <div class="cdj-controls">
-        <button class="cdj-btn-cue">CUE</button>
-        <button class="cdj-btn-play" id="cdj-spotify-playbtn" onclick="cdjToggle('spotify')">
-          <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21" fill="currentColor"/></svg>
-        </button>
-      </div>
-      <div class="cdj-footer">
-        <span class="cdj-brand">PIONEER</span>
-        <span class="cdj-model">CDJ-3000</span>
-      </div>
+
+      <div class="cdj-footer-bar">CDJ-3000</div>
     </div>
 
     <!-- CDJ 2: Apple Music -->
     <div class="cdj" id="cdj-apple">
-      <div class="cdj-display">
-        <div class="cdj-display-info" id="cdj-apple-info">
-          <div class="cdj-display-platform">Apple Music</div>
-          <div class="cdj-display-track">Southern Frequencies</div>
-          <div class="cdj-display-artist">Dell Harris</div>
-          <div class="cdj-waveform" id="cdj-apple-wave"></div>
-          <div class="cdj-display-meta">Tap ▶ to load playlist</div>
+
+      <div class="cdj-top-row">
+        <span class="cdj-top-btn hi">Source</span>
+        <span class="cdj-top-btn hi">USB 2</span>
+        <span class="cdj-top-btn">Link</span>
+        <span class="cdj-top-btn">Sync</span>
+        <span class="cdj-top-btn">Menu</span>
+      </div>
+
+      <div class="cdj-screen" id="cdj-apple-screen">
+        <div class="cdj-screen-top">
+          <span class="cdj-screen-platform cdj-platform-apple">Apple Music</span>
+          <span class="cdj-screen-bpm">124.0 <span>BPM</span></span>
         </div>
-        <iframe class="cdj-embed-frame" id="cdj-apple-iframe"
+        <div class="cdj-screen-track" id="cdj-apple-track">Southern Frequencies</div>
+        <div class="cdj-screen-artist" id="cdj-apple-artist">Dell Harris</div>
+        <div class="cdj-wave" id="cdj-apple-wave"></div>
+        <div class="cdj-screen-time" id="cdj-apple-time">00:00.000</div>
+        <iframe class="cdj-embed" id="cdj-apple-iframe"
           src="" data-src="https://embed.music.apple.com/us/playlist/southern-frequencies/pl.u-P09ACoGKJAP"
           allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
           sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"></iframe>
       </div>
-      <div class="cdj-platter-wrap">
-        <div class="cdj-platter" id="cdj-apple-platter">
-          <div class="cdj-platter-label">
-            <img src="apple-cover.jpg" alt="" onerror="this.style.display='none'">
-            <div class="cdj-platter-dot"></div>
+
+      <div class="cdj-hot-cues">
+        <button class="hcq hcq-a">A</button>
+        <button class="hcq hcq-b">B</button>
+        <button class="hcq hcq-c">C</button>
+        <button class="hcq hcq-d">D</button>
+        <button class="hcq hcq-e">E</button>
+        <button class="hcq hcq-f">F</button>
+        <button class="hcq hcq-g">G</button>
+        <button class="hcq hcq-h">H</button>
+      </div>
+
+      <div class="cdj-body">
+        <div class="cdj-left">
+          <div class="cdj-mini-row">
+            <span class="cdj-mini">Beat</span>
+            <span class="cdj-mini">Loop</span>
+          </div>
+          <div class="cdj-mini-row">
+            <span class="cdj-mini">◀</span>
+            <span class="cdj-mini">▶</span>
+          </div>
+          <div class="cdj-knob-row">
+            <div class="cdj-knob-sm"></div>
+            <div class="cdj-knob-sm"></div>
+          </div>
+          <button class="cdj-cue-btn">CUE</button>
+          <button class="cdj-play-btn" id="cdj-apple-playbtn" onclick="cdjToggle('apple')">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21" fill="currentColor"/></svg>
+          </button>
+        </div>
+
+        <div class="cdj-jog-wrap">
+          <div class="cdj-jog" id="cdj-apple-jog">
+            <div class="cdj-jog-ring">
+              <div class="cdj-jog-art">
+                <img src="apple-cover.jpg" alt="" onerror="this.style.display='none'">
+                <div class="cdj-jog-dot"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cdj-right">
+          <div class="cdj-mode-grp">
+            <div class="cdj-mode-btn on">Vinyl</div>
+            <div class="cdj-mode-btn">CDJ</div>
+            <div class="cdj-mode-btn">Jog</div>
+          </div>
+          <div class="cdj-tempo-wrap">
+            <span class="cdj-tempo-lbl">Tempo</span>
+            <div class="cdj-tempo-track">
+              <div class="cdj-tempo-fader"></div>
+            </div>
+            <span class="cdj-tempo-val">+0.0</span>
           </div>
         </div>
       </div>
-      <div class="cdj-controls">
-        <button class="cdj-btn-cue">CUE</button>
-        <button class="cdj-btn-play" id="cdj-apple-playbtn" onclick="cdjToggle('apple')">
-          <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21" fill="currentColor"/></svg>
-        </button>
-      </div>
-      <div class="cdj-footer">
-        <span class="cdj-brand">PIONEER</span>
-        <span class="cdj-model">CDJ-3000</span>
-      </div>
+
+      <div class="cdj-footer-bar">CDJ-3000</div>
     </div>
 
   </div>
@@ -1152,12 +1096,12 @@ body.nav-open .nav-overlay {
 function buildWaveform(id) {
   var el = document.getElementById('cdj-' + id + '-wave');
   if (!el || el.children.length) return;
-  var heights = [30,55,40,70,50,35,80,45,60,35,75,50,40,65,45,55,35,70,50,60];
-  heights.forEach(function (h, i) {
+  var pattern = [18,32,55,70,48,82,60,38,75,50,88,42,65,30,78,52,40,68,58,35,80,44,62,28,72,55,38,85,48,60];
+  pattern.forEach(function (h, i) {
     var bar = document.createElement('div');
-    bar.className = 'cdj-waveform-bar';
+    bar.className = 'cdj-wave-bar';
     bar.style.height = h + '%';
-    bar.style.animationDelay = (i * 0.04) + 's';
+    bar.style.animationDelay = (i * 0.035) + 's';
     el.appendChild(bar);
   });
 }
@@ -1167,7 +1111,6 @@ function cdjToggle(id) {
   var iframe = document.getElementById('cdj-' + id + '-iframe');
   var wave   = document.getElementById('cdj-' + id + '-wave');
   var btn    = document.getElementById('cdj-' + id + '-playbtn');
-
   var playing = unit.classList.contains('playing');
 
   if (playing) {
