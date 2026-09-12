@@ -1158,6 +1158,11 @@ function loadEmbed(id) {
       })
       .catch(function () {
         padsEl.children[i].classList.add('no-preview');
+        // Show network error in display on first failure
+        if (mainEl.textContent === 'SOUTHERN FREQUENCIES') {
+          mainEl.textContent = 'NETWORK ERROR';
+          subEl.textContent  = 'CANNOT REACH ITUNES API';
+        }
       });
   });
 
