@@ -7,10 +7,10 @@
 if (history.scrollRestoration) history.scrollRestoration = 'manual';
 window.scrollTo(0, 0);
 
-/* ── Countdown to First ATL Match: June 14, 2026 · 3 PM ET ── */
+/* ── Countdown (banner removed — guard keeps script alive) ── */
 (function () {
-  // June 14, 2026 3:00 PM Eastern Time (UTC-4 in summer)
-  const TARGET = new Date('2026-06-14T19:00:00Z');
+  var el = document.getElementById('cdDays');
+  if (!el) return; // banner gone, skip silently
 
   function pad(n) { return String(n).padStart(2, '0'); }
 
