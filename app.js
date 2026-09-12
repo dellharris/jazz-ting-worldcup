@@ -432,3 +432,47 @@ function escHtml(s) {
     .replace(/&/g,'&amp;').replace(/</g,'&lt;')
     .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
+
+/* ── Universe Nav ─────────────────────────────────────────── */
+(function () {
+  var overlay    = document.getElementById('jtrNav');
+  var hamburgers = document.querySelectorAll('.hamburger');
+
+  function animateBurgers(opening) {
+    hamburgers.forEach(function (btn) {
+      btn.classList.remove('jtr-opening', 'jtr-closing');
+      void btn.offsetWidth; // reflow — restart animation
+      btn.classList.add(opening ? 'jtr-opening' : 'jtr-closing');
+    });
+  }
+
+  function openNav() {
+    document.body.classList.add('jtr-nav-open');
+    overlay.setAttribute('aria-hidden', 'false');
+    hamburgers.forEach(function(b) { b.setAttribute('aria-label','Close navigation'); });
+    animateBurgers(true);
+  }
+
+  function closeNav() {
+    document.body.classList.remove('jtr-nav-open');
+    overlay.setAttribute('aria-hidden', 'true');
+    hamburgers.forEach(function(b) { b.setAttribute('aria-label','Open navigation'); });
+    animateBurgers(false);
+  }
+
+  hamburgers.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.body.classList.contains('jtr-nav-open') ? closeNav() : openNav();
+    });
+  });
+
+  // ESC to close
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && document.body.classList.contains('jtr-nav-open')) closeNav();
+  });
+
+  // Click dark background to close
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay) closeNav();
+  });
+})();

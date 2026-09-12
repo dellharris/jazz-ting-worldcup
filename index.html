@@ -199,6 +199,66 @@
   </div>
 </header>
 
+<!-- ── Universe Nav Overlay ──────────────────────────────── -->
+<nav class="jtr-nav-overlay" id="jtrNav" aria-hidden="true">
+
+  <svg class="jtr-nav-overlay__grain" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="jtr-gn" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="linearRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.76 0.72" numOctaves="4" seed="9" stitchTiles="stitch"/>
+        <feColorMatrix type="saturate" values="0"/>
+      </filter>
+    </defs>
+    <rect width="100%" height="100%" filter="url(#jtr-gn)"/>
+  </svg>
+
+  <div class="jtr-nav-breadcrumb">
+    IDU House <span>·</span> Jazz Ting Radio <span>·</span> Atlanta
+  </div>
+
+  <ul class="jtr-nav-links">
+
+    <li class="jtr-nav-link">
+      <a href="/sf">
+        <span class="jtr-nav-label">Southern Frequencies</span>
+        <span class="jtr-nav-meta">Live Hi-Fi Set · Programming</span>
+      </a>
+    </li>
+
+    <li class="jtr-nav-link jtr-nav-link--current">
+      <a href="#">
+        <span class="jtr-nav-label">Jazz Ting Radio</span>
+        <span class="jtr-nav-meta">You're Here</span>
+      </a>
+    </li>
+
+    <li class="jtr-nav-link">
+      <a href="https://www.iduhouse.com" target="_blank" rel="noopener">
+        <span class="jtr-nav-label">IDU House</span>
+        <span class="jtr-nav-meta">The Platform</span>
+      </a>
+    </li>
+
+    <li class="jtr-nav-link">
+      <a href="https://www.communeatl.com" target="_blank" rel="noopener">
+        <span class="jtr-nav-label">Commune ATL</span>
+        <span class="jtr-nav-meta">Atlanta, GA</span>
+      </a>
+    </li>
+
+  </ul>
+
+  <div class="jtr-nav-footer">
+    <a href="https://www.iduhouse.com" target="_blank" rel="noopener">
+      <img src="sf/idu-logo.png" alt="IDU House">
+    </a>
+    <a href="https://www.communeatl.com" target="_blank" rel="noopener">
+      <img src="sf/commune-logo.webp" alt="Commune ATL">
+    </a>
+  </div>
+
+</nav>
+
 <!-- ── HERO ───────────────────────────────────────────────── -->
 <section id="hero">
   <div class="hero-layout">
