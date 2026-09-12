@@ -476,12 +476,51 @@ body {
   display: block;
   width: 24px; height: 1.5px;
   background: rgba(200, 175, 135, 0.75);
-  transition: transform 0.28s cubic-bezier(.4,0,.2,1), opacity 0.2s;
-  transform-origin: center;
+  transform-origin: center center;
 }
-body.nav-open .site-header__toggle span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-body.nav-open .site-header__toggle span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-body.nav-open .site-header__toggle span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* ── Open: slide to centre, then rotate ── */
+@keyframes bar1-open {
+  0%   { transform: translateY(0px)    rotate(0deg);  }
+  48%  { transform: translateY(6.5px)  rotate(0deg);  }
+  100% { transform: translateY(6.5px)  rotate(45deg); }
+}
+@keyframes bar2-open {
+  0%   { opacity: 1; transform: scaleX(1); }
+  32%  { opacity: 0; transform: scaleX(0); }
+  100% { opacity: 0; transform: scaleX(0); }
+}
+@keyframes bar3-open {
+  0%   { transform: translateY(0px)     rotate(0deg);   }
+  48%  { transform: translateY(-6.5px)  rotate(0deg);   }
+  100% { transform: translateY(-6.5px)  rotate(-45deg); }
+}
+
+/* ── Close: un-rotate first, then spread back ── */
+@keyframes bar1-close {
+  0%   { transform: translateY(6.5px)  rotate(45deg); }
+  52%  { transform: translateY(6.5px)  rotate(0deg);  }
+  100% { transform: translateY(0px)    rotate(0deg);  }
+}
+@keyframes bar2-close {
+  0%   { opacity: 0; transform: scaleX(0); }
+  55%  { opacity: 1; transform: scaleX(1); }
+  100% { opacity: 1; transform: scaleX(1); }
+}
+@keyframes bar3-close {
+  0%   { transform: translateY(-6.5px)  rotate(-45deg); }
+  52%  { transform: translateY(-6.5px)  rotate(0deg);   }
+  100% { transform: translateY(0px)     rotate(0deg);   }
+}
+
+.toggle--opening span:nth-child(1) { animation: bar1-open  0.38s cubic-bezier(.4,0,.2,1) forwards; }
+.toggle--opening span:nth-child(2) { animation: bar2-open  0.28s ease forwards; }
+.toggle--opening span:nth-child(3) { animation: bar3-open  0.38s cubic-bezier(.4,0,.2,1) forwards; }
+
+.toggle--closing span:nth-child(1) { animation: bar1-close 0.38s cubic-bezier(.4,0,.2,1) forwards; }
+.toggle--closing span:nth-child(2) { animation: bar2-close 0.38s ease 0.14s forwards; }
+.toggle--closing span:nth-child(3) { animation: bar3-close 0.38s cubic-bezier(.4,0,.2,1) forwards; }
+
 body.nav-open { overflow: hidden; }
 
 /* ═══════════════════════════
@@ -989,26 +1028,33 @@ function loadEmbed(id) {
 var toggle  = document.getElementById('nav-toggle');
 var overlay = document.getElementById('nav-overlay');
 
+function animateToggle(opening) {
+  toggle.classList.remove('toggle--opening', 'toggle--closing');
+  void toggle.offsetWidth; // reflow — restarts animation
+  toggle.classList.add(opening ? 'toggle--opening' : 'toggle--closing');
+}
+
 toggle.addEventListener('click', function () {
   var isOpen = document.body.classList.toggle('nav-open');
   overlay.setAttribute('aria-hidden', !isOpen);
   toggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
+  animateToggle(isOpen);
 });
 
-// Close on ESC
 document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape' && document.body.classList.contains('nav-open')) {
     document.body.classList.remove('nav-open');
     overlay.setAttribute('aria-hidden', 'true');
     toggle.setAttribute('aria-label', 'Open navigation');
+    animateToggle(false);
   }
 });
 
-// Close when clicking the dark overlay background (not on links)
 overlay.addEventListener('click', function (e) {
-  if (e.target === overlay || e.target === overlay.querySelector('.nav-links') || e.target.classList.contains('nav-overlay__grain')) {
+  if (e.target === overlay || e.target.classList.contains('nav-overlay__grain')) {
     document.body.classList.remove('nav-open');
     overlay.setAttribute('aria-hidden', 'true');
+    animateToggle(false);
   }
 });
 </script>
