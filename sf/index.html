@@ -1075,10 +1075,11 @@ function loadEmbed(id) {
 (function () {
   // ── Add songs here ────────────────────────────────────────
   // Each entry: { a: 'Artist', t: 'Track Title' }
+  //   OR use iTunes ID for exact match: { id: '1843177886', a: 'Dell Harris', t: 'Jazz Night Ting' }
   // Previews + buy links fetched automatically from iTunes.
   // Up to 16 pads (4×4). Blank entries keep the pad dark.
   var TRACKS = [
-    { a: 'Dell Harris',       t: 'Jazz Side'                    },
+    { id: '1843177886', a: 'Dell Harris',     t: 'Jazz Night Ting'              },
     { a: 'MF DOOM',           t: 'Accordion'                    },
     { a: 'Loyle Carner',      t: 'Ice Water'                    },
     { a: 'Karriem Riggins',   t: 'Alone Together'               },
@@ -1136,9 +1137,13 @@ function loadEmbed(id) {
   });
 
   // Fetch previews + buy links from iTunes (no auth needed)
+  // Uses direct ID lookup when available, falls back to search
   TRACKS.forEach(function (trk, i) {
-    var q = encodeURIComponent(trk.a + ' ' + trk.t);
-    fetch('https://itunes.apple.com/search?term=' + q + '&entity=song&limit=1&media=music')
+    var url = trk.id
+      ? 'https://itunes.apple.com/lookup?id=' + trk.id
+      : 'https://itunes.apple.com/search?term=' + encodeURIComponent(trk.a + ' ' + trk.t) + '&entity=song&limit=1&media=music';
+
+    fetch(url)
       .then(function (r) { return r.json(); })
       .then(function (d) {
         var result = d.results && d.results[0];
