@@ -1,42 +1,11 @@
 /* ================================================================
-   JAZZ TING RADIO × WORLD CUP — app.js
+   JAZZ TING RADIO — app.js
    YouTube episodes + player interactions
 ================================================================ */
 
 // Always land at the top of the page on load
 if (history.scrollRestoration) history.scrollRestoration = 'manual';
 window.scrollTo(0, 0);
-
-/* ── Countdown (banner removed — guard keeps script alive) ── */
-(function () {
-  var el = document.getElementById('cdDays');
-  if (!el) return; // banner gone, skip silently
-
-  function pad(n) { return String(n).padStart(2, '0'); }
-
-  function tick() {
-    const diff = TARGET - Date.now();
-    if (diff <= 0) {
-      document.getElementById('cdDays').textContent  = '00';
-      document.getElementById('cdHours').textContent = '00';
-      document.getElementById('cdMins').textContent  = '00';
-      document.getElementById('cdSecs').textContent  = '00';
-      document.querySelector('.cd-label') && (document.querySelector('.cd-label').textContent = '⚽ MATCH DAY');
-      return;
-    }
-    const days  = Math.floor(diff / 86400000);
-    const hours = Math.floor((diff % 86400000) / 3600000);
-    const mins  = Math.floor((diff % 3600000)  / 60000);
-    const secs  = Math.floor((diff % 60000)    / 1000);
-    document.getElementById('cdDays').textContent  = pad(days);
-    document.getElementById('cdHours').textContent = pad(hours);
-    document.getElementById('cdMins').textContent  = pad(mins);
-    document.getElementById('cdSecs').textContent  = pad(secs);
-  }
-
-  tick();
-  setInterval(tick, 1000);
-})();
 
 /* ──────────────────────────────────────────────────────────────
    NO API KEY NEEDED. To add your real videos:
@@ -59,7 +28,6 @@ const CONFIG = {
 };
 
 // ── Add your real video IDs here ──────────────────────────────
-// Find each ID at: youtube.com/watch?v=YOUR_ID_IS_HERE
 const EPISODES = [
   { id:'hPrOw27Sves', title:'All Vinyl Jazz Funk Soul Mix',            host:'DJ Cozy Shawn',   date:'Recent' },
   { id:'KqTbh0HuK7E', title:'OutKast vs Larry June Mashup',            host:'Jazz Ting Radio', date:'Recent' },
@@ -76,10 +44,11 @@ document.addEventListener('DOMContentLoaded', () => {
   initEpisodeTabs();
   renderEpisodes();
   initRadioShuffle();
+  initUniverseNav();
 });
 
 /* ── Hero Play Button — unmute/mute YouTube at 70% volume ──── */
-let ytMuted = true;   // video starts muted (mute=1 in embed URL)
+let ytMuted = true;
 
 function _ytCmd(func, args) {
   const iframe = document.getElementById('ytHeroPlayer');
@@ -139,9 +108,9 @@ function initPowerOn() {
   const statusEl = document.getElementById('poStatusText');
   if (!screen || !knob) return;
 
-  const ARC_LEN = 265;   // matches SVG stroke-dasharray
-  const MAX_DEG = 270;   // full knob travel (like a real mixer knob: 7 o'clock → 5 o'clock)
-  let   rotDeg  = 0;     // current rotation (0 = fully counter-clockwise)
+  const ARC_LEN = 265;
+  const MAX_DEG = 270;
+  let   rotDeg  = 0;
   let   isDrag  = false;
   let   lastAng = null;
 
@@ -156,19 +125,18 @@ function initPowerOn() {
 
   function setRotation(deg) {
     rotDeg = Math.max(0, Math.min(MAX_DEG, deg));
-    // CSS: knob starts at -135deg visually, add rotDeg progress
     knob.style.transform = `rotate(${rotDeg - 135}deg)`;
-    // Arc: offset from full (265) down to 0
-    arcFill.style.strokeDashoffset = ARC_LEN - (rotDeg / MAX_DEG) * ARC_LEN;
-    // Feedback text
+    if (arcFill) arcFill.style.strokeDashoffset = ARC_LEN - (rotDeg / MAX_DEG) * ARC_LEN;
     if (rotDeg >= MAX_DEG * 0.85) {
-      instrEl.textContent = 'ALMOST THERE...';
-      led.style.setProperty('background', 'radial-gradient(circle at 35% 30%, #ffdd60, #cc8800)', '');
-      led.style.boxShadow  = '0 0 10px rgba(255,200,0,0.8)';
-      led.style.animation  = 'none';
-      statusEl.textContent = 'POWERING ON';
+      if (instrEl)  instrEl.textContent  = 'ALMOST THERE...';
+      if (led) {
+        led.style.setProperty('background', 'radial-gradient(circle at 35% 30%, #ffdd60, #cc8800)', '');
+        led.style.boxShadow  = '0 0 10px rgba(255,200,0,0.8)';
+        led.style.animation  = 'none';
+      }
+      if (statusEl) statusEl.textContent = 'POWERING ON';
     } else if (rotDeg >= MAX_DEG * 0.35) {
-      instrEl.textContent = 'KEEP TURNING...';
+      if (instrEl) instrEl.textContent = 'KEEP TURNING...';
     }
   }
 
@@ -185,7 +153,7 @@ function initPowerOn() {
     let delta = ang - lastAng;
     if (delta >  180) delta -= 360;
     if (delta < -180) delta += 360;
-    if (delta > 0) setRotation(rotDeg + delta);  // clockwise only
+    if (delta > 0) setRotation(rotDeg + delta);
     lastAng = ang;
   });
   window.addEventListener('touchmove', e => {
@@ -202,7 +170,6 @@ function initPowerOn() {
   window.addEventListener('mouseup',  () => { isDrag = false; lastAng = null; });
   window.addEventListener('touchend', () => { isDrag = false; lastAng = null; });
 
-  // Check for completion
   const check = setInterval(() => {
     if (rotDeg >= MAX_DEG - 2) {
       clearInterval(check);
@@ -212,11 +179,9 @@ function initPowerOn() {
 
   function powerOn() {
     isDrag = false;
-    led.className = 'po-led po-led-on';
-    led.style.cssText = '';
-    statusEl.textContent = 'ON AIR';
-    instrEl.textContent  = 'POWERED ON';
-    // Screen flicker → fade out
+    if (led) { led.className = 'po-led po-led-on'; led.style.cssText = ''; }
+    if (statusEl) statusEl.textContent = 'ON AIR';
+    if (instrEl)  instrEl.textContent  = 'POWERED ON';
     let ticks = 0;
     const flicker = setInterval(() => {
       screen.style.opacity = (ticks % 2 === 0) ? '0' : '0.5';
@@ -236,7 +201,6 @@ function renderEpisodes() {
   const list = document.getElementById('episodesList');
   if (!list) return;
 
-  // If a playlist ID is set, inject a native YouTube playlist player at the top
   let playlistEmbed = '';
   if (CONFIG.PLAYLIST_ID) {
     playlistEmbed = `
@@ -270,12 +234,9 @@ function renderEpisodes() {
 }
 
 function playEpisode(videoId, title) {
-  // Keep index in sync so Next/Prev stay relative to what's playing
   const idx = EPISODES.findIndex(e => e.id === videoId);
   if (idx !== -1) currentEpIndex = idx;
 
-  // Use YouTube API loadVideoById — keeps the same trusted iframe (fixes iOS autoplay)
-  // Call unMute/setVolume synchronously so iOS treats it as part of the user gesture
   const iframe = document.getElementById('ytHeroPlayer');
   if (iframe) {
     iframe.contentWindow.postMessage(
@@ -286,14 +247,14 @@ function playEpisode(videoId, title) {
     ytMuted = false;
     _updatePlayBtn(true);
   }
-  document.querySelector('.pbar-time').textContent = 'Playing: ' + title.slice(0, 30) + '…';
+  const timeEl = document.querySelector('.pbar-time');
+  if (timeEl) timeEl.textContent = 'Playing: ' + title.slice(0, 30) + '…';
 }
 
 /* ── Player Controls ──────────────────────────────────────── */
-let currentEpIndex = -1;  // -1 = hero default (not an episode yet)
+let currentEpIndex = -1;
 
 function initPlayer() {
-  // Scrubber fill visual
   let pct = 0;
   setInterval(() => {
     pct = (pct + 0.05) % 100;
@@ -301,10 +262,8 @@ function initPlayer() {
     if (fill) fill.style.width = pct + '%';
   }, 300);
 
-  // VU meter animation
   animateVU();
 
-  // Wire Next / Prev buttons
   document.querySelectorAll('.pbar-btn').forEach(btn => {
     const label = btn.getAttribute('aria-label');
     if (label === 'Next')     btn.addEventListener('click', playNext);
@@ -347,11 +306,6 @@ function animateVU() {
 }
 
 function togglePlay() {
-  const btn  = document.getElementById('playBtn');
-  const wrap = document.querySelector('.studio-video-wrap');
-  if (!wrap) return;
-
-  // Open the YouTube channel in a new tab (no channel ID needed)
   window.open(CONFIG.YT_CHANNEL_URL, '_blank');
 }
 
@@ -389,10 +343,8 @@ function initEpisodeTabs() {
     const btnText = document.getElementById('cfBtnText');
     const msg     = document.getElementById('cfMsg');
 
-    // Basic validation
     if (!form.checkValidity()) { form.reportValidity(); return; }
 
-    // Build JSONP URL (Mailchimp requires /post-json endpoint)
     const action = form.action.replace('/post?', '/post-json?') + '&c=_mcCb';
     const params = new URLSearchParams(new FormData(form)).toString();
 
@@ -401,7 +353,6 @@ function initEpisodeTabs() {
     msg.className = 'cf-msg';
     msg.textContent = '';
 
-    // JSONP callback
     window._mcCb = function (res) {
       btn.disabled = false;
       btnText.textContent = 'Send Inquiry';
@@ -411,10 +362,8 @@ function initEpisodeTabs() {
         form.reset();
       } else {
         msg.className = 'cf-msg cf-msg-err';
-        // Strip Mailchimp's HTML from error string
         msg.textContent = res.msg.replace(/<[^>]+>/g, '') || 'Something went wrong. Please try again.';
       }
-      // Clean up script tag
       const old = document.getElementById('_mcScript');
       if (old) old.remove();
     };
@@ -434,14 +383,15 @@ function escHtml(s) {
 }
 
 /* ── Universe Nav ─────────────────────────────────────────── */
-(function () {
+function initUniverseNav() {
   var overlay    = document.getElementById('jtrNav');
+  if (!overlay) return;
   var hamburgers = document.querySelectorAll('.hamburger');
 
   function animateBurgers(opening) {
     hamburgers.forEach(function (btn) {
       btn.classList.remove('jtr-opening', 'jtr-closing');
-      void btn.offsetWidth; // reflow — restart animation
+      void btn.offsetWidth;
       btn.classList.add(opening ? 'jtr-opening' : 'jtr-closing');
     });
   }
@@ -466,13 +416,11 @@ function escHtml(s) {
     });
   });
 
-  // ESC to close
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && document.body.classList.contains('jtr-nav-open')) closeNav();
   });
 
-  // Click dark background to close
   overlay.addEventListener('click', function (e) {
     if (e.target === overlay) closeNav();
   });
-})();
+}
