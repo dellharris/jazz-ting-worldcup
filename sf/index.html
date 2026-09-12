@@ -11,6 +11,8 @@
 <meta property="og:url" content="https://radio.dellharris.com/sf">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -427,20 +429,250 @@ body {
 /* ═══════════════════════════
    RESPONSIVE
 ═══════════════════════════ */
+/* ═══════════════════════════
+   SITE HEADER
+═══════════════════════════ */
+.site-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background: linear-gradient(to bottom, rgba(4,2,1,0.65) 0%, transparent 100%);
+  pointer-events: none;
+}
+.site-header__brand,
+.site-header__toggle { pointer-events: all; }
+
+.site-header__brand {
+  font-family: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-decoration: none;
+  line-height: 1;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 1px;
+}
+.brand__jazz  { color: #e0c840; }
+.brand__ting  { color: #e8d880; }
+.brand__radio { color: rgba(200, 172, 80, 0.55); font-size: 14px; letter-spacing: 2px; margin-left: 3px; }
+
+.site-header__toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  position: relative; z-index: 210;
+}
+.site-header__toggle span {
+  display: block;
+  width: 24px; height: 1.5px;
+  background: rgba(200, 175, 135, 0.75);
+  transition: transform 0.28s cubic-bezier(.4,0,.2,1), opacity 0.2s;
+  transform-origin: center;
+}
+body.nav-open .site-header__toggle span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+body.nav-open .site-header__toggle span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+body.nav-open .site-header__toggle span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+body.nav-open { overflow: hidden; }
+
+/* ═══════════════════════════
+   FULL-SCREEN NAV OVERLAY
+═══════════════════════════ */
+.nav-overlay {
+  position: fixed; inset: 0;
+  z-index: 195;
+  background: #060402;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 100px 40px 60px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-16px);
+  transition: opacity 0.35s cubic-bezier(.4,0,.2,1), transform 0.35s cubic-bezier(.4,0,.2,1);
+}
+body.nav-open .nav-overlay {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+
+.nav-overlay__grain {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  mix-blend-mode: overlay; opacity: 0.1;
+}
+
+/* Universe breadcrumb */
+.nav-universe {
+  font-size: 9px; letter-spacing: 0.5em;
+  color: rgba(155, 128, 88, 0.35);
+  font-weight: 300; text-transform: uppercase;
+  margin-bottom: 40px;
+  display: flex; align-items: center; gap: 12px;
+}
+.nav-universe span { opacity: 0.4; }
+
+/* Nav links list */
+.nav-links {
+  list-style: none;
+  max-width: 800px;
+  width: 100%;
+}
+
+.nav-link { border-bottom: 1px solid rgba(140, 115, 78, 0.09); }
+.nav-link:first-child { border-top: 1px solid rgba(140, 115, 78, 0.09); }
+
+.nav-link a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 0 22px 0;
+  text-decoration: none;
+  transition: padding-left 0.22s cubic-bezier(.4,0,.2,1);
+  gap: 16px;
+}
+.nav-link a:hover { padding-left: 14px; }
+
+.nav-link__label {
+  font-size: clamp(24px, 4.5vw, 48px);
+  letter-spacing: 0.1em;
+  color: rgba(215, 192, 150, 0.85);
+  font-weight: 200;
+  text-transform: uppercase;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+.nav-link a:hover .nav-link__label { color: rgba(230, 210, 172, 1); }
+
+/* Current page — dimmed */
+.nav-link--current .nav-link__label { color: rgba(175, 148, 100, 0.45); }
+.nav-link--current a:hover .nav-link__label { color: rgba(195, 165, 118, 0.65); }
+
+.nav-link__meta {
+  font-size: 9px; letter-spacing: 0.4em;
+  color: rgba(145, 118, 80, 0.38);
+  font-weight: 300; text-transform: uppercase;
+  text-align: right; flex-shrink: 0;
+  transition: color 0.2s;
+}
+.nav-link a:hover .nav-link__meta { color: rgba(165, 135, 90, 0.65); }
+
+/* Logos row at bottom of overlay */
+.nav-footer-logos {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  margin-top: 44px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(140, 115, 78, 0.08);
+}
+.nav-footer-logos a {
+  display: block;
+  opacity: 0.28;
+  transition: opacity 0.2s;
+}
+.nav-footer-logos a:hover { opacity: 0.6; }
+.nav-footer-logos img {
+  height: 16px; width: auto;
+  display: block;
+  filter: brightness(0) invert(1);
+}
+
 @media (max-width: 640px) {
+  .site-header { padding: 18px 24px; }
+  .nav-overlay { padding: 88px 24px 48px; }
+  .nav-universe { margin-bottom: 28px; }
   .playlist       { padding: 60px 24px 80px; }
   .footer         { padding: 52px 24px 64px; }
-
-  .track a {
-    grid-template-columns: 26px 1fr 1fr;
-  }
-  .track__tag { display: none; }
-
+  .track a        { grid-template-columns: 26px 1fr 1fr; }
+  .track__tag     { display: none; }
   .track__artist, .track__title { font-size: 10px; }
+  .playlist__players { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
+
+<!-- ══════════ SITE HEADER ══════════ -->
+<header class="site-header">
+  <a class="site-header__brand" href="https://radio.dellharris.com">
+    <span class="brand__jazz">Jazz</span><span class="brand__ting">Ting</span><span class="brand__radio">Radio</span>
+  </a>
+  <button class="site-header__toggle" id="nav-toggle" aria-label="Open navigation">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- ══════════ FULL-SCREEN NAV ══════════ -->
+<nav class="nav-overlay" id="nav-overlay" aria-hidden="true">
+
+  <svg class="nav-overlay__grain" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="gn" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="linearRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.76 0.72" numOctaves="4" seed="4" stitchTiles="stitch"/>
+        <feColorMatrix type="saturate" values="0"/>
+      </filter>
+    </defs>
+    <rect width="100%" height="100%" filter="url(#gn)"/>
+  </svg>
+
+  <div class="nav-universe">
+    IDU House <span>·</span> Jazz Ting Radio <span>·</span> Southern Frequencies
+  </div>
+
+  <ul class="nav-links">
+
+    <li class="nav-link nav-link--current">
+      <a href="https://radio.dellharris.com/sf">
+        <span class="nav-link__label">Southern Frequencies</span>
+        <span class="nav-link__meta">Live Hi-Fi Set · ATL</span>
+      </a>
+    </li>
+
+    <li class="nav-link">
+      <a href="https://radio.dellharris.com">
+        <span class="nav-link__label">Jazz Ting Radio</span>
+        <span class="nav-link__meta">The Main Station</span>
+      </a>
+    </li>
+
+    <li class="nav-link">
+      <a href="https://www.communeatl.com" target="_blank" rel="noopener">
+        <span class="nav-link__label">Commune ATL</span>
+        <span class="nav-link__meta">Atlanta, GA</span>
+      </a>
+    </li>
+
+    <li class="nav-link">
+      <a href="https://www.iduhouse.com" target="_blank" rel="noopener">
+        <span class="nav-link__label">IDU House</span>
+        <span class="nav-link__meta">Platform</span>
+      </a>
+    </li>
+
+  </ul>
+
+  <div class="nav-footer-logos">
+    <a href="https://www.communeatl.com" target="_blank" rel="noopener">
+      <img src="commune-logo.webp" alt="Commune ATL">
+    </a>
+    <a href="https://www.iduhouse.com" target="_blank" rel="noopener">
+      <img src="idu-logo.png" alt="IDU House">
+    </a>
+  </div>
+
+</nav>
 
 <!-- ══════════ CREATIVE — V1 ══════════ -->
 <section class="creative">
@@ -752,6 +984,33 @@ function loadEmbed(id) {
   iframe.src = iframe.dataset.src;
   card.classList.add('player-card--playing');
 }
+
+// ── Navigation ──────────────────────────────────
+var toggle  = document.getElementById('nav-toggle');
+var overlay = document.getElementById('nav-overlay');
+
+toggle.addEventListener('click', function () {
+  var isOpen = document.body.classList.toggle('nav-open');
+  overlay.setAttribute('aria-hidden', !isOpen);
+  toggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
+});
+
+// Close on ESC
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape' && document.body.classList.contains('nav-open')) {
+    document.body.classList.remove('nav-open');
+    overlay.setAttribute('aria-hidden', 'true');
+    toggle.setAttribute('aria-label', 'Open navigation');
+  }
+});
+
+// Close when clicking the dark overlay background (not on links)
+overlay.addEventListener('click', function (e) {
+  if (e.target === overlay || e.target === overlay.querySelector('.nav-links') || e.target.classList.contains('nav-overlay__grain')) {
+    document.body.classList.remove('nav-open');
+    overlay.setAttribute('aria-hidden', 'true');
+  }
+});
 </script>
 
 </body>
