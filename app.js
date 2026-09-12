@@ -424,44 +424,35 @@ function sfScramble(src, dest) {
     }
   }
 
-  // Phase 1 — rapid stagger (all tiles on-screen in ~100ms)
-  tiles.forEach(function (t, i) {
-    setTimeout(function () {
-      t.el.style.transition = 'opacity 0.04s';
-      t.el.style.opacity    = '1';
-    }, i * 1);
+  // Phase 1 — all tiles snap on instantly
+  tiles.forEach(function (t) {
+    t.el.style.opacity = '1';
   });
 
-  // Phase 2 — 3 fast scramble passes, mostly horizontal like a bad signal
+  // Phase 2 — 2 ultra-fast scramble passes
   var pass = 0;
-  var PASSES = 3;
+  var PASSES = 2;
 
   function scramblePass() {
     pass++;
-    var spread = 0.5 - pass * 0.08;
     tiles.forEach(function (t) {
-      var tx = (Math.random() - 0.5) * W * spread;
-      var ty = (Math.random() - 0.5) * H * 0.15;
-      var spd = (0.025 + Math.random() * 0.025).toFixed(3);
-      t.el.style.transition = 'transform ' + spd + 's ease-out';
+      var tx = (Math.random() - 0.5) * W * 0.35;
+      var ty = (Math.random() - 0.5) * H * 0.08;
+      t.el.style.transition = 'transform 0.018s linear';
       t.el.style.transform  = 'translate(' + tx + 'px,' + ty + 'px)';
     });
     if (pass < PASSES) {
-      setTimeout(scramblePass, 35);
+      setTimeout(scramblePass, 20);
     } else {
+      wrap.style.filter = 'brightness(12) saturate(0)';
       setTimeout(function () {
-        wrap.style.transition = 'filter 0.08s ease-in';
-        wrap.style.filter     = 'brightness(10) saturate(0)';
-        setTimeout(function () {
-          try { sessionStorage.setItem('jtr-enter', '1'); } catch(e) {}
-          window.location.href = dest;
-        }, 90);
-      }, 50);
+        try { sessionStorage.setItem('jtr-enter', '1'); } catch(e) {}
+        window.location.href = dest;
+      }, 60);
     }
   }
 
-  // Start scramble as soon as tiles are visible
-  setTimeout(scramblePass, ROWS * COLS * 1 + 50);
+  setTimeout(scramblePass, 30);
 }
 
 function escHtml(s) {
