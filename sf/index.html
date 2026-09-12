@@ -639,6 +639,16 @@ body.nav-open .nav-overlay {
   .track__artist, .track__title { font-size: 10px; }
   .playlist__players { grid-template-columns: 1fr; }
 }
+/* ── JTR landing: tiles reassemble from bright static ── */
+@keyframes sf-land-assemble {
+  0%   { filter: brightness(8) saturate(0) blur(2px); opacity: 0.6; }
+  18%  { filter: brightness(4) saturate(0.1) blur(1px); opacity: 0.85; }
+  40%  { filter: brightness(2) saturate(0.4) blur(0); opacity: 0.95; }
+  100% { filter: sepia(22%) contrast(1.12) brightness(0.82) saturate(0.75); opacity: 1; }
+}
+.creative__photo.jtr-land {
+  animation: sf-land-assemble 1.4s cubic-bezier(.4,0,.2,1) forwards;
+}
 </style>
 </head>
 <body>
@@ -1023,6 +1033,17 @@ function loadEmbed(id) {
   iframe.src = iframe.dataset.src;
   card.classList.add('player-card--playing');
 }
+
+// ── JTR → SF landing animation ──────────────────────────────
+(function () {
+  try {
+    if (sessionStorage.getItem('jtr-enter') === '1') {
+      sessionStorage.removeItem('jtr-enter');
+      var photo = document.querySelector('.creative__photo');
+      if (photo) photo.classList.add('jtr-land');
+    }
+  } catch(e) {}
+})();
 
 // ── Navigation ──────────────────────────────────
 var toggle  = document.getElementById('nav-toggle');

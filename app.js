@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderEpisodes();
   initRadioShuffle();
   initUniverseNav();
+  initSFTransition();
 });
 
 /* ── Hero Play Button — unmute/mute YouTube at 70% volume ──── */
@@ -375,7 +376,96 @@ function initEpisodeTabs() {
   });
 })();
 
-/* ── Utils ────────────────────────────────────────────────── */
+/* ── Enter the World — Tile Scramble Transition ────────────── */
+function initSFTransition() {
+  var btn = document.querySelector('.sf-cta');
+  if (!btn) return;
+
+  btn.addEventListener('click', function (e) {
+    e.preventDefault();
+    var dest = this.href;
+    sfScramble('sf-promo.png', dest);
+  });
+}
+
+function sfScramble(src, dest) {
+  var W = window.innerWidth;
+  var H = window.innerHeight;
+  var ROWS = 10;
+  var COLS = 10;
+  var tW   = W / COLS;
+  var tH   = H / ROWS;
+
+  // Wrapper
+  var wrap = document.createElement('div');
+  wrap.style.cssText = 'position:fixed;inset:0;z-index:9500;overflow:hidden;background:#050302;';
+  document.body.appendChild(wrap);
+
+  // Build grid of image slices
+  var tiles = [];
+  for (var r = 0; r < ROWS; r++) {
+    for (var c = 0; c < COLS; c++) {
+      var div = document.createElement('div');
+      div.style.cssText = [
+        'position:absolute;',
+        'left:'   + (c * tW) + 'px;',
+        'top:'    + (r * tH) + 'px;',
+        'width:'  + (tW + 1) + 'px;',
+        'height:' + (tH + 1) + 'px;',
+        'background-image:url(' + src + ');',
+        'background-size:' + W + 'px ' + H + 'px;',
+        'background-position:-' + (c * tW) + 'px -' + (r * tH) + 'px;',
+        'background-repeat:no-repeat;',
+        'opacity:0;',
+        'will-change:transform,opacity;',
+      ].join('');
+      wrap.appendChild(div);
+      tiles.push({ el: div, r: r, c: c });
+    }
+  }
+
+  // Phase 1 — staggered fade-in (photo builds tile by tile)
+  tiles.forEach(function (t, i) {
+    setTimeout(function () {
+      t.el.style.transition = 'opacity 0.12s';
+      t.el.style.opacity    = '1';
+    }, i * 6);
+  });
+
+  // Phase 2 — scramble (tiles fly to random offsets, 3 rapid passes)
+  var pass = 0;
+  var PASSES = 4;
+
+  function scramblePass() {
+    pass++;
+    var spread = 1.2 - pass * 0.22; // shrink spread each pass
+    tiles.forEach(function (t) {
+      var tx = (Math.random() - 0.5) * W * spread;
+      var ty = (Math.random() - 0.5) * H * 0.4;
+      var spd = (0.07 + Math.random() * 0.1).toFixed(3);
+      t.el.style.transition = 'transform ' + spd + 's cubic-bezier(.6,0,.8,0.4)';
+      t.el.style.transform  = 'translate(' + tx + 'px,' + ty + 'px)';
+    });
+    if (pass < PASSES) {
+      setTimeout(scramblePass, 130);
+    } else {
+      // Phase 3 — flash white and navigate
+      setTimeout(function () {
+        wrap.style.transition = 'filter 0.25s ease-in';
+        wrap.style.filter     = 'brightness(8) saturate(0)';
+        setTimeout(function () {
+          // Store flag so SF page knows to play the land animation
+          try { sessionStorage.setItem('jtr-enter', '1'); } catch(e) {}
+          window.location.href = dest;
+        }, 220);
+      }, 160);
+    }
+  }
+
+  // Wait for tiles to finish fading in, then scramble
+  setTimeout(scramblePass, ROWS * COLS * 6 + 120);
+}
+
 function escHtml(s) {
   return String(s || '')
     .replace(/&/g,'&amp;').replace(/</g,'&lt;')
