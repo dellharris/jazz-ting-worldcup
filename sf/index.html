@@ -641,13 +641,12 @@ body.nav-open .nav-overlay {
 }
 /* ── JTR landing: tiles reassemble from bright static ── */
 @keyframes sf-land-assemble {
-  0%   { filter: brightness(8) saturate(0) blur(2px); opacity: 0.6; }
-  18%  { filter: brightness(4) saturate(0.1) blur(1px); opacity: 0.85; }
-  40%  { filter: brightness(2) saturate(0.4) blur(0); opacity: 0.95; }
+  0%   { filter: brightness(10) saturate(0) blur(1px); opacity: 0.7; }
+  25%  { filter: brightness(3) saturate(0.2) blur(0); opacity: 0.9; }
   100% { filter: sepia(22%) contrast(1.12) brightness(0.82) saturate(0.75); opacity: 1; }
 }
 .creative__photo.jtr-land {
-  animation: sf-land-assemble 1.4s cubic-bezier(.4,0,.2,1) forwards;
+  animation: sf-land-assemble 0.8s cubic-bezier(.4,0,.2,1) forwards;
 }
 </style>
 </head>

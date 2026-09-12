@@ -424,46 +424,44 @@ function sfScramble(src, dest) {
     }
   }
 
-  // Phase 1 — staggered fade-in (photo builds tile by tile)
+  // Phase 1 — rapid stagger (all tiles on-screen in ~100ms)
   tiles.forEach(function (t, i) {
     setTimeout(function () {
-      t.el.style.transition = 'opacity 0.12s';
+      t.el.style.transition = 'opacity 0.04s';
       t.el.style.opacity    = '1';
-    }, i * 6);
+    }, i * 1);
   });
 
-  // Phase 2 — scramble (tiles fly to random offsets, 3 rapid passes)
+  // Phase 2 — 3 fast scramble passes, mostly horizontal like a bad signal
   var pass = 0;
-  var PASSES = 4;
+  var PASSES = 3;
 
   function scramblePass() {
     pass++;
-    var spread = 1.2 - pass * 0.22; // shrink spread each pass
+    var spread = 0.5 - pass * 0.08;
     tiles.forEach(function (t) {
       var tx = (Math.random() - 0.5) * W * spread;
-      var ty = (Math.random() - 0.5) * H * 0.4;
-      var spd = (0.07 + Math.random() * 0.1).toFixed(3);
-      t.el.style.transition = 'transform ' + spd + 's cubic-bezier(.6,0,.8,0.4)';
+      var ty = (Math.random() - 0.5) * H * 0.15;
+      var spd = (0.025 + Math.random() * 0.025).toFixed(3);
+      t.el.style.transition = 'transform ' + spd + 's ease-out';
       t.el.style.transform  = 'translate(' + tx + 'px,' + ty + 'px)';
     });
     if (pass < PASSES) {
-      setTimeout(scramblePass, 130);
+      setTimeout(scramblePass, 35);
     } else {
-      // Phase 3 — flash white and navigate
       setTimeout(function () {
-        wrap.style.transition = 'filter 0.25s ease-in';
-        wrap.style.filter     = 'brightness(8) saturate(0)';
+        wrap.style.transition = 'filter 0.08s ease-in';
+        wrap.style.filter     = 'brightness(10) saturate(0)';
         setTimeout(function () {
-          // Store flag so SF page knows to play the land animation
           try { sessionStorage.setItem('jtr-enter', '1'); } catch(e) {}
           window.location.href = dest;
-        }, 220);
-      }, 160);
+        }, 90);
+      }, 50);
     }
   }
 
-  // Wait for tiles to finish fading in, then scramble
-  setTimeout(scramblePass, ROWS * COLS * 6 + 120);
+  // Start scramble as soon as tiles are visible
+  setTimeout(scramblePass, ROWS * COLS * 1 + 50);
 }
 
 function escHtml(s) {
