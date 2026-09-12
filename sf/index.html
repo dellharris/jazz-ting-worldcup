@@ -639,6 +639,144 @@ body.nav-open .nav-overlay {
   .track__artist, .track__title { font-size: 10px; }
   .playlist__players { grid-template-columns: 1fr; }
 }
+
+/* ── SP-404 Sampler ───────────────────────────────────────── */
+.sp404-wrap {
+  display: flex; justify-content: center;
+  padding: 8px 0 40px;
+}
+.sp404-unit {
+  width: 100%;
+  background: linear-gradient(160deg, #1e1a14 0%, #131008 55%, #1b1710 100%);
+  border-radius: 14px; padding: 26px 26px 22px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.92), 0 4px 16px rgba(0,0,0,0.7),
+    inset 0 1px 0 rgba(255,200,80,0.07), inset 0 -1px 0 rgba(0,0,0,0.6);
+  border: 1px solid rgba(200,150,40,0.09);
+}
+.sp404-screen {
+  background: #080603; border-radius: 6px;
+  padding: 12px 18px; margin-bottom: 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  border: 1px solid rgba(200,150,40,0.13);
+  box-shadow: inset 0 2px 10px rgba(0,0,0,0.85);
+  position: relative; overflow: hidden;
+}
+.sp404-screen::before {
+  content: ''; position: absolute; inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.18) 3px, rgba(0,0,0,0.18) 4px);
+  pointer-events: none;
+}
+.sp404-screen-inner { flex: 1; min-width: 0; }
+.sp404-display-main {
+  font-family: 'Courier Prime', monospace; font-size: 13px;
+  letter-spacing: 0.22em; color: rgba(72,230,110,0.92);
+  text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.sp404-display-sub {
+  font-family: 'Courier Prime', monospace; font-size: 9px;
+  letter-spacing: 0.3em; color: rgba(72,230,110,0.38);
+  text-transform: uppercase; margin-top: 3px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.sp404-led {
+  width: 9px; height: 9px; border-radius: 50%;
+  flex-shrink: 0; margin-left: 14px;
+  background: rgba(72,230,110,0.22);
+  box-shadow: 0 0 5px rgba(72,230,110,0.15);
+  transition: background 0.1s, box-shadow 0.1s;
+}
+.sp404-led.on {
+  background: rgba(72,230,110,1);
+  box-shadow: 0 0 14px rgba(72,230,110,0.9);
+  animation: led-beat 0.45s ease-in-out infinite;
+}
+@keyframes led-beat { 0%,100%{opacity:1} 50%{opacity:0.45} }
+
+.sp404-pads {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 9px; margin-bottom: 20px;
+}
+.sp404-pad {
+  aspect-ratio: 1.1; border-radius: 5px; border: none;
+  cursor: pointer; position: relative;
+  transition: transform 0.05s, filter 0.05s;
+  -webkit-tap-highlight-color: transparent; user-select: none; outline: none;
+}
+.sp404-pad:focus-visible { outline: 1px solid rgba(200,150,40,0.5); }
+.sp404-pad[data-bank="0"] {
+  background: radial-gradient(ellipse at 32% 28%, #c8880c, #7a4e08);
+  box-shadow: inset 0 3px 7px rgba(255,210,80,0.14), inset 0 -2px 5px rgba(0,0,0,0.55), 0 4px 10px rgba(0,0,0,0.82);
+}
+.sp404-pad[data-bank="1"] {
+  background: radial-gradient(ellipse at 32% 28%, #722a2a, #421414);
+  box-shadow: inset 0 3px 7px rgba(200,80,80,0.1), inset 0 -2px 5px rgba(0,0,0,0.55), 0 4px 10px rgba(0,0,0,0.82);
+}
+.sp404-pad[data-bank="2"] {
+  background: radial-gradient(ellipse at 32% 28%, #2c4432, #182818);
+  box-shadow: inset 0 3px 7px rgba(80,180,80,0.08), inset 0 -2px 5px rgba(0,0,0,0.55), 0 4px 10px rgba(0,0,0,0.82);
+}
+.sp404-pad[data-bank="3"] {
+  background: radial-gradient(ellipse at 32% 28%, #7c6840, #4e4228);
+  box-shadow: inset 0 3px 7px rgba(220,190,120,0.1), inset 0 -2px 5px rgba(0,0,0,0.55), 0 4px 10px rgba(0,0,0,0.82);
+}
+.sp404-pad:hover { filter: brightness(1.35); }
+.sp404-pad:active { transform: scale(0.92); filter: brightness(0.88); }
+.sp404-pad.playing[data-bank="0"] {
+  background: radial-gradient(ellipse at 38% 32%, #f0b040, #c07820);
+  animation: glow0 0.42s ease-in-out infinite;
+}
+.sp404-pad.playing[data-bank="1"] {
+  background: radial-gradient(ellipse at 38% 32%, #c04040, #802020);
+  animation: glow1 0.42s ease-in-out infinite;
+}
+.sp404-pad.playing[data-bank="2"] {
+  background: radial-gradient(ellipse at 38% 32%, #407c50, #244e30);
+  animation: glow2 0.42s ease-in-out infinite;
+}
+.sp404-pad.playing[data-bank="3"] {
+  background: radial-gradient(ellipse at 38% 32%, #b89858, #7a6438);
+  animation: glow3 0.42s ease-in-out infinite;
+}
+@keyframes glow0{0%,100%{box-shadow:0 0 18px rgba(220,145,25,0.5)}50%{box-shadow:0 0 44px rgba(220,145,25,1)}}
+@keyframes glow1{0%,100%{box-shadow:0 0 18px rgba(180,40,40,0.5)}50%{box-shadow:0 0 44px rgba(180,40,40,1)}}
+@keyframes glow2{0%,100%{box-shadow:0 0 18px rgba(45,150,55,0.5)}50%{box-shadow:0 0 44px rgba(45,150,55,1)}}
+@keyframes glow3{0%,100%{box-shadow:0 0 18px rgba(175,150,85,0.5)}50%{box-shadow:0 0 44px rgba(175,150,85,1)}}
+.sp404-pad.no-preview { opacity: 0.3; cursor: default; }
+.sp404-pad-num {
+  position: absolute; top: 5px; left: 7px;
+  font-family: 'Courier Prime', monospace;
+  font-size: 9px; letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.18); font-weight: 700;
+}
+.sp404-pad-bar {
+  position: absolute; bottom: 0; left: 0;
+  height: 3px; width: 0%;
+  background: rgba(255,255,255,0.55);
+  border-radius: 0 0 5px 5px;
+}
+.sp404-footer {
+  display: flex; align-items: center;
+  justify-content: space-between; padding: 0 6px;
+}
+.sp404-knob {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: radial-gradient(circle at 34% 28%, #2e2a22, #141008);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.82), inset 0 1px 0 rgba(255,255,255,0.04);
+  border: 1px solid rgba(200,150,40,0.1); position: relative;
+}
+.sp404-knob::after {
+  content:''; position:absolute; top:4px; left:50%; transform:translateX(-50%);
+  width:2px; height:6px; background:rgba(200,150,40,0.35); border-radius:1px;
+}
+.sp404-footer-label {
+  font-family:'Courier Prime', monospace; font-size:8px;
+  letter-spacing:0.28em; color:rgba(200,150,40,0.22); text-transform:uppercase;
+}
+@media (max-width: 640px) {
+  .sp404-pads { gap: 6px; }
+  .sp404-unit { padding: 18px 16px 16px; }
+}
+
 /* ── JTR landing: tiles reassemble from bright static ── */
 @keyframes sf-land-assemble {
   0%   { filter: brightness(10) saturate(0) blur(1px); opacity: 0.7; }
@@ -854,153 +992,28 @@ body.nav-open .nav-overlay {
        target="_blank" rel="noopener">Spotify &nbsp;↗</a>
   </div>
 
-  <ol class="tracks">
+  <!-- SP-404 Sampler -->
+  <div class="sp404-wrap">
+    <div class="sp404-unit">
 
-    <li class="track track--own">
-      <a href="https://music.apple.com/search?term=Dell+Harris+Jazz+Side" target="_blank" rel="noopener">
-        <span class="track__num">01</span>
-        <span class="track__artist">Dell Harris</span>
-        <span class="track__title">Jazz Side (Instrumental)</span>
-        <span class="track__tag">Anchor</span>
-      </a>
-    </li>
+      <div class="sp404-screen">
+        <div class="sp404-screen-inner">
+          <div class="sp404-display-main" id="sp404Main">SOUTHERN FREQUENCIES</div>
+          <div class="sp404-display-sub"  id="sp404Sub">TAP A PAD TO PREVIEW</div>
+        </div>
+        <div class="sp404-led" id="sp404Led"></div>
+      </div>
 
-    <li class="track">
-      <a href="https://music.apple.com/search?term=MF+DOOM+Accordion+Madvillainy" target="_blank" rel="noopener">
-        <span class="track__num">02</span>
-        <span class="track__artist">MF DOOM</span>
-        <span class="track__title">Accordion</span>
-        <span class="track__tag">Jazz Rap</span>
-      </a>
-    </li>
+      <div class="sp404-pads" id="sp404Pads"></div>
 
-    <li class="track">
-      <a href="https://music.apple.com/search?term=Loyle+Carner+Ice+Water" target="_blank" rel="noopener">
-        <span class="track__num">03</span>
-        <span class="track__artist">Loyle Carner</span>
-        <span class="track__title">Ice Water (feat. Kiko Bun)</span>
-        <span class="track__tag">UK</span>
-      </a>
-    </li>
+      <div class="sp404-footer">
+        <div class="sp404-knob"></div>
+        <span class="sp404-footer-label">DELL HARRIS · SP-404 · SOUTHERN FREQUENCIES</span>
+        <div class="sp404-knob"></div>
+      </div>
 
-    <li class="track">
-      <a href="https://music.apple.com/search?term=Karriem+Riggins+Alone+Together" target="_blank" rel="noopener">
-        <span class="track__num">04</span>
-        <span class="track__artist">Karriem Riggins</span>
-        <span class="track__title">Alone Together</span>
-        <span class="track__tag">Instrumental</span>
-      </a>
-    </li>
-
-    <li class="track">
-      <a href="https://music.apple.com/search?term=OutKast+SpottieOttieDopaliscious" target="_blank" rel="noopener">
-        <span class="track__num">05</span>
-        <span class="track__artist">OutKast</span>
-        <span class="track__title">SpottieOttieDopaliscious</span>
-        <span class="track__tag">ATL</span>
-      </a>
-    </li>
-
-    <li class="track track--own">
-      <a href="https://music.apple.com/search?term=Bexblu+Slew+Dem" target="_blank" rel="noopener">
-        <span class="track__num">06</span>
-        <span class="track__artist">Bexblu</span>
-        <span class="track__title">Slew Dem</span>
-        <span class="track__tag">UK Grime</span>
-      </a>
-    </li>
-
-    <li class="track">
-      <a href="https://music.apple.com/search?term=Freddie+Gibbs+Madlib+Thuggin" target="_blank" rel="noopener">
-        <span class="track__num">07</span>
-        <span class="track__artist">Freddie Gibbs &amp; Madlib</span>
-        <span class="track__title">Thuggin</span>
-        <span class="track__tag">Beats</span>
-      </a>
-    </li>
-
-    <li class="track">
-      <a href="https://music.apple.com/search?term=Knxwledge+Timez" target="_blank" rel="noopener">
-        <span class="track__num">08</span>
-        <span class="track__artist">Knxwledge</span>
-        <span class="track__title">Timez</span>
-        <span class="track__tag">Lo-Fi</span>
-      </a>
-    </li>
-
-    <li class="track">
-      <a href="https://music.apple.com/search?term=Little+Simz+101+FM" target="_blank" rel="noopener">
-        <span class="track__num">09</span>
-        <span class="track__artist">Little Simz</span>
-        <span class="track__title">101 FM</span>
-        <span class="track__tag">UK</span>
-      </a>
-    </li>
-
-    <li class="track track--own">
-      <a href="https://music.apple.com/search?term=Rejie+Snow+Cookie+Chip" target="_blank" rel="noopener">
-        <span class="track__num">10</span>
-        <span class="track__artist">Rejie Snow</span>
-        <span class="track__title">Cookie Chip</span>
-        <span class="track__tag">Anchor</span>
-      </a>
-    </li>
-
-    <li class="track">
-      <a href="https://music.apple.com/search?term=Earl+Sweatshirt+Grief" target="_blank" rel="noopener">
-        <span class="track__num">11</span>
-        <span class="track__artist">Earl Sweatshirt</span>
-        <span class="track__title">Grief</span>
-        <span class="track__tag">Abstract</span>
-      </a>
-    </li>
-
-    <li class="track">
-      <a href="https://music.apple.com/search?term=Kano+T-Shirt+Weather+in+the+Manor" target="_blank" rel="noopener">
-        <span class="track__num">12</span>
-        <span class="track__artist">Kano</span>
-        <span class="track__title">T-Shirt Weather in the Manor</span>
-        <span class="track__tag">UK</span>
-      </a>
-    </li>
-
-    <li class="track">
-      <a href="https://music.apple.com/search?term=Curren%24y+Seat+Change" target="_blank" rel="noopener">
-        <span class="track__num">13</span>
-        <span class="track__artist">Curren$y</span>
-        <span class="track__title">Seat Change</span>
-        <span class="track__tag">Southern</span>
-      </a>
-    </li>
-
-    <li class="track">
-      <a href="https://music.apple.com/search?term=BADBADNOTGOOD+Time+Moves+Slow" target="_blank" rel="noopener">
-        <span class="track__num">14</span>
-        <span class="track__artist">BADBADNOTGOOD</span>
-        <span class="track__title">Time Moves Slow (feat. Samuel T. Herring)</span>
-        <span class="track__tag">Jazz</span>
-      </a>
-    </li>
-
-    <li class="track">
-      <a href="https://music.apple.com/search?term=Smino+Wild+Irish+Roses" target="_blank" rel="noopener">
-        <span class="track__num">15</span>
-        <span class="track__artist">Smino</span>
-        <span class="track__title">Wild Irish Roses</span>
-        <span class="track__tag">Neo-Soul</span>
-      </a>
-    </li>
-
-    <li class="track track--own">
-      <a href="https://music.apple.com/search?term=Dell+Harris+Jazz+Charge" target="_blank" rel="noopener">
-        <span class="track__num">16</span>
-        <span class="track__artist">Dell Harris</span>
-        <span class="track__title">Jazz Charge (Sample)</span>
-        <span class="track__tag">Anchor</span>
-      </a>
-    </li>
-
-  </ol>
+    </div>
+  </div>
 </section>
 
 
@@ -1033,7 +1046,130 @@ function loadEmbed(id) {
   card.classList.add('player-card--playing');
 }
 
-// ── JTR → SF landing animation ──────────────────────────────
+// ── SP-404 Sampler ──────────────────────────────────────────
+(function () {
+  var TRACKS = [
+    { a: 'Dell Harris',       t: 'Jazz Side'                    },
+    { a: 'MF DOOM',           t: 'Accordion'                    },
+    { a: 'Loyle Carner',      t: 'Ice Water'                    },
+    { a: 'Karriem Riggins',   t: 'Alone Together'               },
+    { a: 'OutKast',           t: 'SpottieOttieDopaliscious'     },
+    { a: 'Bexblu',            t: 'Slew Dem'                     },
+    { a: 'Freddie Gibbs',     t: 'Thuggin'                      },
+    { a: 'Knxwledge',         t: 'Timez'                        },
+    { a: 'Little Simz',       t: '101 FM'                       },
+    { a: 'Rejie Snow',        t: 'Cookie Chip'                  },
+    { a: 'Earl Sweatshirt',   t: 'Grief'                        },
+    { a: 'Kano',              t: 'T-Shirt Weather in the Manor' },
+    { a: 'Currens',           t: 'Seat Change'                  },
+    { a: 'BADBADNOTGOOD',     t: 'Time Moves Slow'              },
+    { a: 'Smino',             t: 'Wild Irish Roses'             },
+    { a: 'Dell Harris',       t: 'Jazz Charge'                  },
+  ];
+
+  var padsEl  = document.getElementById('sp404Pads');
+  var mainEl  = document.getElementById('sp404Main');
+  var subEl   = document.getElementById('sp404Sub');
+  var ledEl   = document.getElementById('sp404Led');
+  if (!padsEl) return;
+
+  var previews     = new Array(TRACKS.length).fill(null);
+  var curAudio     = null;
+  var curPad       = null;
+  var progTimer    = null;
+
+  // Build 16 pads
+  TRACKS.forEach(function (trk, i) {
+    var bank = Math.floor(i / 4);
+    var pad  = document.createElement('button');
+    pad.className = 'sp404-pad';
+    pad.setAttribute('data-bank', bank);
+    pad.setAttribute('aria-label', 'Pad ' + (i + 1));
+
+    var num = document.createElement('span');
+    num.className = 'sp404-pad-num';
+    num.textContent = String(i + 1).padStart(2, '0');
+    pad.appendChild(num);
+
+    var bar = document.createElement('div');
+    bar.className = 'sp404-pad-bar';
+    pad.appendChild(bar);
+
+    pad.addEventListener('click', function () { tap(pad, i); });
+    pad.addEventListener('touchstart', function (e) {
+      e.preventDefault(); tap(pad, i);
+    }, { passive: false });
+
+    padsEl.appendChild(pad);
+  });
+
+  // Fetch 30-sec previews from iTunes (no auth needed)
+  TRACKS.forEach(function (trk, i) {
+    var q = encodeURIComponent(trk.a + ' ' + trk.t);
+    fetch('https://itunes.apple.com/search?term=' + q + '&entity=song&limit=1&media=music')
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (d.results && d.results[0] && d.results[0].previewUrl) {
+          previews[i] = d.results[0].previewUrl;
+        } else {
+          padsEl.children[i].classList.add('no-preview');
+        }
+      })
+      .catch(function () {
+        padsEl.children[i].classList.add('no-preview');
+      });
+  });
+
+  function reset() {
+    if (curAudio) { curAudio.pause(); curAudio = null; }
+    clearInterval(progTimer);
+    if (curPad) {
+      curPad.classList.remove('playing');
+      curPad.querySelector('.sp404-pad-bar').style.width = '0%';
+      curPad = null;
+    }
+    ledEl.classList.remove('on');
+    mainEl.textContent = 'SOUTHERN FREQUENCIES';
+    subEl.textContent  = 'TAP A PAD TO PREVIEW';
+  }
+
+  function tap(pad, i) {
+    // Toggle off
+    if (curPad === pad) { reset(); return; }
+    reset();
+
+    if (!previews[i]) {
+      // No-signal flash
+      mainEl.textContent = '— NO SIGNAL —';
+      subEl.textContent  = '';
+      setTimeout(function () {
+        mainEl.textContent = 'SOUTHERN FREQUENCIES';
+        subEl.textContent  = 'TAP A PAD TO PREVIEW';
+      }, 900);
+      return;
+    }
+
+    var trk   = TRACKS[i];
+    var audio = new Audio(previews[i]);
+    curAudio  = audio;
+    curPad    = pad;
+
+    pad.classList.add('playing');
+    ledEl.classList.add('on');
+    mainEl.textContent = trk.a.toUpperCase();
+    subEl.textContent  = trk.t.toUpperCase();
+
+    audio.play().catch(function () {});
+
+    var bar = pad.querySelector('.sp404-pad-bar');
+    progTimer = setInterval(function () {
+      if (audio.duration) bar.style.width = (audio.currentTime / audio.duration * 100) + '%';
+    }, 80);
+
+    audio.onended = reset;
+  }
+})();
+
 (function () {
   try {
     if (sessionStorage.getItem('jtr-enter') === '1') {
