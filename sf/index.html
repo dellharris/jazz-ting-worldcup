@@ -253,6 +253,7 @@ body {
   box-shadow: inset 0 2px 12px rgba(0,0,0,0.9), 0 0 0 1px #000;
   position: relative; overflow: hidden;
   padding: 10px 12px 8px;
+  min-height: 180px;
 }
 .cdj-screen::before {
   content: '';
@@ -320,15 +321,18 @@ body {
 /* Embed iframe over screen when playing */
 .cdj-embed {
   display: none;
-  position: absolute; inset: 0;
-  width: 100%; height: 100%; border: none; z-index: 5;
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100%; height: 100%;
+  border: none; z-index: 5;
+  min-height: 180px;
 }
 .cdj.playing .cdj-embed { display: block; }
 .cdj.playing .cdj-screen-top,
 .cdj.playing .cdj-screen-track,
 .cdj.playing .cdj-screen-artist,
 .cdj.playing .cdj-wave,
-.cdj.playing .cdj-screen-time { display: none; }
+.cdj.playing .cdj-screen-time { visibility: hidden; }
 
 /* Hot cue buttons A–H */
 .cdj-hot-cues {
@@ -1365,12 +1369,7 @@ function cdjToggle(id) {
         }
       })
       .catch(function () {
-        padsEl.children[i].classList.add('no-preview');
-        // Show network error in display on first failure
-        if (mainEl.textContent === 'SOUTHERN FREQUENCIES') {
-          mainEl.textContent = 'NETWORK ERROR';
-          subEl.textContent  = 'CANNOT REACH ITUNES API';
-        }
+        if (i < padsEl.children.length) padsEl.children[i].classList.add('no-preview');
       });
   });
 
