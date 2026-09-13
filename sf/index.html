@@ -210,10 +210,187 @@ body {
 /* ── Pioneer CDJ-3000 ─────────────────────────────────────── */
 .cdj-pair {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  grid-template-columns: 1fr 136px 1fr;
+  gap: 12px;
   margin-bottom: 32px;
+  align-items: stretch;
 }
+
+/* ── DJM-450 Mixer ── */
+.djm {
+  background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
+  border-radius: 8px;
+  border: 1px solid #2c2c2c;
+  padding: 10px 8px 12px;
+  display: flex; flex-direction: column; gap: 6px;
+  box-shadow:
+    0 16px 56px rgba(0,0,0,0.95),
+    inset 0 1px 0 rgba(255,255,255,0.04),
+    inset 0 -1px 0 rgba(0,0,0,0.5);
+  user-select: none;
+}
+.djm-brand {
+  text-align: center;
+  font-family: 'Barlow Condensed', Arial, sans-serif;
+  font-weight: 800; font-size: 9px; letter-spacing: 2.5px;
+  color: rgba(255,255,255,0.22); text-transform: uppercase;
+}
+
+/* EQ section: CH1 | VU | CH2 */
+.djm-eq-body {
+  display: grid; grid-template-columns: 1fr 18px 1fr;
+  gap: 4px; flex: 1;
+}
+.djm-eq-strip {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+}
+.djm-eq-label {
+  font-family: 'Courier Prime', monospace;
+  font-size: 6px; letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.2); text-transform: uppercase;
+}
+.djm-knob {
+  border-radius: 50%; cursor: default;
+  background: radial-gradient(circle at 36% 30%, #3a3a3a, #1a1a1a);
+  border: 1px solid #2e2e2e;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.04);
+  position: relative; flex-shrink: 0;
+}
+.djm-knob::after {
+  content:''; position:absolute;
+  top:3px; left:50%; transform:translateX(-50%);
+  border-radius:1px;
+  background:rgba(255,255,255,0.22);
+}
+.djm-knob-sm       { width:20px; height:20px; }
+.djm-knob-sm::after{ width:1.5px; height:5px; }
+.djm-knob-xs       { width:15px; height:15px; }
+.djm-knob-xs::after{ width:1px; height:4px; }
+
+/* VU meters */
+.djm-vu {
+  display: flex; flex-direction: row; gap: 2px;
+  align-items: flex-end; justify-content: center; height: 100%;
+}
+.djm-vu-col { display:flex; flex-direction:column-reverse; gap:1px; }
+.djm-vu-seg {
+  width:5px; height:3px; border-radius:1px;
+  background: #1a1a1a;
+}
+.djm-vu-seg.green  { background: rgba(30,215,96,0.85); }
+.djm-vu-seg.yellow { background: rgba(255,200,0,0.85); }
+.djm-vu-seg.red    { background: rgba(220,50,50,0.85); }
+
+/* Divider */
+.djm-divider {
+  height:1px; background: rgba(255,255,255,0.06); margin: 2px 0;
+}
+
+/* Color FX */
+.djm-color-row {
+  display:flex; align-items:center; justify-content:space-between;
+}
+.djm-color-label {
+  font-family: 'Courier Prime', monospace;
+  font-size:5.5px; letter-spacing:0.12em;
+  color:rgba(255,255,255,0.16); text-transform:uppercase; text-align:center;
+  flex:1;
+}
+
+/* CUE buttons */
+.djm-cue-row {
+  display:flex; gap:3px;
+}
+.djm-cue {
+  flex:1; padding:3px 0;
+  border-radius:2px; border:1px solid #2a2a2a;
+  background:#1a1a1a; cursor:default;
+  font-family:'Courier Prime', monospace;
+  font-size:6px; letter-spacing:0.12em;
+  color:rgba(255,255,255,0.3); text-transform:uppercase; text-align:center;
+  line-height:1.4;
+}
+.djm-cue-m {
+  background:#1a1000;
+  color:rgba(255,170,0,0.55);
+  border-color:rgba(255,150,0,0.18);
+}
+
+/* Channel faders */
+.djm-ch-faders {
+  display:grid; grid-template-columns:1fr 1fr; gap:4px;
+  flex:1; min-height:60px;
+}
+.djm-ch-fader-wrap {
+  display:flex; flex-direction:column; align-items:center; gap:3px;
+}
+.djm-ch-num {
+  font-family:'Courier Prime', monospace;
+  font-size:7px; letter-spacing:0.15em;
+  color:rgba(255,255,255,0.2);
+}
+.djm-ch-track {
+  flex:1; width:4px;
+  background:#0d0d0d; border-radius:2px;
+  border:1px solid #1e1e1e;
+  position:relative;
+  box-shadow:inset 0 2px 4px rgba(0,0,0,0.8);
+  min-height:50px;
+}
+.djm-ch-cap {
+  width:18px; height:9px;
+  background:linear-gradient(to bottom, #555, #333);
+  border:1px solid #555; border-radius:2px;
+  position:absolute; top:30%; left:50%; transform:translateX(-50%);
+  box-shadow:0 2px 4px rgba(0,0,0,0.6);
+}
+
+/* Crossfader */
+.djm-xfader-section {
+  display:flex; flex-direction:column; gap:3px;
+}
+.djm-xfader-labels {
+  display:flex; justify-content:space-between;
+  font-family:'Courier Prime', monospace;
+  font-size:8px; letter-spacing:0.12em;
+  color:rgba(255,255,255,0.3);
+  padding:0 2px;
+}
+.djm-xfader-wrap {
+  position:relative; padding:4px 0;
+}
+.djm-xfader {
+  -webkit-appearance:none; appearance:none;
+  width:100%; height:3px;
+  background:linear-gradient(to right, #222, #1a1a1a);
+  border-radius:2px; outline:none; cursor:pointer;
+  border:1px solid #222;
+}
+.djm-xfader::-webkit-slider-thumb {
+  -webkit-appearance:none;
+  width:22px; height:30px;
+  background:linear-gradient(to bottom, #555 0%, #3a3a3a 40%, #2e2e2e 100%);
+  border-radius:2px; cursor:grab;
+  border:1px solid #555;
+  box-shadow:0 3px 8px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.08);
+}
+.djm-xfader::-moz-range-thumb {
+  width:22px; height:30px;
+  background:linear-gradient(to bottom, #555, #3a3a3a);
+  border-radius:2px; cursor:grab; border:1px solid #555;
+}
+.djm-xfader:active::-webkit-slider-thumb { cursor:grabbing; background:linear-gradient(to bottom, #666, #444); }
+
+/* Model label */
+.djm-footer {
+  text-align:right;
+  font-family:'Barlow Condensed', Arial, sans-serif;
+  font-weight:800; font-size:9px; letter-spacing:2px;
+  color:rgba(255,255,255,0.12); text-transform:uppercase;
+}
+
+/* Crossfader dims inactive CDJ */
+.cdj { transition: opacity 0.15s; }
 
 .cdj {
   background: linear-gradient(180deg, #191919 0%, #111 100%);
@@ -1130,6 +1307,86 @@ body.nav-open .nav-overlay { opacity: 1; pointer-events: all; transform: transla
       <div class="cdj-footer-bar">CDJ-3000</div>
     </div>
 
+    <!-- DJM-450 Mixer -->
+    <div class="djm">
+
+      <div class="djm-brand">Pioneer DJ</div>
+
+      <!-- TRIM knobs -->
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:0 4px">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
+          <div class="djm-knob djm-knob-sm"></div>
+          <span class="djm-eq-label">TRIM</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
+          <div class="djm-knob djm-knob-sm"></div>
+          <span class="djm-eq-label">TRIM</span>
+        </div>
+      </div>
+
+      <div class="djm-divider"></div>
+
+      <!-- EQ + VU meters -->
+      <div class="djm-eq-body" style="flex:1">
+        <div class="djm-eq-strip">
+          <div class="djm-knob djm-knob-sm"></div><span class="djm-eq-label">HI</span>
+          <div class="djm-knob djm-knob-sm"></div><span class="djm-eq-label">MID</span>
+          <div class="djm-knob djm-knob-sm"></div><span class="djm-eq-label">LOW</span>
+        </div>
+        <div class="djm-vu" id="djmVu">
+          <div class="djm-vu-col" id="djmVuL"></div>
+          <div class="djm-vu-col" id="djmVuR"></div>
+        </div>
+        <div class="djm-eq-strip">
+          <div class="djm-knob djm-knob-sm"></div><span class="djm-eq-label">HI</span>
+          <div class="djm-knob djm-knob-sm"></div><span class="djm-eq-label">MID</span>
+          <div class="djm-knob djm-knob-sm"></div><span class="djm-eq-label">LOW</span>
+        </div>
+      </div>
+
+      <div class="djm-divider"></div>
+
+      <!-- Sound Color FX -->
+      <div class="djm-color-row">
+        <div class="djm-knob djm-knob-xs"></div>
+        <span class="djm-color-label">SOUND<br>COLOR FX</span>
+        <div class="djm-knob djm-knob-xs"></div>
+      </div>
+
+      <!-- CUE -->
+      <div class="djm-cue-row">
+        <div class="djm-cue">CUE<br>1</div>
+        <div class="djm-cue djm-cue-m">CUE<br>M</div>
+        <div class="djm-cue">CUE<br>2</div>
+      </div>
+
+      <!-- Channel faders -->
+      <div class="djm-ch-faders">
+        <div class="djm-ch-fader-wrap">
+          <span class="djm-ch-num">1</span>
+          <div class="djm-ch-track"><div class="djm-ch-cap"></div></div>
+        </div>
+        <div class="djm-ch-fader-wrap">
+          <span class="djm-ch-num">2</span>
+          <div class="djm-ch-track"><div class="djm-ch-cap"></div></div>
+        </div>
+      </div>
+
+      <div class="djm-divider"></div>
+
+      <!-- Crossfader -->
+      <div class="djm-xfader-section">
+        <div class="djm-xfader-labels"><span>‹A</span><span>B›</span></div>
+        <div class="djm-xfader-wrap">
+          <input type="range" class="djm-xfader" id="djmXfader"
+                 min="0" max="100" value="50">
+        </div>
+      </div>
+
+      <div class="djm-footer">DJM-450</div>
+
+    </div>
+
     <!-- CDJ 2: Apple Music -->
     <div class="cdj" id="cdj-apple">
 
@@ -1317,7 +1574,61 @@ function cdjToggle(id) {
   }
 }
 
-// ── JTR → SF landing animation ──────────────────────────────
+// ── DJM-450 Mixer ───────────────────────────────────────────
+(function () {
+  // Build VU meter segments
+  var VU_LEVELS = [
+    { cls:'green'  }, { cls:'green'  }, { cls:'green'  }, { cls:'green'  },
+    { cls:'green'  }, { cls:'green'  }, { cls:'yellow' }, { cls:'yellow' },
+    { cls:'red'    }, { cls:'red'    },
+  ];
+  ['djmVuL','djmVuR'].forEach(function (id) {
+    var col = document.getElementById(id);
+    if (!col) return;
+    VU_LEVELS.forEach(function (seg) {
+      var s = document.createElement('div');
+      s.className = 'djm-vu-seg ' + seg.cls;
+      col.appendChild(s);
+    });
+  });
+
+  // Animate VU when any CDJ is playing
+  var vuFrame = 0;
+  setInterval(function () {
+    vuFrame++;
+    var anyPlaying = document.querySelector('.cdj.playing');
+    var level = anyPlaying
+      ? Math.floor(4 + Math.random() * 5)
+      : Math.floor(Math.random() * 2);
+    ['djmVuL','djmVuR'].forEach(function (id) {
+      var col = document.getElementById(id);
+      if (!col) return;
+      var offset = id === 'djmVuL' ? 0 : Math.floor(Math.random() * 2);
+      var segs = col.querySelectorAll('.djm-vu-seg');
+      segs.forEach(function (seg, i) {
+        seg.style.opacity = i < level - offset ? '1' : '0.08';
+      });
+    });
+  }, 120);
+
+  // Crossfader — dims the non-dominant CDJ
+  var xfader = document.getElementById('djmXfader');
+  if (!xfader) return;
+
+  xfader.addEventListener('input', function () {
+    var val = parseInt(this.value); // 0=full A, 100=full B
+    var spotOpacity = val < 50
+      ? 1
+      : 1 - (val - 50) / 50 * 0.65;
+    var appleOpacity = val > 50
+      ? 1
+      : 1 - (50 - val) / 50 * 0.65;
+    var spotUnit  = document.getElementById('cdj-spotify');
+    var appleUnit = document.getElementById('cdj-apple');
+    if (spotUnit)  spotUnit.style.opacity  = spotOpacity;
+    if (appleUnit) appleUnit.style.opacity = appleOpacity;
+  });
+})();
 (function () {
   // ── BANK A — Dell Harris tracks ───────────────────────────
   var TRACKS_A = [
