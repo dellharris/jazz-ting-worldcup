@@ -1328,15 +1328,24 @@ function cdjToggle(id) {
     { id: '1731659859', a: 'Dell Harris', t: 'Us vs Jazz Scene'             },
   ];
 
-  // ── BANK B — SFX on row 1, rest dark ──────────────────────
+  // ── BANK B — SFX row 1, Dell Harris fills rows 2-4 ───────
   var TRACKS_B = [
-    { id: '340093236',  a: 'SFX', t: 'Warning Siren'     },
-    { id: '396850172',  a: 'SFX', t: 'Jet Fighter Flyby' },
-    { id: '340893347',  a: 'SFX', t: 'Trumpet & Whinny'  },
-    { id: '396850183',  a: 'SFX', t: 'Car Warning Beeper'},
-    null, null, null, null,
-    null, null, null, null,
-    null, null, null, null,
+    { id: '340093236',  a: 'SFX',        t: 'Warning Siren'              },
+    { id: '396850172',  a: 'SFX',        t: 'Jet Fighter Flyby'          },
+    { id: '340893347',  a: 'SFX',        t: 'Trumpet & Whinny'           },
+    { id: '396850183',  a: 'SFX',        t: 'Car Warning Beeper'         },
+    { id: '1843177886', a: 'Dell Harris', t: 'Jazz Night Ting'            },
+    { id: '1725250183', a: 'Dell Harris', t: 'Jazz Side'                  },
+    { id: '1718713597', a: 'Dell Harris', t: 'Us vs Jazz Scene'           },
+    { id: '1746259534', a: 'Dell Harris', t: 'Jazz Charge Sample'         },
+    { id: '1843177887', a: 'Dell Harris', t: "It Don't Matter"            },
+    { id: '1753325410', a: 'Dell Harris', t: 'Use Your Heart'             },
+    { id: '1726703023', a: 'Dell Harris', t: 'Jazz Side (Instrumental)'   },
+    { id: '1843177891', a: 'Dell Harris', t: 'Love 93 (feat. 81ne)'       },
+    { id: '1718713595', a: 'Dell Harris', t: 'So Icy My Whole Career'     },
+    { id: '1489524152', a: 'Dell Harris', t: 'Salute (Extended Mix)'      },
+    { id: '1485316515', a: 'Dell Harris', t: 'B&G'                        },
+    { id: '6787179312', a: 'Dell Harris', t: 'Open Book'                  },
   ];
   // ──────────────────────────────────────────────────────────
 
@@ -1355,7 +1364,7 @@ function cdjToggle(id) {
   var curPad      = null;
   var progTimer   = null;
 
-  // ── Build 16 pads (start in Bank B — FX first) ───────────
+  // ── Build 16 pads ─────────────────────────────────────────
   TRACKS_A.forEach(function (trk, i) {
     var bankColor = Math.floor(i / 4);
     var pad = document.createElement('button');
@@ -1371,9 +1380,6 @@ function cdjToggle(id) {
     var bar = document.createElement('div');
     bar.className = 'sp404-pad-bar';
     pad.appendChild(bar);
-
-    // Pads 5-16 are dark in Bank B
-    if (!TRACKS_B[i]) pad.classList.add('no-preview');
 
     pad.addEventListener('click', function () { tap(pad, i); });
     pad.addEventListener('touchstart', function (e) {
