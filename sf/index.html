@@ -709,6 +709,16 @@ body {
   background: rgba(255,255,255,0.55);
   border-radius: 0 0 5px 5px;
 }
+.sp404-key-label {
+  display: none;
+  position: absolute; bottom: 5px; right: 7px;
+  font-family: 'Courier Prime', monospace;
+  font-size: 9px; letter-spacing: 0.05em; font-weight: 700;
+  color: rgba(255,255,255,0.5);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.9);
+  pointer-events: none;
+}
+.sp404-keys-on .sp404-key-label { display: block; }
 .sp404-footer {
   display: flex; align-items: center;
   justify-content: space-between; padding: 0 6px;
@@ -1232,8 +1242,9 @@ body.nav-open .nav-overlay { opacity: 1; pointer-events: all; transform: transla
       </div>
 
       <div class="sp404-banks">
-        <button class="sp404-bank-btn"        id="sp404BankA" onclick="sp404SwitchBank('a')">Bank A</button>
-        <button class="sp404-bank-btn active" id="sp404BankB" onclick="sp404SwitchBank('b')">Bank B</button>
+        <button class="sp404-bank-btn"        id="sp404BankA"   onclick="sp404SwitchBank('a')">Bank A</button>
+        <button class="sp404-bank-btn active" id="sp404BankB"   onclick="sp404SwitchBank('b')">Bank B</button>
+        <button class="sp404-bank-btn"        id="sp404KeysBtn" onclick="sp404ToggleKeys()">Keys</button>
       </div>
 
       <div class="sp404-pads" id="sp404Pads"></div>
@@ -1387,6 +1398,44 @@ function cdjToggle(id) {
     }, { passive: false });
 
     padsEl.appendChild(pad);
+  });
+
+  // ── Keyboard mapping ──────────────────────────────────────
+  var KEY_MAP = {
+    'q':0,  'w':1,  'e':2,  'r':3,
+    'a':4,  's':5,  'd':6,  'f':7,
+    'z':8,  'x':9,  'c':10, 'v':11,
+    '1':12, '2':13, '3':14, '4':15,
+  };
+  var KEY_LABELS = ['Q','W','E','R','A','S','D','F','Z','X','C','V','1','2','3','4'];
+  var keysOn = false;
+
+  // Inject key labels into each pad
+  Array.from(padsEl.children).forEach(function (pad, i) {
+    var lbl = document.createElement('span');
+    lbl.className = 'sp404-key-label';
+    lbl.textContent = KEY_LABELS[i] || '';
+    pad.appendChild(lbl);
+  });
+
+  window.sp404ToggleKeys = function () {
+    keysOn = !keysOn;
+    document.getElementById('sp404KeysBtn').classList.toggle('active', keysOn);
+    padsEl.classList.toggle('sp404-keys-on', keysOn);
+    subEl.textContent = keysOn
+      ? 'KEYS ON · Q-R / A-F / Z-V / 1-4'
+      : 'BANK ' + currentBank.toUpperCase() + ' · TAP TO PLAY';
+  };
+
+  document.addEventListener('keydown', function (e) {
+    if (!keysOn) return;
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    var idx = KEY_MAP[e.key.toLowerCase()];
+    if (idx !== undefined) {
+      e.preventDefault();
+      var pad = padsEl.children[idx];
+      if (pad) tap(pad, idx);
+    }
   });
 
   // ── Fetch both banks in parallel ──────────────────────────
