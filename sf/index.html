@@ -761,6 +761,175 @@ body {
   .sp404-unit { padding: 18px 16px 16px; }
 }
 
+/* ── Step Sequencer ─────────────────────────────────────── */
+.seq-wrap {
+  max-width: 860px; margin: 0 auto;
+  padding: 0 40px 80px;
+}
+.seq-unit {
+  background: linear-gradient(175deg, #1e1a14 0%, #131008 60%, #1b1710 100%);
+  border-radius: 14px; padding: 20px 22px 22px;
+  border: 1px solid rgba(200,150,40,0.1);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,200,80,0.06);
+  display: flex; flex-direction: column; gap: 16px;
+}
+
+/* LCD + knob row */
+.seq-top {
+  display: flex; gap: 16px; align-items: stretch;
+}
+.seq-lcd {
+  flex: 1;
+  background: #0d1208;
+  border-radius: 6px;
+  border: 1px solid rgba(100,140,60,0.3);
+  box-shadow: inset 0 2px 12px rgba(0,0,0,0.9), 0 0 0 1px #000;
+  position: relative; overflow: hidden;
+  padding: 12px 16px;
+}
+.seq-lcd::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(80,180,40,0.04) 3px, rgba(80,180,40,0.04) 4px);
+  pointer-events: none;
+}
+.seq-lcd-inner { position: relative; z-index: 1; }
+.seq-lcd-label {
+  font-family: 'Courier Prime', monospace;
+  font-size: 7px; letter-spacing: 0.3em;
+  color: rgba(80,200,60,0.45); text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.seq-lcd-bpm {
+  font-family: 'Courier Prime', monospace;
+  font-size: 52px; letter-spacing: 0.04em; line-height: 1;
+  color: rgba(80,220,60,0.92);
+  text-shadow: 0 0 20px rgba(80,220,60,0.4);
+}
+.seq-lcd-sub {
+  font-family: 'Courier Prime', monospace;
+  font-size: 8px; letter-spacing: 0.2em;
+  color: rgba(80,200,60,0.4); text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* Tempo knob */
+.seq-knob-section {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 6px; justify-content: center;
+}
+.seq-tempo-knob {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: radial-gradient(circle at 36% 30%, #3a3530, #181208);
+  border: 2px solid rgba(200,150,40,0.2);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,200,80,0.06);
+  position: relative; cursor: grab;
+  transition: border-color 0.15s;
+}
+.seq-tempo-knob:active { cursor: grabbing; border-color: rgba(200,150,40,0.5); }
+.seq-tempo-indicator {
+  position: absolute; top: 6px; left: 50%;
+  transform: translateX(-50%);
+  width: 3px; height: 14px;
+  background: rgba(200,150,40,0.8); border-radius: 2px;
+  transform-origin: center bottom;
+}
+.seq-knob-label {
+  font-family: 'Courier Prime', monospace;
+  font-size: 8px; letter-spacing: 0.3em;
+  color: rgba(200,150,40,0.4); text-transform: uppercase;
+}
+
+/* Step grid */
+.seq-steps {
+  display: grid;
+  grid-template-columns: repeat(16, 1fr);
+  gap: 6px;
+}
+.seq-step {
+  height: 36px; border-radius: 4px;
+  background: #111; border: 1px solid #222;
+  position: relative; cursor: pointer;
+  transition: background 0.08s, border-color 0.08s;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: flex-end;
+  padding-bottom: 5px; gap: 3px;
+  overflow: hidden;
+}
+.seq-step:hover { border-color: rgba(200,150,40,0.3); }
+
+/* Playhead light at top of step */
+.seq-step::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px; border-radius: 4px 4px 0 0;
+  background: transparent;
+  transition: background 0.06s;
+}
+.seq-step.active::before { background: rgba(200,150,40,0.9); }
+.seq-step.active { border-color: rgba(200,150,40,0.6); background: rgba(200,150,40,0.08); }
+
+/* Dot: pad programmed on this step */
+.seq-step-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(200,150,40,0.8);
+  box-shadow: 0 0 6px rgba(200,150,40,0.5);
+  display: none;
+}
+.seq-step.has-sound .seq-step-dot { display: block; }
+.seq-step.active.has-sound .seq-step-dot { background: rgba(255,200,80,1); box-shadow: 0 0 12px rgba(255,200,80,0.8); }
+
+/* Step number */
+.seq-step-num {
+  font-family: 'Courier Prime', monospace;
+  font-size: 7px; color: rgba(255,255,255,0.15); letter-spacing: 0;
+}
+
+/* Controls row */
+.seq-controls {
+  display: flex; align-items: center; gap: 8px;
+}
+.seq-btn {
+  font-family: 'Courier Prime', monospace;
+  font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+  border-radius: 3px; padding: 7px 14px; cursor: pointer;
+  transition: all 0.12s; border: 1px solid;
+}
+.seq-btn-play {
+  background: rgba(30,215,96,0.1); color: rgba(30,215,96,0.85);
+  border-color: rgba(30,215,96,0.3);
+}
+.seq-btn-play:hover, .seq-btn-play.running {
+  background: rgba(30,215,96,0.2); color: rgba(30,215,96,1);
+  border-color: rgba(30,215,96,0.6);
+  box-shadow: 0 0 12px rgba(30,215,96,0.2);
+}
+.seq-btn-stop {
+  background: rgba(220,60,60,0.1); color: rgba(220,80,80,0.75);
+  border-color: rgba(220,60,60,0.25);
+}
+.seq-btn-stop:hover { background: rgba(220,60,60,0.18); color: rgba(220,80,80,1); border-color: rgba(220,60,60,0.5); }
+.seq-btn-clear {
+  background: #111; color: rgba(255,255,255,0.25);
+  border-color: #222;
+}
+.seq-btn-clear:hover { color: rgba(255,255,255,0.6); border-color: #333; }
+
+.seq-active-pad {
+  margin-left: auto;
+  font-family: 'Courier Prime', monospace;
+  font-size: 9px; letter-spacing: 0.28em;
+  color: rgba(200,150,40,0.45); text-transform: uppercase;
+  border: 1px solid rgba(200,150,40,0.15);
+  padding: 7px 12px; border-radius: 3px;
+}
+
+@media (max-width: 640px) {
+  .seq-wrap { padding: 0 24px 60px; }
+  .seq-steps { gap: 3px; }
+  .seq-step  { height: 28px; }
+}
+
 /* ── JTR landing: tiles reassemble from bright static ── */
 @keyframes sf-land-assemble {
   0%   { filter: brightness(10) saturate(0) blur(1px); opacity: 0.7; }
@@ -1257,6 +1426,42 @@ body.nav-open .nav-overlay { opacity: 1; pointer-events: all; transform: transla
 
     </div>
   </div>
+
+  <!-- ══ SP-404 Step Sequencer ══ -->
+  <div class="seq-wrap">
+    <div class="seq-unit">
+
+      <!-- LCD display + tempo knob -->
+      <div class="seq-top">
+        <div class="seq-lcd">
+          <div class="seq-lcd-inner">
+            <div class="seq-lcd-label">PATTERN SEQUENCER</div>
+            <div class="seq-lcd-bpm" id="seqBpmDisplay">120</div>
+            <div class="seq-lcd-sub" id="seqStatus">STOPPED · TAP PAD TO PROGRAM</div>
+          </div>
+        </div>
+        <div class="seq-knob-section">
+          <div class="seq-tempo-knob" id="seqTempoKnob">
+            <div class="seq-tempo-indicator"></div>
+          </div>
+          <span class="seq-knob-label">TEMPO</span>
+        </div>
+      </div>
+
+      <!-- Step grid: 16 dots -->
+      <div class="seq-steps" id="seqSteps"></div>
+
+      <!-- Controls -->
+      <div class="seq-controls">
+        <button class="seq-btn seq-btn-play"  id="seqPlay">▶ PLAY</button>
+        <button class="seq-btn seq-btn-stop"  id="seqStop">■ STOP</button>
+        <button class="seq-btn seq-btn-clear" id="seqClear">CLEAR</button>
+        <div class="seq-active-pad" id="seqActivePad">SELECT A PAD</div>
+      </div>
+
+    </div>
+  </div>
+
 </section>
 
 
@@ -1391,9 +1596,15 @@ function cdjToggle(id) {
     bar.className = 'sp404-pad-bar';
     pad.appendChild(bar);
 
-    pad.addEventListener('click', function () { tap(pad, i); });
+    pad.addEventListener('click', function () {
+      // Select this pad for sequencer programming
+      if (window.seqSelectPad) seqSelectPad(i, tracks[i]);
+      tap(pad, i);
+    });
     pad.addEventListener('touchstart', function (e) {
-      e.preventDefault(); tap(pad, i);
+      e.preventDefault();
+      if (window.seqSelectPad) seqSelectPad(i, tracks[i]);
+      tap(pad, i);
     }, { passive: false });
 
     padsEl.appendChild(pad);
@@ -1469,11 +1680,17 @@ function cdjToggle(id) {
   fetchBank(TRACKS_A, data_a, 'a');
   fetchBank(TRACKS_B, data_b, 'b');
 
+  // Expose data stores for sequencer
+  window._sp404_tracks = { a: TRACKS_A, b: TRACKS_B };
+  window._sp404_stores = { a: data_a,   b: data_b   };
+  window._sp404_bank   = currentBank;
+
   // ── Bank switching ─────────────────────────────────────────
   window.sp404SwitchBank = function (bank) {
     if (currentBank === bank) return;
     reset();
     currentBank = bank;
+    if (window._sp404_bank !== undefined) window._sp404_bank = bank;
 
     var tracks = bank === 'a' ? TRACKS_A : TRACKS_B;
     var store  = bank === 'a' ? data_a   : data_b;
@@ -1601,6 +1818,153 @@ function cdjToggle(id) {
 
     audio.onended = reset;
   }
+})();
+
+// ── Step Sequencer ──────────────────────────────────────────
+(function () {
+  var STEPS     = 16;
+  var bpm       = 120;
+  var running   = false;
+  var currentStep = 0;
+  var ticker    = null;
+  var selectedPad = null;
+
+  var pattern = [];
+  for (var s = 0; s < STEPS; s++) pattern[s] = [];
+
+  var stepsEl  = document.getElementById('seqSteps');
+  var bpmEl    = document.getElementById('seqBpmDisplay');
+  var statusEl = document.getElementById('seqStatus');
+  var activeEl = document.getElementById('seqActivePad');
+  var playBtn  = document.getElementById('seqPlay');
+  var stopBtn  = document.getElementById('seqStop');
+  var clearBtn = document.getElementById('seqClear');
+  var knob     = document.getElementById('seqTempoKnob');
+  if (!stepsEl) return;
+
+  // Build 16 step cells
+  var stepCells = [];
+  for (var i = 0; i < STEPS; i++) {
+    (function (idx) {
+      var cell = document.createElement('div');
+      cell.className = 'seq-step';
+      var num = document.createElement('span');
+      num.className = 'seq-step-num';
+      num.textContent = idx + 1;
+      cell.appendChild(num);
+      var dot = document.createElement('div');
+      dot.className = 'seq-step-dot';
+      cell.appendChild(dot);
+      cell.addEventListener('click', function () { toggleStep(idx); });
+      stepsEl.appendChild(cell);
+      stepCells.push(cell);
+    })(i);
+  }
+
+  function toggleStep(idx) {
+    if (!selectedPad) return;
+    var padIdx = selectedPad.index;
+    var arr = pattern[idx];
+    var pos = arr.indexOf(padIdx);
+    if (pos === -1) {
+      arr.push(padIdx);
+      stepCells[idx].classList.add('has-sound');
+    } else {
+      arr.splice(pos, 1);
+      if (!arr.length) stepCells[idx].classList.remove('has-sound');
+    }
+  }
+
+  // Expose pad selection
+  window.seqSelectPad = function (padIndex, trk) {
+    selectedPad = { index: padIndex, trk: trk };
+    activeEl.textContent = trk ? trk.t.toUpperCase() : 'SELECT A PAD';
+    if (!running) statusEl.textContent = 'READY · TAP STEPS TO PROGRAM';
+  };
+
+  function stepInterval() { return (60 / bpm / 4) * 1000; }
+
+  function tick() {
+    stepCells.forEach(function (c) { c.classList.remove('active'); });
+    stepCells[currentStep].classList.add('active');
+
+    var pads = pattern[currentStep];
+    if (pads.length && window._sp404_tracks && window._sp404_stores) {
+      var bnk    = window._sp404_bank || 'b';
+      var tracks = window._sp404_tracks[bnk];
+      var store  = window._sp404_stores[bnk];
+      pads.forEach(function (padIdx) {
+        var slot = store[padIdx];
+        var trk  = tracks[padIdx];
+        if (slot && slot.previewUrl) {
+          var a = new Audio(slot.previewUrl);
+          a.play().catch(function () {});
+          if (trk && trk.oneshot) setTimeout(function () { a.pause(); }, 1100);
+        }
+      });
+    }
+    currentStep = (currentStep + 1) % STEPS;
+  }
+
+  function start() {
+    if (running) return;
+    running = true; currentStep = 0;
+    tick();
+    ticker = setInterval(tick, stepInterval());
+    playBtn.classList.add('running');
+    playBtn.textContent = '⏸ PAUSE';
+    statusEl.textContent = 'RUNNING · ' + bpm + ' BPM';
+  }
+
+  function pause() {
+    if (!running) return;
+    running = false; clearInterval(ticker); ticker = null;
+    stepCells.forEach(function (c) { c.classList.remove('active'); });
+    playBtn.classList.remove('running');
+    playBtn.textContent = '▶ PLAY';
+    statusEl.textContent = 'PAUSED';
+  }
+
+  function stop() {
+    pause(); currentStep = 0;
+    statusEl.textContent = 'STOPPED · TAP PAD TO PROGRAM';
+  }
+
+  playBtn.addEventListener('click', function () { running ? pause() : start(); });
+  stopBtn.addEventListener('click', stop);
+  clearBtn.addEventListener('click', function () {
+    stop();
+    pattern.forEach(function (a) { a.length = 0; });
+    stepCells.forEach(function (c) { c.classList.remove('has-sound'); });
+    statusEl.textContent = 'CLEARED';
+  });
+
+  // Tempo knob drag
+  var dragging = false, startY = 0, startBpm = bpm;
+  var indicator = knob ? knob.querySelector('.seq-tempo-indicator') : null;
+
+  function updateBpm(v) {
+    bpm = Math.max(40, Math.min(240, Math.round(v)));
+    bpmEl.textContent = bpm;
+    if (running) { clearInterval(ticker); ticker = setInterval(tick, stepInterval()); }
+    if (indicator) {
+      var deg = -135 + ((bpm - 40) / 200) * 270;
+      indicator.style.transform = 'translateX(-50%) rotate(' + deg + 'deg)';
+      indicator.style.transformOrigin = '50% 100%';
+    }
+    if (running) statusEl.textContent = 'RUNNING · ' + bpm + ' BPM';
+  }
+
+  if (knob) {
+    knob.addEventListener('mousedown', function (e) { dragging = true; startY = e.clientY; startBpm = bpm; e.preventDefault(); });
+    knob.addEventListener('touchstart', function (e) { dragging = true; startY = e.touches[0].clientY; startBpm = bpm; e.preventDefault(); }, { passive: false });
+  }
+  window.addEventListener('mousemove', function (e) { if (dragging) updateBpm(startBpm + (startY - e.clientY) * 0.8); });
+  window.addEventListener('touchmove', function (e) { if (dragging) updateBpm(startBpm + (startY - e.touches[0].clientY) * 0.8); }, { passive: false });
+  window.addEventListener('mouseup',  function () { dragging = false; });
+  window.addEventListener('touchend', function () { dragging = false; });
+
+  updateBpm(120);
 })();
 
 (function () {
