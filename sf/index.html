@@ -1664,10 +1664,10 @@ function cdjToggle(id) {
     { id: '295908456',  a: 'FX',         t: 'Voice FX'                   },
     { id: '295908449',  a: 'FX',         t: 'Guitar'                     },
     { id: '295908461',  a: 'FX',         t: 'Voice DJ Scratch'           },
-    { id: '295908229',  a: 'Drums',      t: 'Rim Shot'                   },
-    { id: '295907977',  a: 'Drums',      t: 'Kick'                       },
-    { id: '295908235',  a: 'Drums',      t: 'Snare'                      },
-    { id: '295907926',  a: 'Drums',      t: 'Hi-Hat'                     },
+    { id: '295908229',  a: 'Drums', t: 'Rim Shot',  oneshot: true },
+    { id: '295907977',  a: 'Drums', t: 'Kick',      oneshot: true },
+    { id: '295908235',  a: 'Drums', t: 'Snare',     oneshot: true },
+    { id: '295907926',  a: 'Drums', t: 'Hi-Hat',    oneshot: true },
   ];
   // ──────────────────────────────────────────────────────────
 
@@ -1821,6 +1821,31 @@ function cdjToggle(id) {
   function tap(pad, i) {
     var tracks = currentBank === 'a' ? TRACKS_A : TRACKS_B;
     var store  = currentBank === 'a' ? data_a   : data_b;
+    var trk    = tracks[i];
+    var slot   = store[i];
+
+    // ── One-shot drum mode ────────────────────────────────────
+    // Each tap fires the hit fresh. No toggle, no full preview.
+    if (trk && trk.oneshot && slot) {
+      var hit = new Audio(slot.previewUrl);
+      hit.play().catch(function () {});
+      // Cut after 1.1s — just the hit, not the silence tail
+      setTimeout(function () { hit.pause(); hit.currentTime = 0; }, 1100);
+
+      // Visual flash
+      pad.classList.add('playing');
+      setTimeout(function () { pad.classList.remove('playing'); }, 140);
+
+      // Briefly show drum name on display
+      mainEl.textContent = trk.t.toUpperCase();
+      subEl.textContent  = trk.a.toUpperCase();
+      clearTimeout(pad._displayTimer);
+      pad._displayTimer = setTimeout(function () {
+        mainEl.textContent = 'SOUTHERN FREQUENCIES';
+        subEl.textContent  = 'BANK ' + currentBank.toUpperCase() + ' · TAP TO PLAY';
+      }, 500);
+      return;
+    }
 
     if (curPad === pad) { reset(); return; }
     reset();
