@@ -1597,13 +1597,14 @@ function cdjToggle(id) {
     pad.appendChild(bar);
 
     pad.addEventListener('click', function () {
-      // Select this pad for sequencer programming
-      if (window.seqSelectPad) seqSelectPad(i, tracks[i]);
+      var bt = (window._sp404_bank || 'b') === 'a' ? TRACKS_A : TRACKS_B;
+      if (window.seqSelectPad) seqSelectPad(i, bt[i]);
       tap(pad, i);
     });
     pad.addEventListener('touchstart', function (e) {
       e.preventDefault();
-      if (window.seqSelectPad) seqSelectPad(i, tracks[i]);
+      var bt = (window._sp404_bank || 'b') === 'a' ? TRACKS_A : TRACKS_B;
+      if (window.seqSelectPad) seqSelectPad(i, bt[i]);
       tap(pad, i);
     }, { passive: false });
 
