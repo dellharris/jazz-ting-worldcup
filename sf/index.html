@@ -1407,7 +1407,7 @@ function cdjToggle(id) {
     '1':12, '2':13, '3':14, '4':15,
   };
   var KEY_LABELS = ['Q','W','E','R','A','S','D','F','Z','X','C','V','1','2','3','4'];
-  var keysOn = false;
+  var keysOn = true;
 
   // Inject key labels into each pad
   Array.from(padsEl.children).forEach(function (pad, i) {
@@ -1416,6 +1416,11 @@ function cdjToggle(id) {
     lbl.textContent = KEY_LABELS[i] || '';
     pad.appendChild(lbl);
   });
+
+  // Keys on by default
+  document.getElementById('sp404KeysBtn').classList.add('active');
+  padsEl.classList.add('sp404-keys-on');
+  subEl.textContent = 'KEYS ON · Q-R / A-F / Z-V / 1-4';
 
   window.sp404ToggleKeys = function () {
     keysOn = !keysOn;
