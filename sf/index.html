@@ -1759,8 +1759,9 @@ function cdjToggle(id) {
     }
 
     // ── Poly mode — Bank B non-drum pads stack freely ─────────
-    // Each tap plays on top of anything already running.
-    if (currentBank === 'b' && slot) {
+    // Always return early for Bank B so the toggle path never runs.
+    if (currentBank === 'b') {
+      if (!slot) return; // preview not loaded yet — do nothing
       var fx = new Audio(slot.previewUrl);
       fx.play().catch(function () {});
 
