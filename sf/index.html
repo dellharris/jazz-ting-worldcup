@@ -727,6 +727,25 @@ body {
   font-family:'Courier Prime', monospace; font-size:8px;
   letter-spacing:0.28em; color:rgba(200,150,40,0.22); text-transform:uppercase;
 }
+/* Bank selector */
+.sp404-banks {
+  display: flex; gap: 6px; margin-bottom: 2px;
+}
+.sp404-bank-btn {
+  font-family: 'Courier Prime', monospace;
+  font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase;
+  padding: 5px 14px; border-radius: 3px; cursor: pointer;
+  background: #111; color: rgba(200,150,40,0.35);
+  border: 1px solid rgba(200,150,40,0.15);
+  transition: all 0.12s;
+}
+.sp404-bank-btn:hover { color: rgba(200,150,40,0.7); border-color: rgba(200,150,40,0.35); }
+.sp404-bank-btn.active {
+  background: rgba(200,150,40,0.12);
+  color: rgba(200,150,40,0.95);
+  border-color: rgba(200,150,40,0.55);
+  box-shadow: 0 0 10px rgba(200,150,40,0.18);
+}
 @media (max-width: 640px) {
   .sp404-pads { gap: 6px; }
   .sp404-unit { padding: 18px 16px 16px; }
@@ -1214,6 +1233,11 @@ body.nav-open .nav-overlay { opacity: 1; pointer-events: all; transform: transla
 
       <div class="sp404-pads" id="sp404Pads"></div>
 
+      <div class="sp404-banks">
+        <button class="sp404-bank-btn active" id="sp404BankA" onclick="sp404SwitchBank('a')">Bank A</button>
+        <button class="sp404-bank-btn"        id="sp404BankB" onclick="sp404SwitchBank('b')">Bank B</button>
+      </div>
+
       <div class="sp404-footer">
         <div class="sp404-knob"></div>
         <span class="sp404-footer-label">DELL HARRIS · SP-404 · SOUTHERN FREQUENCIES</span>
@@ -1284,51 +1308,59 @@ function cdjToggle(id) {
 
 // ── JTR → SF landing animation ──────────────────────────────
 (function () {
-  // ── Add songs here ────────────────────────────────────────
-  // Each entry: { a: 'Artist', t: 'Track Title' }
-  //   OR use iTunes ID for exact match: { id: '1843177886', a: 'Dell Harris', t: 'Jazz Night Ting' }
-  // Previews + buy links fetched automatically from iTunes.
-  // Up to 16 pads (4×4). Blank entries keep the pad dark.
-  var TRACKS = [
-    { id: '1843177886', a: 'Dell Harris',     t: 'Jazz Night Ting'              },
-    { id: '1725250183', a: 'Dell Harris',     t: 'Jazz Side'                    },
-    { id: '1718713597', a: 'Dell Harris',     t: 'Us vs Jazz Scene'             },
-    { id: '1746259534', a: 'Dell Harris',     t: 'Jazz Charge Sample'           },
-    { id: '1843177887', a: 'Dell Harris',     t: "It Don't Matter"              },
-    { id: '1753325410', a: 'Dell Harris',     t: 'Use Your Heart'               },
-    { id: '1726703023', a: 'Dell Harris',     t: 'Jazz Side (Instrumental)'     },
-    { id: '1843177891', a: 'Dell Harris',     t: 'Love 93 (feat. 81ne)'         },
-    { id: '1718713595', a: 'Dell Harris',     t: 'So Icy My Whole Career'       },
-    { id: '1489524152', a: 'Dell Harris',     t: 'Salute (Extended Mix)'        },
-    { id: '1485316515', a: 'Dell Harris',     t: 'B&G'                          },
-    { id: '6787179312', a: 'Dell Harris',     t: 'Open Book'                    },
-    { id: '1718713596', a: 'Dell Harris',     t: 'Cheese on His Jazz Head'      },
-    { id: '1843177889', a: 'Dell Harris',     t: 'Puede Conmigo'                },
-    { id: '1743387751', a: 'Dell Harris',     t: 'Surrender'                    },
-    { id: '1731659859', a: 'Dell Harris',     t: 'Us vs Jazz Scene'             },
+  // ── BANK A — Dell Harris tracks ───────────────────────────
+  var TRACKS_A = [
+    { id: '1843177886', a: 'Dell Harris', t: 'Jazz Night Ting'              },
+    { id: '1725250183', a: 'Dell Harris', t: 'Jazz Side'                    },
+    { id: '1718713597', a: 'Dell Harris', t: 'Us vs Jazz Scene'             },
+    { id: '1746259534', a: 'Dell Harris', t: 'Jazz Charge Sample'           },
+    { id: '1843177887', a: 'Dell Harris', t: "It Don't Matter"              },
+    { id: '1753325410', a: 'Dell Harris', t: 'Use Your Heart'               },
+    { id: '1726703023', a: 'Dell Harris', t: 'Jazz Side (Instrumental)'     },
+    { id: '1843177891', a: 'Dell Harris', t: 'Love 93 (feat. 81ne)'         },
+    { id: '1718713595', a: 'Dell Harris', t: 'So Icy My Whole Career'       },
+    { id: '1489524152', a: 'Dell Harris', t: 'Salute (Extended Mix)'        },
+    { id: '1485316515', a: 'Dell Harris', t: 'B&G'                          },
+    { id: '6787179312', a: 'Dell Harris', t: 'Open Book'                    },
+    { id: '1718713596', a: 'Dell Harris', t: 'Cheese on His Jazz Head'      },
+    { id: '1843177889', a: 'Dell Harris', t: 'Puede Conmigo'                },
+    { id: '1743387751', a: 'Dell Harris', t: 'Surrender'                    },
+    { id: '1731659859', a: 'Dell Harris', t: 'Us vs Jazz Scene'             },
   ];
-  // ─────────────────────────────────────────────────────────
 
-  var padsEl   = document.getElementById('sp404Pads');
-  var mainEl   = document.getElementById('sp404Main');
-  var subEl    = document.getElementById('sp404Sub');
-  var ledEl    = document.getElementById('sp404Led');
-  var buyEl    = document.getElementById('sp404Buy');
-  var spotEl   = document.getElementById('sp404Spotify');
+  // ── BANK B — SFX on row 1, rest dark ──────────────────────
+  var TRACKS_B = [
+    { id: '340093236',  a: 'SFX', t: 'Warning Siren'     },
+    { id: '396850172',  a: 'SFX', t: 'Jet Fighter Flyby' },
+    { id: '340893347',  a: 'SFX', t: 'Trumpet & Whinny'  },
+    { id: '396850183',  a: 'SFX', t: 'Car Warning Beeper'},
+    null, null, null, null,
+    null, null, null, null,
+    null, null, null, null,
+  ];
+  // ──────────────────────────────────────────────────────────
+
+  var padsEl  = document.getElementById('sp404Pads');
+  var mainEl  = document.getElementById('sp404Main');
+  var subEl   = document.getElementById('sp404Sub');
+  var ledEl   = document.getElementById('sp404Led');
+  var buyEl   = document.getElementById('sp404Buy');
+  var spotEl  = document.getElementById('sp404Spotify');
   if (!padsEl) return;
 
-  // Each slot: { previewUrl, buyUrl } or null
-  var data         = new Array(TRACKS.length).fill(null);
-  var curAudio     = null;
-  var curPad       = null;
-  var progTimer    = null;
+  var data_a      = new Array(16).fill(null);
+  var data_b      = new Array(16).fill(null);
+  var currentBank = 'a';
+  var curAudio    = null;
+  var curPad      = null;
+  var progTimer   = null;
 
-  // Build 16 pads
-  TRACKS.forEach(function (trk, i) {
-    var bank = Math.floor(i / 4);
-    var pad  = document.createElement('button');
+  // ── Build 16 pads ─────────────────────────────────────────
+  TRACKS_A.forEach(function (trk, i) {
+    var bankColor = Math.floor(i / 4);
+    var pad = document.createElement('button');
     pad.className = 'sp404-pad';
-    pad.setAttribute('data-bank', bank);
+    pad.setAttribute('data-bank', bankColor);
     pad.setAttribute('aria-label', 'Pad ' + (i + 1));
 
     var num = document.createElement('span');
@@ -1348,31 +1380,57 @@ function cdjToggle(id) {
     padsEl.appendChild(pad);
   });
 
-  // Fetch previews + buy links from iTunes (no auth needed)
-  // Uses direct ID lookup when available, falls back to search
-  TRACKS.forEach(function (trk, i) {
-    var url = trk.id
-      ? 'https://itunes.apple.com/lookup?id=' + trk.id
-      : 'https://itunes.apple.com/search?term=' + encodeURIComponent(trk.a + ' ' + trk.t) + '&entity=song&limit=1&media=music';
+  // ── Fetch both banks in parallel ──────────────────────────
+  function fetchBank(tracks, store, bankLabel) {
+    tracks.forEach(function (trk, i) {
+      if (!trk) return;
+      var url = trk.id
+        ? 'https://itunes.apple.com/lookup?id=' + trk.id
+        : 'https://itunes.apple.com/search?term=' + encodeURIComponent(trk.a + ' ' + trk.t) + '&entity=song&limit=1&media=music';
+      fetch(url)
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          var result = d.results && d.results[0];
+          if (result && result.previewUrl) {
+            store[i] = { previewUrl: result.previewUrl, buyUrl: result.trackViewUrl || null };
+          } else if (currentBank === bankLabel) {
+            padsEl.children[i].classList.add('no-preview');
+          }
+        })
+        .catch(function () {
+          if (currentBank === bankLabel && i < padsEl.children.length) {
+            padsEl.children[i].classList.add('no-preview');
+          }
+        });
+    });
+  }
+  fetchBank(TRACKS_A, data_a, 'a');
+  fetchBank(TRACKS_B, data_b, 'b');
 
-    fetch(url)
-      .then(function (r) { return r.json(); })
-      .then(function (d) {
-        var result = d.results && d.results[0];
-        if (result && result.previewUrl) {
-          data[i] = {
-            previewUrl: result.previewUrl,
-            buyUrl:     result.trackViewUrl || null,
-          };
-        } else {
-          padsEl.children[i].classList.add('no-preview');
-        }
-      })
-      .catch(function () {
-        if (i < padsEl.children.length) padsEl.children[i].classList.add('no-preview');
-      });
-  });
+  // ── Bank switching ─────────────────────────────────────────
+  window.sp404SwitchBank = function (bank) {
+    if (currentBank === bank) return;
+    reset();
+    currentBank = bank;
 
+    var tracks = bank === 'a' ? TRACKS_A : TRACKS_B;
+    var store  = bank === 'a' ? data_a   : data_b;
+
+    // Update button states
+    document.getElementById('sp404BankA').classList.toggle('active', bank === 'a');
+    document.getElementById('sp404BankB').classList.toggle('active', bank === 'b');
+
+    // Update pad no-preview states
+    Array.from(padsEl.children).forEach(function (pad, i) {
+      pad.classList.remove('no-preview');
+      if (!tracks[i]) pad.classList.add('no-preview');
+    });
+
+    mainEl.textContent = 'SOUTHERN FREQUENCIES';
+    subEl.textContent  = 'BANK ' + bank.toUpperCase() + ' · TAP TO PREVIEW';
+  };
+
+  // ── Reset ──────────────────────────────────────────────────
   function reset() {
     if (curAudio) { curAudio.pause(); curAudio = null; }
     clearInterval(progTimer);
@@ -1387,25 +1445,29 @@ function cdjToggle(id) {
     spotEl.style.display = 'none';
     spotEl.href          = '#';
     mainEl.textContent   = 'SOUTHERN FREQUENCIES';
-    subEl.textContent    = 'TAP A PAD TO PREVIEW';
+    subEl.textContent    = 'BANK ' + currentBank.toUpperCase() + ' · TAP TO PREVIEW';
   }
 
+  // ── Tap pad ────────────────────────────────────────────────
   function tap(pad, i) {
+    var tracks = currentBank === 'a' ? TRACKS_A : TRACKS_B;
+    var store  = currentBank === 'a' ? data_a   : data_b;
+
     if (curPad === pad) { reset(); return; }
     reset();
 
-    if (!data[i]) {
+    if (!store[i]) {
       mainEl.textContent = '— NO SIGNAL —';
       subEl.textContent  = '';
       setTimeout(function () {
         mainEl.textContent = 'SOUTHERN FREQUENCIES';
-        subEl.textContent  = 'TAP A PAD TO PREVIEW';
+        subEl.textContent  = 'BANK ' + currentBank.toUpperCase() + ' · TAP TO PREVIEW';
       }, 900);
       return;
     }
 
-    var trk   = TRACKS[i];
-    var slot  = data[i];
+    var trk   = tracks[i];
+    var slot  = store[i];
     var audio = new Audio(slot.previewUrl);
     curAudio  = audio;
     curPad    = pad;
@@ -1415,14 +1477,12 @@ function cdjToggle(id) {
     mainEl.textContent = trk.a.toUpperCase();
     subEl.textContent  = trk.t.toUpperCase();
 
-    // Show Apple Music buy link
     if (slot.buyUrl) {
       buyEl.href          = slot.buyUrl;
       buyEl.style.display = 'block';
     }
 
-    // Always show Spotify search link
-    var spotifyQ = encodeURIComponent('Dell Harris ' + trk.t);
+    var spotifyQ = encodeURIComponent(trk.a + ' ' + trk.t);
     spotEl.href          = 'https://open.spotify.com/search/' + spotifyQ;
     spotEl.style.display = 'block';
 
