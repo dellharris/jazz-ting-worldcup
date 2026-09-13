@@ -1540,6 +1540,25 @@ function cdjToggle(id) {
       return;
     }
 
+    // ── Poly mode — Bank B non-drum pads stack freely ─────────
+    // Each tap plays on top of anything already running.
+    if (currentBank === 'b' && slot) {
+      var fx = new Audio(slot.previewUrl);
+      fx.play().catch(function () {});
+
+      pad.classList.add('playing');
+      fx.onended = function () { pad.classList.remove('playing'); };
+
+      mainEl.textContent = trk.t.toUpperCase();
+      subEl.textContent  = trk.a.toUpperCase();
+      clearTimeout(pad._displayTimer);
+      pad._displayTimer = setTimeout(function () {
+        mainEl.textContent = 'SOUTHERN FREQUENCIES';
+        subEl.textContent  = 'BANK B · TAP TO PLAY';
+      }, 800);
+      return;
+    }
+
     if (curPad === pad) { reset(); return; }
     reset();
 
