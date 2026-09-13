@@ -1231,12 +1231,12 @@ body.nav-open .nav-overlay { opacity: 1; pointer-events: all; transform: transla
         </div>
       </div>
 
-      <div class="sp404-pads" id="sp404Pads"></div>
-
       <div class="sp404-banks">
-        <button class="sp404-bank-btn active" id="sp404BankA" onclick="sp404SwitchBank('a')">Bank A</button>
-        <button class="sp404-bank-btn"        id="sp404BankB" onclick="sp404SwitchBank('b')">Bank B</button>
+        <button class="sp404-bank-btn"        id="sp404BankA" onclick="sp404SwitchBank('a')">Bank A</button>
+        <button class="sp404-bank-btn active" id="sp404BankB" onclick="sp404SwitchBank('b')">Bank B</button>
       </div>
+
+      <div class="sp404-pads" id="sp404Pads"></div>
 
       <div class="sp404-footer">
         <div class="sp404-knob"></div>
@@ -1350,12 +1350,12 @@ function cdjToggle(id) {
 
   var data_a      = new Array(16).fill(null);
   var data_b      = new Array(16).fill(null);
-  var currentBank = 'a';
+  var currentBank = 'b';
   var curAudio    = null;
   var curPad      = null;
   var progTimer   = null;
 
-  // ── Build 16 pads ─────────────────────────────────────────
+  // ── Build 16 pads (start in Bank B — FX first) ───────────
   TRACKS_A.forEach(function (trk, i) {
     var bankColor = Math.floor(i / 4);
     var pad = document.createElement('button');
@@ -1371,6 +1371,9 @@ function cdjToggle(id) {
     var bar = document.createElement('div');
     bar.className = 'sp404-pad-bar';
     pad.appendChild(bar);
+
+    // Pads 5-16 are dark in Bank B
+    if (!TRACKS_B[i]) pad.classList.add('no-preview');
 
     pad.addEventListener('click', function () { tap(pad, i); });
     pad.addEventListener('touchstart', function (e) {
@@ -1427,7 +1430,7 @@ function cdjToggle(id) {
     });
 
     mainEl.textContent = 'SOUTHERN FREQUENCIES';
-    subEl.textContent  = 'BANK ' + bank.toUpperCase() + ' · TAP TO PREVIEW';
+    subEl.textContent  = bank === 'a' ? 'BANK A · DELL HARRIS MUSIC' : 'BANK B · TAP TO PLAY';
   };
 
   // ── Reset ──────────────────────────────────────────────────
@@ -1445,7 +1448,7 @@ function cdjToggle(id) {
     spotEl.style.display = 'none';
     spotEl.href          = '#';
     mainEl.textContent   = 'SOUTHERN FREQUENCIES';
-    subEl.textContent    = 'BANK ' + currentBank.toUpperCase() + ' · TAP TO PREVIEW';
+    subEl.textContent    = 'BANK ' + currentBank.toUpperCase() + ' · TAP TO PLAY';
   }
 
   // ── Tap pad ────────────────────────────────────────────────
