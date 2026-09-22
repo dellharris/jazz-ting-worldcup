@@ -936,53 +936,64 @@ body {
   border-bottom: 1px solid rgba(155,128,88,0.1);
 }
 .event-desc__inner {
-  max-width: 860px; margin: 0 auto;
-  padding: 72px 40px;
-  display: grid;
-  grid-template-columns: 180px 1fr;
-  gap: 60px;
-  align-items: start;
+  max-width: 900px; margin: 0 auto;
+  padding: 88px 40px 96px;
+  display: flex; flex-direction: column; gap: 40px;
 }
-.event-desc__date {
-  display: flex; flex-direction: column; gap: 6px;
-  padding-top: 4px;
+
+/* Date + venue line */
+.event-desc__meta {
+  display: flex; gap: 28px; align-items: center; flex-wrap: wrap;
 }
 .event-desc__day {
-  font-size: 9px; letter-spacing: 0.48em;
-  color: rgba(165,138,96,0.5); font-weight: 300;
-  text-transform: uppercase;
-}
-.event-desc__num {
-  font-family: -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 28px; font-weight: 200; letter-spacing: 0.04em;
-  color: rgba(218,196,155,0.9); line-height: 1;
+  font-size: 11px; letter-spacing: 0.46em;
+  color: rgba(165,138,96,0.65); font-weight: 300; text-transform: uppercase;
 }
 .event-desc__venue {
-  font-size: 9px; letter-spacing: 0.3em;
-  color: rgba(155,128,88,0.45); font-weight: 300;
-  text-transform: uppercase; margin-top: 4px;
+  font-size: 11px; letter-spacing: 0.46em;
+  color: rgba(155,128,88,0.38); font-weight: 300; text-transform: uppercase;
+}
+
+/* Big headline */
+.event-desc__headline {
+  font-family: -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: clamp(40px, 7vw, 88px);
+  font-weight: 200;
+  letter-spacing: -0.01em;
+  line-height: 1.06;
+  color: rgba(222,203,170,0.96);
+}
+
+/* Large lead paragraph */
+.event-desc__lead {
+  font-size: clamp(20px, 2.8vw, 30px);
+  font-weight: 300;
   line-height: 1.6;
+  color: rgba(195,172,132,0.8);
+  letter-spacing: 0.01em;
+  max-width: 780px;
 }
-.event-desc__body {
-  display: flex; flex-direction: column; gap: 20px;
+
+/* Smaller bio paragraph */
+.event-desc__bio {
+  font-size: clamp(15px, 1.8vw, 19px);
+  font-weight: 300;
+  line-height: 1.75;
+  color: rgba(175,152,112,0.58);
+  letter-spacing: 0.01em;
+  max-width: 680px;
 }
-.event-desc__copy {
-  font-size: 14px; font-weight: 300; line-height: 1.8;
-  color: rgba(195,172,132,0.72);
-  letter-spacing: 0.02em;
-}
+
 .event-desc__tags {
-  display: flex; flex-wrap: wrap; gap: 6px;
+  display: flex; flex-wrap: wrap; gap: 8px;
   align-items: center;
-  font-size: 9px; letter-spacing: 0.34em;
-  color: rgba(155,128,88,0.38); text-transform: uppercase;
-  font-weight: 300; margin-top: 4px;
+  font-size: 10px; letter-spacing: 0.38em;
+  color: rgba(155,128,88,0.32); text-transform: uppercase; font-weight: 300;
 }
+
 @media (max-width: 640px) {
-  .event-desc__inner {
-    grid-template-columns: 1fr;
-    gap: 28px; padding: 52px 24px;
-  }
+  .event-desc__inner { padding: 64px 24px 72px; gap: 32px; }
+  .event-desc__meta  { flex-direction: column; gap: 6px; }
 }
 
 /* ── JTR landing: tiles reassemble from bright static ── */
@@ -1201,32 +1212,33 @@ body.nav-open .nav-overlay { opacity: 1; pointer-events: all; transform: transla
 <section class="event-desc">
   <div class="event-desc__inner">
 
-    <div class="event-desc__date">
-      <span class="event-desc__day">Saturday</span>
-      <span class="event-desc__num">September 26</span>
+    <div class="event-desc__meta">
+      <span class="event-desc__day">Saturday · September 26</span>
       <span class="event-desc__venue">Commune ATL · Atlanta, GA</span>
     </div>
 
-    <div class="event-desc__body">
-      <p class="event-desc__copy">
-        Southern Frequency is Dell Harris performing live — the SP-404 as the instrument,
-        not a tool. Jazz-inflected production, Southern rap, mellow grime, and deep sample
-        culture channeled through a single machine into one unbroken listening session.
-        Warm bass. Analog texture. The kind of music that makes a room go still.
-      </p>
-      <p class="event-desc__copy">
-        Dell Harris is an Atlanta-based DJ, producer, and sample artist. His sound lives
-        at the intersection of MF DOOM–era abstract rap, Memphis and ATL underground, and
-        the mellow grime of late-night London — heard through a serious hi-fi system.
-        Southern Frequency is where that world gets performed live.
-      </p>
-      <div class="event-desc__tags">
-        <span>Jazz-Inflected</span>
-        <span>·</span>
-        <span>Southern Underground</span>
-        <span>·</span>
-        <span>Hi-Fi Culture</span>
-      </div>
+    <h2 class="event-desc__headline">
+      The SP‑404<br>as the instrument,<br>not a tool.
+    </h2>
+
+    <p class="event-desc__lead">
+      Jazz-inflected production, Southern rap, mellow grime, and deep sample
+      culture — channeled through a single machine into one unbroken listening session.
+      Warm bass. Analog texture. The kind of music that makes a room go still.
+    </p>
+
+    <p class="event-desc__bio">
+      Dell Harris is an Atlanta-based DJ, producer, and sample artist. His sound lives
+      at the intersection of MF DOOM–era abstract rap, Memphis and ATL underground,
+      and the mellow grime of late-night London — heard through a serious hi-fi system.
+    </p>
+
+    <div class="event-desc__tags">
+      <span>Jazz-Inflected</span>
+      <span>·</span>
+      <span>Southern Underground</span>
+      <span>·</span>
+      <span>Hi-Fi Culture</span>
     </div>
 
   </div>
