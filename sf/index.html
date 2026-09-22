@@ -990,6 +990,18 @@ body {
   font-size: 10px; letter-spacing: 0.38em;
   color: rgba(155,128,88,0.32); text-transform: uppercase; font-weight: 300;
 }
+.event-desc__track {
+  display: flex; flex-direction: column; gap: 10px;
+  max-width: 600px;
+}
+.event-desc__track-label {
+  font-size: 9px; letter-spacing: 0.46em;
+  color: rgba(165,138,96,0.5); font-weight: 300; text-transform: uppercase;
+}
+.event-desc__track iframe {
+  border-radius: 6px;
+  opacity: 0.88;
+}
 
 @media (max-width: 640px) {
   .event-desc__inner { padding: 64px 24px 72px; gap: 32px; }
@@ -1222,23 +1234,36 @@ body.nav-open .nav-overlay { opacity: 1; pointer-events: all; transform: transla
     </h2>
 
     <p class="event-desc__lead">
-      Jazz-inflected production, Southern rap, mellow grime, and deep sample
-      culture — channeled through a single machine into one unbroken listening session.
-      Warm bass. Analog texture. The kind of music that makes a room go still.
+      Jazz-inflected production, Southern rap, lo-fi house, amapiano, mellow grime,
+      and deep sample culture — channeled through a single machine into one unbroken
+      listening session. Warm bass. Analog texture. The kind of music that makes a room go still.
     </p>
 
     <p class="event-desc__bio">
       Dell Harris is an Atlanta-based DJ, producer, and sample artist. His sound lives
       at the intersection of MF DOOM–era abstract rap, Memphis and ATL underground,
-      and the mellow grime of late-night London — heard through a serious hi-fi system.
+      amapiano, and the mellow grime of late-night London — heard through a serious hi-fi system.
     </p>
 
     <div class="event-desc__tags">
       <span>Jazz-Inflected</span>
       <span>·</span>
+      <span>Lo-Fi House</span>
+      <span>·</span>
+      <span>Amapiano</span>
+      <span>·</span>
       <span>Southern Underground</span>
       <span>·</span>
       <span>Hi-Fi Culture</span>
+    </div>
+
+    <!-- Featured track -->
+    <div class="event-desc__track">
+      <div class="event-desc__track-label">Now Dropping</div>
+      <iframe width="100%" height="166" scrolling="no" frameborder="no"
+        allow="autoplay; encrypted-media"
+        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2404157703&color=%23845e54&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false">
+      </iframe>
     </div>
 
   </div>
