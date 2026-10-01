@@ -59,6 +59,18 @@
     .checks input { width: 18px; height: 18px; accent-color: var(--gold); }
     button { background: var(--gold); color: var(--black); border: 0; padding: 16px 28px; border-radius: 4px; font-weight: 700; font-size: 15px; cursor: pointer; font-family: 'Inter', sans-serif; }
     .note { font-size: 13px; color: var(--muted); margin-top: 6px; }
+
+    .note#tzNote { margin: 12px 0 0; }
+    .days { margin-top: 28px; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+    .day { background: var(--mid); border: 1px solid var(--border); border-radius: 8px; padding: 18px; display: grid; gap: 10px; }
+    .day h4 { font-family: 'Syne', sans-serif; font-size: 15px; }
+    .slot { background: transparent; color: var(--gold); border: 1px solid var(--gold); padding: 10px 12px; font-size: 14px; }
+    .slot.on { background: var(--gold); color: var(--black); }
+    .picked { padding: 14px 16px; border: 1px dashed var(--border); border-radius: 4px; color: var(--muted); font-size: 14px; }
+    .picked.set { color: var(--white); border-color: var(--gold); }
+    .done { margin-top: 36px; max-width: 640px; padding: 28px; background: var(--gold-dim); border: 1px solid var(--gold); border-radius: 8px; display: grid; gap: 12px; }
+    .done .btn { justify-self: start; }
+    form { margin-top: 28px; }
     footer { border-top: 1px solid var(--border); padding: 36px 6vw; text-align: center; color: var(--muted); font-size: 13px; }
     footer img { height: 40px; opacity: 0.75; display: block; margin: 0 auto 12px; }
   </style>
@@ -135,7 +147,7 @@
     <div class="label">The path</div>
     <h2>From first hello to a working partnership.</h2>
     <div class="steps">
-      <div class="step"><b>STEP 01</b><span>Request the call below. It takes under a minute and tells us which points matter most to you.</span></div>
+      <div class="step"><b>STEP 01</b><span>Pick a time below during IDU House open hours. It takes under a minute and tells us which points matter most to you.</span></div>
       <div class="step"><b>STEP 02</b><span>30 minute discovery call. We listen first, then walk through the three points.</span></div>
       <div class="step"><b>STEP 03</b><span>Within a week we send a one page summary of what we agreed to explore, with owners and dates.</span></div>
       <div class="step"><b>STEP 04</b><span>Pilot with one release. We run a single IDU House artist through the membership, placement and radio path, then decide what scales.</span></div>
@@ -144,10 +156,15 @@
 </div>
 
 <section id="call">
-  <div class="label">Request a call</div>
-  <h2>Let's talk.</h2>
-  <p class="lead">Pick what you want to cover and a few times that work. This opens an email to the IDU House team with everything filled in.</p>
+  <div class="label">Pick a time</div>
+  <h2>IDU House open hours.</h2>
+  <p class="lead">Tuesday through Thursday, 9 to 10 PM Eastern. Choose a slot and we will confirm by reply.</p>
+  <p class="note" id="tzNote"></p>
+  <div id="days" class="days"></div>
+  <p class="note" id="noSlots" style="display:none">No open slots right now. Use the box below to suggest a time.</p>
+
   <form id="callForm">
+    <div id="picked" class="picked">Select a time above to continue.</div>
     <label>Your name<input name="name" required placeholder="DJ Rukus"></label>
     <label>Email<input name="email" type="email" required placeholder="you@mymp3pool.com"></label>
     <div class="checks">
@@ -155,10 +172,10 @@
       <label><input type="checkbox" name="pt" value="Artist song placement partnership" checked> Artist song placement partnership</label>
       <label><input type="checkbox" name="pt" value="IDU House Sounds radio program" checked> IDU House Sounds radio program</label>
     </div>
-    <label>Best days and times (include time zone)<textarea name="times" placeholder="Tuesday or Thursday afternoons ET"></textarea></label>
-    <button type="submit">Send call request</button>
-    <p class="note">No scheduling tool needed. We confirm a time by reply within one business day.</p>
+    <label>Need a different time? Tell us what works (optional)<textarea name="times" placeholder="Outside open hours, include your time zone"></textarea></label>
+    <button type="submit">Confirm request</button>
   </form>
+  <div id="done" class="done" style="display:none"></div>
 </section>
 
 <footer>
@@ -167,22 +184,145 @@
 </footer>
 
 <script>
-  const TO = 'hello@iduhouse.com';
-  document.getElementById('callForm').addEventListener('submit', function (e) {
+  const CONFIG = {
+    endpoint: '',
+    fallbackEmail: 'hello@iduhouse.com',
+    weeks: 4,
+    minLeadHours: 12,
+    weekdays: [2, 3, 4],
+    times: ['21:00', '21:30'],
+    slotMinutes: 30
+  };
+  const TZ = 'America/New_York';
+  let selected = null;
+  let busy = [];
+
+  function tzOffsetMs(date) {
+    const p = Object.fromEntries(new Intl.DateTimeFormat('en-US', {
+      timeZone: TZ, hourCycle: 'h23', year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', second: '2-digit'
+    }).formatToParts(date).map(x => [x.type, x.value]));
+    const asUtc = Date.UTC(+p.year, +p.month - 1, +p.day, +p.hour, +p.minute, +p.second);
+    return asUtc - Math.floor(date.getTime() / 1000) * 1000;
+  }
+  function nyToDate(y, m, d, hh, mm) {
+    const guess = Date.UTC(y, m - 1, d, hh, mm);
+    const first = guess - tzOffsetMs(new Date(guess));
+    return new Date(guess - tzOffsetMs(new Date(first)));
+  }
+  const fmtDay = new Intl.DateTimeFormat('en-US', { timeZone: TZ, weekday: 'long', month: 'short', day: 'numeric' });
+  const fmtET = new Intl.DateTimeFormat('en-US', { timeZone: TZ, hour: 'numeric', minute: '2-digit' });
+  const fmtLocal = new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit', timeZoneName: 'short' });
+  const fmtFull = new Intl.DateTimeFormat('en-US', { timeZone: TZ, weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit', timeZoneName: 'short' });
+
+  function isBusy(start) {
+    const end = new Date(start.getTime() + CONFIG.slotMinutes * 60000);
+    return busy.some(b => start < new Date(b.end) && end > new Date(b.start));
+  }
+
+  function buildSlots() {
+    const now = new Date();
+    const nowNY = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit' })
+      .formatToParts(now).map(x => [x.type, x.value]));
+    const out = [];
+    for (let i = 0; i < CONFIG.weeks * 7; i++) {
+      const civil = new Date(Date.UTC(+nowNY.year, +nowNY.month - 1, +nowNY.day + i));
+      if (!CONFIG.weekdays.includes(civil.getUTCDay())) continue;
+      const slots = CONFIG.times.map(t => {
+        const [h, m] = t.split(':').map(Number);
+        return nyToDate(civil.getUTCFullYear(), civil.getUTCMonth() + 1, civil.getUTCDate(), h, m);
+      }).filter(s => s - now > CONFIG.minLeadHours * 3600000 && !isBusy(s));
+      if (slots.length) out.push({ label: fmtDay.format(slots[0]), slots });
+    }
+    return out;
+  }
+
+  function render() {
+    const wrap = document.getElementById('days');
+    wrap.innerHTML = '';
+    const days = buildSlots();
+    document.getElementById('noSlots').style.display = days.length ? 'none' : 'block';
+    const localTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    document.getElementById('tzNote').textContent = localTz === TZ
+      ? 'All times are Eastern Time.'
+      : 'Times shown in Eastern Time, with your local time in parentheses (' + localTz + ').';
+    days.forEach(d => {
+      const card = document.createElement('div');
+      card.className = 'day';
+      card.innerHTML = '<h4>' + d.label + '</h4>';
+      d.slots.forEach(s => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'slot';
+        const local = localTz === TZ ? '' : ' (' + fmtLocal.format(s) + ')';
+        b.textContent = fmtET.format(s) + ' ET' + local;
+        b.onclick = () => {
+          selected = s;
+          document.querySelectorAll('.slot').forEach(x => x.classList.remove('on'));
+          b.classList.add('on');
+          document.getElementById('picked').textContent = 'Selected: ' + fmtFull.format(s);
+          document.getElementById('picked').classList.add('set');
+        };
+        card.appendChild(b);
+      });
+      wrap.appendChild(card);
+    });
+  }
+
+  function icsFor(start, name) {
+    const end = new Date(start.getTime() + CONFIG.slotMinutes * 60000);
+    const z = d => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+    return ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//IDU House//Discovery Call//EN', 'BEGIN:VEVENT',
+      'UID:' + start.getTime() + '@iduhouse.com', 'DTSTAMP:' + z(new Date()),
+      'DTSTART:' + z(start), 'DTEND:' + z(end),
+      'SUMMARY:IDU House x MyMP3Pool Discovery Call', 'DESCRIPTION:Requested by ' + name + '. Pending confirmation.',
+      'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+  }
+
+  document.getElementById('callForm').addEventListener('submit', async function (e) {
     e.preventDefault();
     const f = new FormData(this);
+    if (!selected && !(f.get('times') || '').trim()) {
+      document.getElementById('picked').textContent = 'Please select a time above or suggest one below.';
+      document.getElementById('picked').classList.add('set');
+      return;
+    }
+    const slotText = selected ? fmtFull.format(selected) : 'No slot selected';
     const points = f.getAll('pt').map((p, i) => (i + 1) + '. ' + p).join('\n');
-    const body =
-      'Hi IDU House team,\n\n' +
-      'I would like to schedule the discovery call.\n\n' +
-      'Name: ' + f.get('name') + '\n' +
-      'Email: ' + f.get('email') + '\n\n' +
-      'Topics to cover:\n' + points + '\n\n' +
-      'Best days and times:\n' + (f.get('times') || 'Open, please send options') + '\n';
-    window.location.href = 'mailto:' + TO +
-      '?subject=' + encodeURIComponent('IDU House x MyMP3Pool Discovery Call Request') +
-      '&body=' + encodeURIComponent(body);
+    const payload = {
+      name: f.get('name'), email: f.get('email'), slot: slotText,
+      slot_iso: selected ? selected.toISOString() : '', topics: points,
+      other_times: f.get('times') || '',
+      _subject: 'Discovery call request: ' + f.get('name') + ' (' + slotText + ')'
+    };
+    let sent = false;
+    if (CONFIG.endpoint) {
+      try {
+        const r = await fetch(CONFIG.endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) });
+        sent = r.ok;
+      } catch (err) { sent = false; }
+    }
+    if (!sent) {
+      const body = 'Hi IDU House team,\n\nDiscovery call request.\n\nName: ' + payload.name + '\nEmail: ' + payload.email +
+        '\nRequested slot: ' + slotText + '\n\nTopics:\n' + points + '\n\nOther times:\n' + (payload.other_times || 'None') + '\n';
+      window.location.href = 'mailto:' + CONFIG.fallbackEmail + '?subject=' + encodeURIComponent(payload._subject) + '&body=' + encodeURIComponent(body);
+    }
+    this.style.display = 'none';
+    const done = document.getElementById('done');
+    done.style.display = 'block';
+    done.innerHTML = '<h3>Request received.</h3><p>' + slotText + '</p><p class="note">We will confirm by reply.</p>';
+    if (selected) {
+      const a = document.createElement('a');
+      a.className = 'btn ghost';
+      a.textContent = 'Add to my calendar';
+      a.href = URL.createObjectURL(new Blob([icsFor(selected, payload.name)], { type: 'text/calendar' }));
+      a.download = 'idu-house-discovery-call.ics';
+      done.appendChild(a);
+    }
   });
+
+  fetch('busy.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : { busy: [] })
+    .then(j => { busy = j.busy || []; }).catch(() => {}).finally(render);
 </script>
 </body>
 </html>
