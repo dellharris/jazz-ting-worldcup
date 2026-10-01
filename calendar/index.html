@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IDU House x MyMP3Pool | Partnership Discovery Call</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #080808;
+      --white: #F0EDE8;
+      --gold: #C8A84B;
+      --gold-dim: rgba(200,168,75,0.10);
+      --mid: #141414;
+      --border: rgba(255,255,255,0.08);
+      --muted: #8a8a8a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: 'Inter', -apple-system, sans-serif; line-height: 1.6; }
+    h1, h2, h3, .label { font-family: 'Syne', sans-serif; }
+    nav { position: sticky; top: 0; z-index: 10; background: var(--black); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 14px 6vw; }
+    nav img { height: 44px; width: auto; opacity: 0.9; }
+    nav a.cta { color: var(--black); background: var(--gold); padding: 10px 20px; border-radius: 4px; font-weight: 600; font-size: 14px; text-decoration: none; }
+    section { padding: 88px 6vw; max-width: 1100px; margin: 0 auto; }
+    .label { color: var(--gold); font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 700; margin-bottom: 18px; }
+    h1 { font-size: clamp(40px, 7vw, 80px); line-height: 1.02; font-weight: 800; margin-bottom: 24px; }
+    h1 span { color: var(--gold); }
+    h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 800; margin-bottom: 16px; line-height: 1.1; }
+    p.lead { font-size: 19px; color: #cfcbc4; max-width: 680px; }
+    .hero { padding-top: 110px; }
+    .hero .btns { margin-top: 36px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn { display: inline-block; padding: 15px 28px; border-radius: 4px; font-weight: 600; text-decoration: none; font-size: 15px; border: 1px solid var(--gold); }
+    .btn.primary { background: var(--gold); color: var(--black); }
+    .btn.ghost { color: var(--gold); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 20px; margin-top: 40px; }
+    .card { background: var(--mid); border: 1px solid var(--border); border-radius: 8px; padding: 32px 28px; }
+    .card .num { font-family: 'Syne', sans-serif; font-size: 44px; font-weight: 800; color: var(--gold); line-height: 1; margin-bottom: 14px; }
+    .card h3 { font-size: 21px; margin-bottom: 10px; }
+    .card p { color: #bdb9b2; font-size: 15px; margin-bottom: 14px; }
+    .card ul { list-style: none; }
+    .card li { font-size: 14px; color: var(--muted); padding: 6px 0; border-top: 1px solid var(--border); }
+    .steps { margin-top: 36px; display: grid; gap: 0; }
+    .step { display: flex; gap: 22px; padding: 22px 0; border-top: 1px solid var(--border); }
+    .step b { font-family: 'Syne', sans-serif; color: var(--gold); min-width: 70px; font-size: 14px; letter-spacing: 0.1em; }
+    .step span { color: #cfcbc4; }
+    .band { background: var(--gold-dim); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .proof { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; margin-top: 32px; }
+    .proof div { border-left: 2px solid var(--gold); padding-left: 16px; }
+    .proof strong { display: block; font-family: 'Syne', sans-serif; font-size: 34px; }
+    .proof small { color: var(--muted); font-size: 13px; }
+    form { margin-top: 36px; display: grid; gap: 16px; max-width: 640px; }
+    label { font-size: 13px; color: var(--muted); display: grid; gap: 6px; }
+    input, textarea, select { background: var(--mid); border: 1px solid var(--border); color: var(--white); padding: 13px 14px; border-radius: 4px; font: inherit; font-size: 15px; }
+    textarea { min-height: 110px; resize: vertical; }
+    .checks { display: grid; gap: 10px; }
+    .checks label { display: flex; align-items: center; gap: 10px; color: var(--white); font-size: 15px; }
+    .checks input { width: 18px; height: 18px; accent-color: var(--gold); }
+    button { background: var(--gold); color: var(--black); border: 0; padding: 16px 28px; border-radius: 4px; font-weight: 700; font-size: 15px; cursor: pointer; font-family: 'Inter', sans-serif; }
+    .note { font-size: 13px; color: var(--muted); margin-top: 6px; }
+    footer { border-top: 1px solid var(--border); padding: 36px 6vw; text-align: center; color: var(--muted); font-size: 13px; }
+    footer img { height: 40px; opacity: 0.75; display: block; margin: 0 auto 12px; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <img src="idu-house-nobg.png" alt="IDU House">
+  <a class="cta" href="#call">Book the discovery call</a>
+</nav>
+
+<section class="hero">
+  <div class="label">IDU House x MyMP3Pool</div>
+  <h1>Independent artists need a path.<br><span>We want to build it together.</span></h1>
+  <p class="lead">IDU House works with independent artists on playlist strategy, creative services and getting records heard. MyMP3Pool puts music in front of working DJs. A 30 minute discovery call to explore three ways to connect the two.</p>
+  <div class="btns">
+    <a class="btn primary" href="#call">Request a call</a>
+    <a class="btn ghost" href="#points">See the three points</a>
+  </div>
+</section>
+
+<div class="band">
+  <section>
+    <div class="label">Who we are</div>
+    <h2>Independent music and creative company.</h2>
+    <p class="lead">IDU House is an independent music and creative company. Our creator service pitches records to a trusted curator network, with 80% of every campaign dollar going straight to curators. We already service DJ packs as an add on, which is why this conversation matters.</p>
+    <div class="proof">
+      <div><strong>111</strong><small>Playlist placements on our most recent artist campaign list</small></div>
+      <div><strong>80%</strong><small>Of each campaign dollar paid directly to curators</small></div>
+      <div><strong>Day 1</strong><small>Release day timing is the standard, not the bonus</small></div>
+    </div>
+  </section>
+</div>
+
+<section id="points">
+  <div class="label">The agenda</div>
+  <h2>Three points for the call.</h2>
+  <div class="grid">
+    <div class="card">
+      <div class="num">01</div>
+      <h3>Creator membership offer</h3>
+      <p>A discount or partnership program so IDU House creators can join MyMP3Pool at a better rate and start getting records to DJs.</p>
+      <ul>
+        <li>Discounted or tiered creator membership</li>
+        <li>Referral or partner code tracking</li>
+        <li>Clear path from IDU campaign to DJ pool</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="num">02</div>
+      <h3>Artist placement partnership</h3>
+      <p>A formal route for IDU House artists to place songs on the MyMP3Pool platform, with clean versions and metadata handled up front.</p>
+      <ul>
+        <li>Submission and approval process</li>
+        <li>Genre channels such as K-Pop and Hip Hop</li>
+        <li>Clean version and one sheet standards</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="num">03</div>
+      <h3>IDU House Sounds radio program</h3>
+      <p>A recurring radio program, IDU House Sounds, presented with MyMP3Pool and built around new independent music and the DJs who break it.</p>
+      <ul>
+        <li>Format, cadence and hosting</li>
+        <li>Featured artist and DJ segments</li>
+        <li>Cross promotion on both platforms</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="band">
+  <section>
+    <div class="label">The path</div>
+    <h2>From first hello to a working partnership.</h2>
+    <div class="steps">
+      <div class="step"><b>STEP 01</b><span>Request the call below. It takes under a minute and tells us which points matter most to you.</span></div>
+      <div class="step"><b>STEP 02</b><span>30 minute discovery call. We listen first, then walk through the three points.</span></div>
+      <div class="step"><b>STEP 03</b><span>Within a week we send a one page summary of what we agreed to explore, with owners and dates.</span></div>
+      <div class="step"><b>STEP 04</b><span>Pilot with one release. We run a single IDU House artist through the membership, placement and radio path, then decide what scales.</span></div>
+    </div>
+  </section>
+</div>
+
+<section id="call">
+  <div class="label">Request a call</div>
+  <h2>Let's talk.</h2>
+  <p class="lead">Pick what you want to cover and a few times that work. This opens an email to the IDU House team with everything filled in.</p>
+  <form id="callForm">
+    <label>Your name<input name="name" required placeholder="DJ Rukus"></label>
+    <label>Email<input name="email" type="email" required placeholder="you@mymp3pool.com"></label>
+    <div class="checks">
+      <label><input type="checkbox" name="pt" value="Creator membership discount or partnership program" checked> Creator membership discount or partnership</label>
+      <label><input type="checkbox" name="pt" value="Artist song placement partnership" checked> Artist song placement partnership</label>
+      <label><input type="checkbox" name="pt" value="IDU House Sounds radio program" checked> IDU House Sounds radio program</label>
+    </div>
+    <label>Best days and times (include time zone)<textarea name="times" placeholder="Tuesday or Thursday afternoons ET"></textarea></label>
+    <button type="submit">Send call request</button>
+    <p class="note">No scheduling tool needed. We confirm a time by reply within one business day.</p>
+  </form>
+</section>
+
+<footer>
+  <img src="idu-house-nobg.png" alt="IDU House">
+  IDU House &nbsp;·&nbsp; Oakland &nbsp;·&nbsp; Washington DC &nbsp;·&nbsp; iduhouse.com
+</footer>
+
+<script>
+  const TO = 'hello@iduhouse.com';
+  document.getElementById('callForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const f = new FormData(this);
+    const points = f.getAll('pt').map((p, i) => (i + 1) + '. ' + p).join('\n');
+    const body =
+      'Hi IDU House team,\n\n' +
+      'I would like to schedule the discovery call.\n\n' +
+      'Name: ' + f.get('name') + '\n' +
+      'Email: ' + f.get('email') + '\n\n' +
+      'Topics to cover:\n' + points + '\n\n' +
+      'Best days and times:\n' + (f.get('times') || 'Open, please send options') + '\n';
+    window.location.href = 'mailto:' + TO +
+      '?subject=' + encodeURIComponent('IDU House x MyMP3Pool Discovery Call Request') +
+      '&body=' + encodeURIComponent(body);
+  });
+</script>
+</body>
+</html>
