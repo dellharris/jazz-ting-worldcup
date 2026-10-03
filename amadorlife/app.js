@@ -11,15 +11,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Promo video sound toggle (starts muted so autoplay works everywhere)
-  const video = document.getElementById('promoVideo');
-  const soundToggle = document.getElementById('soundToggle');
-  if (video && soundToggle) {
-    soundToggle.addEventListener('click', () => {
+  // Video sound toggles (videos start muted so autoplay works everywhere)
+  const wireSoundToggle = (videoId, buttonId) => {
+    const video = document.getElementById(videoId);
+    const button = document.getElementById(buttonId);
+    if (!video || !button) return;
+    button.addEventListener('click', () => {
       video.muted = !video.muted;
-      soundToggle.innerHTML = video.muted ? '&#128264; Sound On' : '&#128266; Sound Off';
+      button.innerHTML = video.muted ? '&#128264; Sound On' : '&#128266; Sound Off';
     });
-  }
+  };
+  wireSoundToggle('promoVideo', 'soundToggleDj');
+  wireSoundToggle('yogaVideo', 'soundToggleYoga');
 
   // Countdown to event — Oct 17, 2026, 10:00 AM ET
   const countdown = document.getElementById('countdown');
