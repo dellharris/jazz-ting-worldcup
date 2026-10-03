@@ -155,12 +155,14 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; color: var(--cream); line-h
 .timeline-item p { color: var(--cream-dim); font-size: 15px; }
 
 /* ── Lineup ───────────────────────────────────────────────── */
-.lineup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-@media (max-width: 720px) { .lineup-grid { grid-template-columns: 1fr; } }
+.lineup-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+@media (max-width: 980px) { .lineup-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 640px) { .lineup-grid { grid-template-columns: 1fr; } }
 .dj-card { background: var(--green-dark); border: 1px solid var(--green-line); border-radius: 18px; padding: 32px; }
 .dj-card .eyebrow { font-size: 12px; }
 .dj-card h3 { font-size: 30px; font-style: italic; margin: 8px 0 14px; }
 .dj-card p { color: var(--cream-dim); font-size: 15px; margin-bottom: 18px; }
+.dj-flyer { width: 100%; border-radius: 12px; margin-bottom: 20px; border: 1px solid var(--green-line); }
 .sc-embed { border-radius: 10px; overflow: hidden; border: 1px solid var(--green-line); }
 .sc-embed iframe { width: 100%; display: block; }
 
@@ -181,21 +183,21 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; color: var(--cream); line-h
 /* ── Gallery ──────────────────────────────────────────────── */
 .gallery-grid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr;
-  grid-template-rows: repeat(2, 220px);
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 200px;
+  grid-auto-flow: dense;
   gap: 14px;
 }
 .gallery-grid a { display: block; border-radius: 16px; overflow: hidden; border: 1px solid var(--green-line); }
 .gallery-grid img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
 .gallery-grid a:hover img { transform: scale(1.05); }
-.gallery-hero { grid-row: 1 / 3; grid-column: 1; }
+.gallery-hero { grid-column: span 2; grid-row: span 2; }
 @media (max-width: 860px) {
-  .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 200px repeat(2, 160px); }
-  .gallery-hero { grid-column: 1 / 3; grid-row: 1; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 170px; }
 }
 @media (max-width: 520px) {
-  .gallery-grid { grid-template-columns: 1fr; grid-template-rows: 220px repeat(4, 180px); }
-  .gallery-hero { grid-column: 1; grid-row: 1; }
+  .gallery-grid { grid-template-columns: 1fr; grid-auto-rows: 220px; }
+  .gallery-hero { grid-column: 1; }
 }
 
 /* ── Chip in ──────────────────────────────────────────────── */
@@ -219,6 +221,27 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; color: var(--cream); line-h
 .world { text-align: center; }
 .world .btn { margin-top: 24px; }
 .partner-row { margin-top: 40px; display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; color: var(--cream-faint); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-size: 13px; }
+
+/* ── Closer ───────────────────────────────────────────────── */
+.closer {
+  max-width: none;
+  padding: 160px 24px;
+  background-image: url('assets/footer-mat.jpg');
+  background-size: cover;
+  background-position: center 25%;
+  background-attachment: fixed;
+  text-align: center;
+  overflow: hidden;
+}
+@media (max-width: 900px) { .closer { background-attachment: scroll; padding: 110px 20px; } }
+.closer-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,45,18,0.55) 0%, rgba(0,27,11,0.9) 65%, var(--green-black) 100%);
+}
+.closer-content { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; }
+.closer h2 { font-size: clamp(2.6rem, 7vw, 4.6rem); font-style: italic; font-weight: 900; margin-top: 14px; }
+.closer-line { width: 120px; height: 3px; background: var(--lime); margin: 24px auto; border-radius: 2px; }
+.closer-content p { color: var(--cream); font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; font-size: 13px; margin-bottom: 30px; }
 
 /* ── Footer ───────────────────────────────────────────────── */
 footer { border-top: 1px solid var(--green-line); padding: 40px 24px 120px; text-align: center; }
