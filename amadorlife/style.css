@@ -247,6 +247,15 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; color: var(--cream); line-h
 footer { border-top: 1px solid var(--green-line); padding: 40px 24px 120px; text-align: center; }
 footer p { color: var(--cream-faint); font-size: 13px; margin-top: 8px; }
 footer a { color: var(--cream-dim); }
+.footer-network {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin-top: 22px; padding: 8px 18px 8px 8px;
+  border: 1px solid var(--green-line); border-radius: 999px;
+  color: var(--cream-dim) !important;
+}
+.footer-network:hover { border-color: var(--lime); color: var(--lime) !important; }
+.footer-network img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
+.footer-network span { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
 
 /* ── Sticky mobile CTA ────────────────────────────────────── */
 .sticky-cta {
