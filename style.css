@@ -789,6 +789,21 @@ body.jtr-nav-open { overflow: hidden; }
   animation: pilotBlink 2s ease-in-out infinite;
 }
 
+.studio-promo-badge {
+  position: absolute; top: 14px; right: 14px; z-index: 3;
+  background: rgba(10,7,2,.88);
+  border: 1px solid var(--pilot-green);
+  color: var(--cream);
+  font-family: 'Courier Prime', monospace;
+  font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 2px;
+  display: flex; align-items: center; gap: 8px;
+  transition: background 0.2s, color 0.2s;
+}
+.studio-promo-badge:hover { background: var(--pilot-green); color: var(--wood); }
+.studio-promo-badge:hover .live-dot { background: var(--wood); box-shadow: none; }
+
 /* Hero title overlay */
 .hero-title-overlay {
   position: absolute; bottom: 0; left: 0; right: 0;
